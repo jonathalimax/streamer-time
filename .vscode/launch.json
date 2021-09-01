@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "App",
+            "cwd": "src/app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "Design System Playground",
+            "cwd": "src/design_system/example",
+            "request": "launch",
+            "type": "dart"
+        },
+    ]
+}
