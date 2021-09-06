@@ -55,6 +55,13 @@ class AppText extends StatelessWidget {
     this.textAlign,
   }) : style = ktsBodyStyle;
 
+  AppText(
+    this.text, {
+    required this.style,
+    this.color,
+    this.textAlign,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Text(
