@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'login_viewmodel.dart';
 
-class LoginView extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
-      builder: (context, model, child) => buildScreen(context),
+      builder: (context, viewModel, child) => buildScreen(
+        context,
+        viewModel,
+      ),
     );
   }
 
-  Widget buildScreen(BuildContext context) {
+  Widget buildScreen(
+    BuildContext context,
+    LoginViewModel viewModel,
+  ) {
     return Stack(
       children: <Widget>[
         _buildBackground(),
@@ -50,7 +56,7 @@ class LoginView extends StatelessWidget {
                   Spacer(flex: 5),
                   AppButton(
                     title: 'Entrar',
-                    action: () {},
+                    action: () => viewModel.startAuthentication(),
                     titleColor: kcPurple,
                   ),
                 ],

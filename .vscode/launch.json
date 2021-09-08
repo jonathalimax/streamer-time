@@ -5,7 +5,14 @@
             "name": "App",
             "cwd": "src/app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+        },
+        {
+            "name": "App Profile",
+            "cwd": "src/app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
         },
         {
             "name": "Design System Playground",
