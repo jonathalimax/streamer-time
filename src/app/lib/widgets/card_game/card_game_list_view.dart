@@ -20,7 +20,6 @@ class CardGameListView extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, CardGameListViewModel viewModel) {
-    final size = MediaQuery.of(context).size;
     return viewModel.isBusy
         ? SizedBox(
             height: 600,
