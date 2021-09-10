@@ -1,7 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-class CardEventWidget extends StatelessWidget {
+class CardEventView extends StatelessWidget {
   final String game;
   final String title;
   final String day;
@@ -9,7 +9,7 @@ class CardEventWidget extends StatelessWidget {
   final String weekday;
   final Color? color;
 
-  const CardEventWidget({
+  const CardEventView({
     Key? key,
     required this.game,
     required this.title,

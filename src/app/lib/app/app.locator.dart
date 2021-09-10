@@ -11,9 +11,10 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../features/authentication/app_authentication.dart';
-import '../features/discover/discover_viewmodel.dart';
 import '../features/home/home_viewmodel.dart';
 import '../services/twitch_service.dart';
+import '../widgets/card_game/card_game_list_viewmodel.dart';
+import '../widgets/card_streams/card_stream_list_viewmodel.dart';
 
 final locator = StackedLocator.instance;
 
@@ -27,5 +28,6 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AppAuthentication());
   locator.registerLazySingleton(() => HomeViewModel());
-  locator.registerLazySingleton(() => DiscoverViewmodel());
+  locator.registerLazySingleton(() => CardGameListViewModel());
+  locator.registerLazySingleton(() => CardStreamListViewModel());
 }

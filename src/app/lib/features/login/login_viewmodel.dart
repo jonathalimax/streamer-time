@@ -22,14 +22,15 @@ class LoginViewModel extends BaseViewModel {
           await _twitchService.client.twitchHttpClient.validateToken();
       if (token != null) {
         _appAuthentication.persisteToken(token);
-        _navigation.replaceWith(Routes.homeScreen);
+        _navigation.clearStackAndShow(Routes.homeScreen);
       }
     }
   }
 
-  void startAuthentication({
-    List<TwitchApiScope> scopes = const [],
-  }) {
+  void startAuthentication() {
+    final List<TwitchApiScope> scopes = [
+      TwitchApiScope.userReadFollow,
+    ];
     _webviewPlugin.onUrlChanged.listen(_urlListener);
 
     final url = _twitchService.client.authorizeUri(scopes);

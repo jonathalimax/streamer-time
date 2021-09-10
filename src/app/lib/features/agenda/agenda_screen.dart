@@ -1,5 +1,5 @@
 import 'package:app/features/agenda/agenda_viewmodel.dart';
-import 'package:app/widgets/card_event_widget.dart';
+import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -36,14 +36,14 @@ class AgendaScreen extends StatelessWidget {
                   key: PageStorageKey('GaulesAgendaKey'),
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    CardEventWidget(
+                    CardEventView(
                       day: '08',
                       month: 'out',
                       weekday: 'seg',
                       game: 'Counter-Strike: Global Offensive',
                       title: 'Furia vs NIP ESL Pro League S14',
                     ),
-                    CardEventWidget(
+                    CardEventView(
                       day: '09',
                       month: 'out',
                       weekday: 'ter',

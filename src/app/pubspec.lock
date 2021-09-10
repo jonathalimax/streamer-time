@@ -286,6 +286,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  flutter_spinkit:
+    dependency: "direct main"
+    description:
+      name: flutter_spinkit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -710,9 +717,9 @@ packages:
   twitch_api:
     dependency: "direct main"
     description:
-      name: twitch_api
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../../flutter_projects/twitch_api_flutter"
+      relative: true
+    source: path
     version: "0.4.0"
   typed_data:
     dependency: transitive

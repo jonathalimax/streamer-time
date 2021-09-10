@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-class CardGameWidget extends StatelessWidget {
+class CardGameView extends StatelessWidget {
   final String game;
   final String imageUrl;
 
-  const CardGameWidget({
+  const CardGameView({
     Key? key,
     required this.game,
     required this.imageUrl,
@@ -15,14 +14,12 @@ class CardGameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 175,
       child: Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(
           children: <Widget>[
             CachedNetworkImage(
-              width: 175,
-              height: 300,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               imageUrl: imageUrl,
               placeholder: (context, url) => Center(
                 child: CircularProgressIndicator(

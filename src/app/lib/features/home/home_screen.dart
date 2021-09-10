@@ -43,8 +43,8 @@ class HomeScreen extends StatelessWidget {
         currentIndex: viewModel.currentIndex,
         indexChanged: viewModel.setIndex,
         margin: const EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 10,
+          vertical: 35,
+          horizontal: 15,
         ),
         items: [
           BottomNavigationBarItem(
