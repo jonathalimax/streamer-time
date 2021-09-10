@@ -43,6 +43,20 @@ class AppAuthentication {
     return authToken.expiresIn != 0;
   }
 
+  Future logout() async {
+    final encryptionKey = await _getEncryptionKey();
+
+    if (encryptionKey == null) return;
+
+    final encryptedBox = await Hive.openBox(
+      AUTH_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    await encryptedBox.delete(AUTH_TOKEN_KEY);
+    encryptedBox.close();
+  }
+
   Future<TwitchToken?> getTwitchToken() async {
     final encryptionKey = await _getEncryptionKey();
 

@@ -3,6 +3,7 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/home/home_viewmodel.dart';
+import 'package:app/features/profile/profile_screen.dart';
 import 'package:design_system/widgets/app_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -11,9 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      disposeViewModel: false,
-      initialiseSpecialViewModelsOnce: true,
-      viewModelBuilder: () => locator<HomeViewModel>(),
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) => _buildScreen(
         context,
         viewModel,
@@ -43,7 +42,7 @@ class HomeScreen extends StatelessWidget {
         currentIndex: viewModel.currentIndex,
         indexChanged: viewModel.setIndex,
         margin: const EdgeInsets.symmetric(
-          vertical: 35,
+          vertical: 25,
           horizontal: 15,
         ),
         items: [
@@ -71,7 +70,7 @@ class HomeScreen extends StatelessWidget {
       case 1:
         return DiscoverScreen();
       case 2:
-        return Scaffold();
+        return ProfileScreen();
       default:
         return AgendaScreen();
     }

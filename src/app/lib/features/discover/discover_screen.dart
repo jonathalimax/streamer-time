@@ -1,3 +1,4 @@
+import 'package:app/app/app.locator.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/widgets/card_game/card_game_list_view.dart';
 import 'package:app/widgets/card_streams/card_stream_list_view.dart';
@@ -9,8 +10,10 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<DiscoverViewmodel>.nonReactive(
-      viewModelBuilder: () => DiscoverViewmodel(),
+    return ViewModelBuilder<DiscoverViewmodel>.reactive(
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
+      viewModelBuilder: () => locator<DiscoverViewmodel>(),
       builder: (context, viewModel, child) => _buildScreen(context, viewModel),
     );
   }
@@ -21,8 +24,16 @@ class DiscoverScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            CardStreamListView(),
-            CardGameListView(),
+            Flexible(
+              flex: 1,
+              child: CardStreamListView(
+                hasLoader: true,
+              ),
+            ),
+            Flexible(
+              flex: 4,
+              child: CardGameListView(),
+            ),
           ],
         ),
       ),

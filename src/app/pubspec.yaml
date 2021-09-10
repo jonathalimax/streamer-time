@@ -35,7 +35,8 @@ dependencies:
   twitch_api: #^0.4.0
     path: ../../../flutter_projects/twitch_api_flutter
   cached_network_image: ^3.1.0
-  flutter_webview_plugin: ^0.4.0
+  webview_flutter: ^2.0.12
+  loading_overlay: ^0.3.0
 
 dev_dependencies:
   flutter_test:

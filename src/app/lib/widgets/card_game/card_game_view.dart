@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CardGameView extends StatelessWidget {
   final String game;
@@ -22,7 +23,7 @@ class CardGameView extends StatelessWidget {
               fit: BoxFit.fill,
               imageUrl: imageUrl,
               placeholder: (context, url) => Center(
-                child: CircularProgressIndicator(
+                child: SpinKitDoubleBounce(
                   color: Theme.of(context).accentColor,
                 ),
               ),

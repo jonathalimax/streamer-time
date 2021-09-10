@@ -1,28 +1,58 @@
+import 'package:app/app/app.locator.dart';
+import 'package:app/features/webview/webview_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loading_overlay/loading_overlay.dart';
+import 'package:stacked/stacked.dart';
+//import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+typedef ShouldNavigateCallback = Future<bool> Function(String url);
 
 class WebViewScreen extends StatelessWidget {
   final String url;
+  final ShouldNavigateCallback shouldNavigate;
 
-  const WebViewScreen(this.url);
+  const WebViewScreen(
+    this.url,
+    this.shouldNavigate,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return WebviewScaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
-      ),
-      url: url,
-      initialChild: Center(
-        child: CircularProgressIndicator(
-          color: Theme.of(context).accentColor,
+    return ViewModelBuilder<WebviewViewModel>.reactive(
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
+      viewModelBuilder: () => locator<WebviewViewModel>(),
+      onModelReady: (viewModel) {
+        viewModel.startLoader();
+      },
+      builder: (context, viewModel, _) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).accentColor,
+        ),
+        body: LoadingOverlay(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          isLoading: viewModel.isBusy,
+          progressIndicator: SpinKitDoubleBounce(
+            color: Theme.of(context).accentColor,
+          ),
+          child: WebView(
+            initialUrl: url,
+            javascriptMode: JavascriptMode.unrestricted,
+            navigationDelegate: (NavigationRequest request) async {
+              final shouldNavigate = this.shouldNavigate(request.url);
+              return await shouldNavigate
+                  ? NavigationDecision.navigate
+                  : NavigationDecision.prevent;
+            },
+            onPageFinished: (_) {
+              viewModel.finishLoader();
+            },
+            gestureNavigationEnabled: true,
+          ),
         ),
       ),
-      withZoom: false,
-      displayZoomControls: false,
-      appCacheEnabled: false,
-      clearCache: true,
-      clearCookies: true,
     );
   }
 }

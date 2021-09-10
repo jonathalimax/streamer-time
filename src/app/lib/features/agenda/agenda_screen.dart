@@ -1,3 +1,4 @@
+import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:design_system/widgets/app_text.dart';
@@ -8,7 +9,9 @@ class AgendaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AgendaViewModel>.reactive(
-      viewModelBuilder: () => AgendaViewModel(),
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
+      viewModelBuilder: () => locator<AgendaViewModel>(),
       builder: (context, viewModel, child) => _buildScreen(context),
     );
   }

@@ -4,6 +4,7 @@ import 'package:app/features/authentication/authentication_model.dart';
 import 'package:design_system/design_system.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,6 +14,12 @@ Future main() async {
   await Firebase.initializeApp();
   Hive.registerAdapter(AuthenticationModelAdapter());
   setupLocator();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light, //status bar brigtness
+      statusBarIconBrightness: Brightness.light, //status barIcon Brightness
+    ),
+  );
   runApp(MyApp());
 }
 
