@@ -24,14 +24,19 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final theme = ThemeData(
+    primaryColor: kcPurple,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    fontFamily: 'Nunito',
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: kcPurple,
-        accentColor: kcLightPurple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Nunito',
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(
+          secondary: kcLightPurple,
+        ),
       ),
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,

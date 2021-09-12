@@ -20,7 +20,7 @@ class StartupScreen extends StatelessWidget {
 
   Scaffold _buildScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

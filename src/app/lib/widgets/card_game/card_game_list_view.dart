@@ -31,7 +31,7 @@ class CardGameListView extends StatelessWidget {
       isLoading: viewModel.isBusy && hasLoader,
       color: Theme.of(context).scaffoldBackgroundColor,
       progressIndicator: SpinKitDoubleBounce(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: viewModel.dataReady
           ? Container(
@@ -41,12 +41,13 @@ class CardGameListView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   AppText.heading4('Categorias Populares'),
+                  SizedBox(height: 4),
                   Flexible(
                     child: GridView.count(
                       crossAxisCount: 2,
-                      childAspectRatio: 250 / 170,
+                      childAspectRatio: 200 / 296,
                       key: PageStorageKey('CardGameList'),
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       children: viewModel.data!
                           .map(
                             (game) => CardGameView(

@@ -3,6 +3,7 @@ import 'package:app/features/discover/discover_search_delegate.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/widgets/card_game/card_game_list_view.dart';
 import 'package:app/widgets/card_streams/card_stream_list_view.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
@@ -23,7 +24,11 @@ class DiscoverScreen extends StatelessWidget {
   Widget _buildScreen(BuildContext context, DiscoverViewmodel viewModel) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
+        title: AppText.heading3(
+          'Descobrir',
+          color: kcIceWhite,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         actions: [
           _buildAppBarActions(context),
         ],
@@ -34,14 +39,12 @@ class DiscoverScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Flexible(
-                flex: 1,
-                child: CardStreamListView(
-                  hasLoader: true,
-                ),
+              CardStreamListView(
+                hasLoader: true,
               ),
+              SizedBox(height: 4),
               Flexible(
-                flex: 4,
+                fit: FlexFit.loose,
                 child: CardGameListView(),
               ),
             ],

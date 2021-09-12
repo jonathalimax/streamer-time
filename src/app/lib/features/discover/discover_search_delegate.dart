@@ -51,7 +51,7 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
           case ConnectionState.waiting:
             return Center(
               child: SpinKitDoubleBounce(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             );
           case ConnectionState.done:

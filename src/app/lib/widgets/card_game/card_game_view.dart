@@ -24,7 +24,7 @@ class CardGameView extends StatelessWidget {
               imageUrl: imageUrl,
               placeholder: (context, url) => Center(
                 child: SpinKitDoubleBounce(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               errorWidget: (context, url, error) => Icon(Icons.error),

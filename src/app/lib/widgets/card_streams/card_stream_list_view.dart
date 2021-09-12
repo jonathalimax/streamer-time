@@ -31,27 +31,28 @@ class CardStreamListView extends StatelessWidget {
       isLoading: viewModel.isBusy && hasLoader,
       color: Theme.of(context).scaffoldBackgroundColor,
       progressIndicator: SpinKitDoubleBounce(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: viewModel.dataReady
           ? Container(
+              height: 120,
               padding: EdgeInsets.all(8.0),
-              height: 130,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AppText.heading4('Canais Sugeridos'),
+                  SizedBox(height: 4),
                   Flexible(
                     child: ListView(
                       key: PageStorageKey('CardStreamList'),
                       scrollDirection: Axis.horizontal,
                       children: viewModel.data!
                           .map(
-                            (game) => CardStreamView(
-                              game: game.gameName,
-                              username: game.userName,
-                              totalViewers: game.viewerCount.toString(),
+                            (channel) => CardStreamView(
+                              game: channel.gameName,
+                              username: channel.userName,
+                              totalViewers: channel.viewerCount.toString(),
                             ),
                           )
                           .toList(),

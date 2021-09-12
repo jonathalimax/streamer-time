@@ -4,7 +4,6 @@ import 'package:app/features/authentication/app_authentication.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/features/home/home_screen.dart';
-import 'package:app/features/home/home_viewmodel.dart';
 import 'package:app/features/login/login_screen.dart';
 import 'package:app/features/profile/profile_screen.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';

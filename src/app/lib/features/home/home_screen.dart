@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/home/home_viewmodel.dart';
@@ -41,10 +40,7 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         currentIndex: viewModel.currentIndex,
         indexChanged: viewModel.setIndex,
-        margin: const EdgeInsets.symmetric(
-          vertical: 25,
-          horizontal: 15,
-        ),
+        margin: const EdgeInsets.fromLTRB(15, 5, 15, 25),
         items: [
           BottomNavigationBarItem(
             label: 'Agenda',

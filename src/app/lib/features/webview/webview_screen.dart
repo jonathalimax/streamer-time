@@ -29,13 +29,13 @@ class WebViewScreen extends StatelessWidget {
       },
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         body: LoadingOverlay(
           color: Theme.of(context).scaffoldBackgroundColor,
           isLoading: viewModel.isBusy,
           progressIndicator: SpinKitDoubleBounce(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           child: WebView(
             initialUrl: url,
