@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 40,
+      height: 44,
       decoration: !outlined
           ? BoxDecoration(
               gradient: LinearGradient(

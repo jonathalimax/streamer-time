@@ -1,4 +1,5 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/features/discover/discover_search_delegate.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/widgets/card_game/card_game_list_view.dart';
 import 'package:app/widgets/card_streams/card_stream_list_view.dart';
@@ -21,6 +22,12 @@ class DiscoverScreen extends StatelessWidget {
 
   Widget _buildScreen(BuildContext context, DiscoverViewmodel viewModel) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).accentColor,
+        actions: [
+          _buildAppBarActions(context),
+        ],
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
@@ -40,6 +47,22 @@ class DiscoverScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  IconButton _buildAppBarActions(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        showSearch(
+          context: context,
+          delegate: DiscoverSearchDelegate(),
+        );
+      },
+      icon: Icon(
+        Icons.search,
+        size: 28,
+        color: Colors.white,
       ),
     );
   }
