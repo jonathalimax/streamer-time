@@ -8,6 +8,7 @@ import 'package:app/features/login/login_screen.dart';
 import 'package:app/features/profile/profile_screen.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';
 import 'package:app/features/startup/startup_screen.dart';
+import 'package:app/features/streamer/streamer_screen.dart';
 import 'package:app/features/webview/webview_screen.dart';
 import 'package:app/features/webview/webview_viewmodel.dart';
 import 'package:app/services/twitch_service.dart';
@@ -25,6 +26,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: AgendaScreen),
     MaterialRoute(page: DiscoverScreen),
     MaterialRoute(page: ProfileScreen),
+    MaterialRoute(page: StreamerScreen),
   ],
   dependencies: [
     LazySingleton(classType: TwitchService),

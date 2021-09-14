@@ -27,41 +27,45 @@ class CardStreamListView extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, CardStreamListViewModel viewModel) {
-    return LoadingOverlay(
-      isLoading: viewModel.isBusy && hasLoader,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      progressIndicator: SpinKitDoubleBounce(
-        color: Theme.of(context).colorScheme.secondary,
-      ),
-      child: viewModel.dataReady
-          ? Container(
-              height: 120,
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  AppText.heading4('Canais Sugeridos'),
-                  SizedBox(height: 4),
-                  Flexible(
-                    child: ListView(
-                      key: PageStorageKey('CardStreamList'),
-                      scrollDirection: Axis.horizontal,
-                      children: viewModel.data!
-                          .map(
-                            (channel) => CardStreamView(
-                              game: channel.gameName,
-                              username: channel.userName,
-                              totalViewers: channel.viewerCount.toString(),
-                            ),
-                          )
-                          .toList(),
+    return Container(
+      height: 120,
+      child: LoadingOverlay(
+        isLoading: viewModel.isBusy && hasLoader,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        progressIndicator: SpinKitDoubleBounce(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        child: viewModel.dataReady
+            ? Container(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    AppText.heading4('Canais Sugeridos'),
+                    SizedBox(height: 4),
+                    Flexible(
+                      child: ListView(
+                        key: PageStorageKey('CardStreamList'),
+                        scrollDirection: Axis.horizontal,
+                        children: viewModel.data!
+                            .map(
+                              (channel) => CardStreamView(
+                                game: channel.gameName,
+                                username: channel.userName,
+                                totalViewers: channel.viewerCount.toString(),
+                                onTap: () => viewModel
+                                    .startStreamerScreen(channel.userId),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          : Container(),
+                  ],
+                ),
+              )
+            : Container(),
+      ),
     );
   }
 }

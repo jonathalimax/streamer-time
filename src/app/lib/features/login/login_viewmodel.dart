@@ -28,6 +28,7 @@ class LoginViewModel extends BaseViewModel {
   void startAuthentication() {
     final List<TwitchApiScope> scopes = [
       TwitchApiScope.userReadFollow,
+      TwitchApiScope.userReadEmail,
     ];
 
     final url = _twitchService.client.authorizeUri(scopes);

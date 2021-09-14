@@ -16,6 +16,8 @@ import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/startup/startup_screen.dart';
+import '../features/streamer/streamer_screen.dart';
+import '../features/streamer/streamer_viewmodel.dart';
 import '../features/webview/webview_screen.dart';
 
 class Routes {
@@ -26,6 +28,7 @@ class Routes {
   static const String agendaScreen = '/agenda-screen';
   static const String discoverScreen = '/discover-screen';
   static const String profileScreen = '/profile-screen';
+  static const String streamerScreen = '/streamer-screen';
   static const all = <String>{
     startupScreen,
     loginScreen,
@@ -34,6 +37,7 @@ class Routes {
     agendaScreen,
     discoverScreen,
     profileScreen,
+    streamerScreen,
   };
 }
 
@@ -48,6 +52,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.agendaScreen, page: AgendaScreen),
     RouteDef(Routes.discoverScreen, page: DiscoverScreen),
     RouteDef(Routes.profileScreen, page: ProfileScreen),
+    RouteDef(Routes.streamerScreen, page: StreamerScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -98,6 +103,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    StreamerScreen: (data) {
+      var args = data.getArgs<StreamerScreenArguments>(nullOk: false);
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => StreamerScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -110,4 +125,11 @@ class WebViewScreenArguments {
   final String url;
   final Future<bool> Function(String) shouldNavigate;
   WebViewScreenArguments({required this.url, required this.shouldNavigate});
+}
+
+/// StreamerScreen arguments holder class
+class StreamerScreenArguments {
+  final Key? key;
+  final StreamerViewModel viewModel;
+  StreamerScreenArguments({this.key, required this.viewModel});
 }

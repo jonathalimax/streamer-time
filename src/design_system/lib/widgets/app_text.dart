@@ -79,8 +79,8 @@ class AppText extends StatelessWidget {
       style: style.copyWith(
         color: color,
       ),
-      textAlign: textAlign,
       maxLines: maxLines,
+      textAlign: textAlign,
     );
   }
 }

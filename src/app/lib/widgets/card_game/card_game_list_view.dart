@@ -45,7 +45,7 @@ class CardGameListView extends StatelessWidget {
                   Flexible(
                     child: GridView.count(
                       crossAxisCount: 2,
-                      childAspectRatio: 200 / 296,
+                      childAspectRatio: 200 / 326,
                       key: PageStorageKey('CardGameList'),
                       scrollDirection: Axis.vertical,
                       children: viewModel.data!

@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/services/twitch_service.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -64,7 +65,10 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
             return ListView.builder(
               itemCount: snapshot.data!.data!.length,
               itemBuilder: (context, index) {
-                return _buildSearchList(snapshot.data!, index);
+                return _buildSearchList(
+                  context,
+                  snapshot.data!.data![index],
+                );
               },
             );
           default:
@@ -77,12 +81,18 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
   }
 
   ListTile _buildSearchList(
-    TwitchResponse<TwitchSearchChannel> snapshot,
-    int index,
+    BuildContext context,
+    TwitchSearchChannel channel,
   ) {
     return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        foregroundImage: CachedNetworkImageProvider(
+          channel.thumbnailUrl,
+        ),
+      ),
       title: AppText.body(
-        snapshot.data![index].displayName,
+        channel.displayName,
       ),
     );
   }
