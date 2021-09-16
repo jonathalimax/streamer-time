@@ -40,21 +40,21 @@ class CardEventView extends StatelessWidget {
                       AppText(
                         day,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       AppText(
                         month.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       AppText(
                         weekday.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -66,14 +66,14 @@ class CardEventView extends StatelessWidget {
               AppText(
                 game,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
               ),
               SizedBox(height: 2),
               AppText(
                 title,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
               ),

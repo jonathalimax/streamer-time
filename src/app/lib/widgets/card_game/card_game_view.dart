@@ -26,6 +26,7 @@ class CardGameView extends StatelessWidget {
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl: imageUrl,
+                filterQuality: FilterQuality.high,
                 placeholder: (context, url) => Center(
                   child: SpinKitDoubleBounce(
                     color: Theme.of(context).colorScheme.secondary,
