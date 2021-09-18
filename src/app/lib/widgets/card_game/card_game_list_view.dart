@@ -56,6 +56,10 @@ class CardGameListView extends StatelessWidget {
                                 width: 200,
                                 height: 300,
                               ),
+                              onTap: () => viewModel.showChannelsBy(
+                                game.name,
+                                game.id,
+                              ),
                             ),
                           )
                           .toList(),

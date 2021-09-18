@@ -1,6 +1,8 @@
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/authentication/app_authentication.dart';
+import 'package:app/features/channels/channels_screen.dart';
+import 'package:app/features/channels/channels_viewmodel.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/features/home/home_screen.dart';
@@ -27,6 +29,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: DiscoverScreen),
     MaterialRoute(page: ProfileScreen),
     MaterialRoute(page: StreamerScreen),
+    MaterialRoute(page: ChannelsScreen),
   ],
   dependencies: [
     LazySingleton(classType: TwitchService),

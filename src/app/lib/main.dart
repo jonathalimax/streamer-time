@@ -2,7 +2,6 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/authentication/authentication_model.dart';
 import 'package:design_system/design_system.dart';
-import 'package:design_system/styles/app_text_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,8 +16,8 @@ Future main() async {
   setupLocator();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light, //status bar brigtness
-      statusBarIconBrightness: Brightness.light, //status barIcon Brightness
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
     ),
   );
   runApp(MyApp());

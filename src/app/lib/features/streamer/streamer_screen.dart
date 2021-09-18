@@ -79,10 +79,6 @@ class StreamerScreen extends StatelessWidget {
   AppBar _buildAppBar(BuildContext context, StreamerViewModel viewModel) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      title: AppText.heading4(
-        'Streamer',
-        color: Colors.white,
-      ),
       actions: [
         IconButton(
           onPressed: () {},

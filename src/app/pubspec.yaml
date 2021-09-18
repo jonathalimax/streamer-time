@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -33,9 +33,9 @@ dependencies:
   animations: ^2.0.1
   injectable: ^1.5.0
   twitch_api: #^0.4.0
-    path: ../../../flutter_projects/twitch_api_flutter
+    path: ../../../twitch_api_flutter
   cached_network_image: ^3.1.0
-  webview_flutter: ^2.0.12
+  webview_flutter: ^2.0.14
   loading_overlay: ^0.3.0
   intl: ^0.17.0
 
@@ -43,9 +43,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   
-  build_runner: ^2.1.1
+  build: ^2.1.0
+  build_runner: ^2.1.2
   hive_generator: ^1.1.0
-  stacked_generator: ^0.5.1
+  stacked_generator: ^0.5.2
 
 flutter:
   uses-material-design: true

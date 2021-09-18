@@ -11,6 +11,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../features/agenda/agenda_screen.dart';
+import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const String discoverScreen = '/discover-screen';
   static const String profileScreen = '/profile-screen';
   static const String streamerScreen = '/streamer-screen';
+  static const String channelsScreen = '/channels-screen';
   static const all = <String>{
     startupScreen,
     loginScreen,
@@ -38,6 +40,7 @@ class Routes {
     discoverScreen,
     profileScreen,
     streamerScreen,
+    channelsScreen,
   };
 }
 
@@ -53,6 +56,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.discoverScreen, page: DiscoverScreen),
     RouteDef(Routes.profileScreen, page: ProfileScreen),
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
+    RouteDef(Routes.channelsScreen, page: ChannelsScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -113,6 +117,17 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ChannelsScreen: (data) {
+      var args = data.getArgs<ChannelsScreenArguments>(nullOk: false);
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => ChannelsScreen(
+          args.game,
+          args.gameId,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -132,4 +147,12 @@ class StreamerScreenArguments {
   final Key? key;
   final StreamerViewModel viewModel;
   StreamerScreenArguments({this.key, required this.viewModel});
+}
+
+/// ChannelsScreen arguments holder class
+class ChannelsScreenArguments {
+  final String game;
+  final String gameId;
+  final Key? key;
+  ChannelsScreenArguments({required this.game, required this.gameId, this.key});
 }

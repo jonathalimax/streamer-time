@@ -23,7 +23,8 @@ class CardStreamView extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         highlightColor:
-            Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+            Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+        borderRadius: BorderRadius.all(Radius.circular(3)),
         child: Card(
           color: Theme.of(context).primaryColor,
           child: Padding(

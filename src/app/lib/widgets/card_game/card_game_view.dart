@@ -6,42 +6,49 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class CardGameView extends StatelessWidget {
   final String game;
   final String imageUrl;
+  final Function()? onTap;
 
   const CardGameView({
     Key? key,
     required this.game,
     required this.imageUrl,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Flexible(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: imageUrl,
-                filterQuality: FilterQuality.high,
-                placeholder: (context, url) => Center(
-                  child: SpinKitDoubleBounce(
-                    color: Theme.of(context).colorScheme.secondary,
+    return InkWell(
+      onTap: onTap,
+      highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+      borderRadius: BorderRadius.all(Radius.circular(3)),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Flexible(
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: imageUrl,
+                  filterQuality: FilterQuality.high,
+                  placeholder: (context, url) => Center(
+                    child: SpinKitDoubleBounce(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
-          ),
-          AppText.body(
-            game,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-          ),
-        ],
+            AppText.body(
+              game,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

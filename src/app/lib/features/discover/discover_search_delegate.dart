@@ -10,8 +10,9 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
   final _twitchService = locator<TwitchService>();
 
   DiscoverSearchDelegate() : super(searchFieldLabel: 'Buscar streamer');
+
   @override
-  List<Widget>? buildActions(BuildContext context) {
+  List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         onPressed: () {
@@ -26,7 +27,7 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
   }
 
   @override
-  Widget? buildLeading(BuildContext context) {
+  Widget buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
         close(context, '');
