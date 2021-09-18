@@ -1,7 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
-import 'package:app/widgets/card_event/card_event_view.dart';
-import 'package:design_system/widgets/app_text.dart';
+import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
@@ -22,44 +21,10 @@ class AgendaScreen extends StatelessWidget {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            height: 250.0,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: 25,
-                      child: CircleAvatar(),
-                    ),
-                    SizedBox(width: 5),
-                    AppText.heading4('Gaules'),
-                  ],
-                ),
-                Flexible(
-                  child: ListView(
-                    key: PageStorageKey('GaulesAgendaKey'),
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      CardEventView(
-                        day: '08',
-                        month: 'out',
-                        weekday: 'seg',
-                        game: 'Counter-Strike: Global Offensive',
-                        title: 'Furia vs NIP ESL Pro League S14',
-                      ),
-                      CardEventView(
-                        day: '09',
-                        month: 'out',
-                        weekday: 'ter',
-                        game: 'Counter-Strike: Global Offensive',
-                        title: 'Furia vs Team Liquid ESL Pro League S14',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AgendaView(
+              title: 'Gaules',
             ),
           ),
         ),

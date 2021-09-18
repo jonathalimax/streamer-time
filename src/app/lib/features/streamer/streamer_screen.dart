@@ -1,4 +1,5 @@
 import 'package:app/features/streamer/streamer_viewmodel.dart';
+import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/widgets/app_text.dart';
@@ -26,27 +27,50 @@ class StreamerScreen extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context, viewModel),
       body: SafeArea(
-        child: viewModel.fetchingStreamer
+        child: viewModel.fetchingStreamer || viewModel.fetchingAgenda
             ? SpinKitDoubleBounce(
                 color: Theme.of(context).colorScheme.secondary,
               )
-            : Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                          child: AppText.body(
-                            viewModel.fetchedStreamer?.description ?? '',
-                            textAlign: TextAlign.center,
+            : Column(
+                children: <Widget>[
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              _buildProfileImage(context, viewModel),
+                              SizedBox(width: 6),
+                              viewModel.fetchingStreamer
+                                  ? Container()
+                                  : AppText.heading3(
+                                      viewModel.fetchedStreamer?.displayName ??
+                                          '',
+                                    ),
+                            ],
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 12),
+                          Flexible(
+                            child: AppText.body(
+                              viewModel.fetchedStreamer?.description ?? '',
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          Divider(),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: AgendaView(title: 'Agenda'),
+                  ),
+                  Spacer(),
+                ],
               ),
       ),
     );
@@ -55,34 +79,45 @@ class StreamerScreen extends StatelessWidget {
   AppBar _buildAppBar(BuildContext context, StreamerViewModel viewModel) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      title: viewModel.fetchingStreamer
-          ? Container()
-          : AppText.heading4(
-              viewModel.fetchedStreamer?.displayName ?? '',
-              color: Colors.white,
-            ),
+      title: AppText.heading4(
+        'Streamer',
+        color: Colors.white,
+      ),
       actions: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: CircleAvatar(
-            child: ClipOval(
-              child: _buildProfileImage(viewModel),
-            ),
-            backgroundColor: Colors.transparent,
+        IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.favorite_outline,
           ),
         )
       ],
     );
   }
 
-  Widget _buildProfileImage(StreamerViewModel viewModel) {
-    if (viewModel.fetchingStreamer) return Container();
-    return CachedNetworkImage(
-      imageUrl: viewModel.fetchedStreamer?.profileImageUrl ?? '',
-      placeholder: (context, url) => Center(
-        child: SpinKitDoubleBounce(
-          size: 20,
-          color: Colors.white,
+  Widget _buildProfileImage(BuildContext context, StreamerViewModel viewModel) {
+    return Container(
+      padding: const EdgeInsets.all(2),
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondary.withOpacity(.8),
+          width: 2.0,
+        ),
+      ),
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: viewModel.fetchedStreamer?.profileImageUrl ?? '',
+            placeholder: (context, url) => Center(
+              child: SpinKitDoubleBounce(
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
       ),
     );
