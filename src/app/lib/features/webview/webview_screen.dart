@@ -28,9 +28,7 @@ class WebViewScreen extends StatelessWidget {
         viewModel.startLoader();
       },
       builder: (context, viewModel, _) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-        ),
+        appBar: AppBar(),
         body: LoadingOverlay(
           color: Theme.of(context).scaffoldBackgroundColor,
           isLoading: viewModel.isBusy,

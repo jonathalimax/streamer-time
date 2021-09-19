@@ -1,6 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
+import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
@@ -18,6 +19,18 @@ class AgendaScreen extends StatelessWidget {
 
   Scaffold _buildScreen(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Agenda',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+          ),
+        ],
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(

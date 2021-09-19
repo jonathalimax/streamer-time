@@ -57,12 +57,26 @@ class AppText extends StatelessWidget {
     this.maxLines,
   }) : style = ktsCaptionStyle;
 
+  const AppText.captionBold(
+    this.text, {
+    this.color,
+    this.textAlign,
+    this.maxLines,
+  }) : style = ktsCaptionBoldStyle;
+
   const AppText.body(
     this.text, {
     this.color,
     this.textAlign,
     this.maxLines,
   }) : style = ktsBodyStyle;
+
+  const AppText.bodyBold(
+    this.text, {
+    this.color,
+    this.textAlign,
+    this.maxLines,
+  }) : style = ktsBodyBoldStyle;
 
   AppText(
     this.text, {

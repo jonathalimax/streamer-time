@@ -3,17 +3,19 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class CardStreamView extends StatelessWidget {
-  final String game;
+  final String? game;
   final String username;
   final String totalViewers;
   final VoidCallback onTap;
+  final Color? backgroundColor;
 
   const CardStreamView({
     Key? key,
-    required this.game,
     required this.username,
     required this.totalViewers,
     required this.onTap,
+    this.game,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class CardStreamView extends StatelessWidget {
             Theme.of(context).colorScheme.secondary.withOpacity(0.6),
         borderRadius: BorderRadius.all(Radius.circular(3)),
         child: Card(
-          color: Theme.of(context).primaryColor,
+          color: backgroundColor ?? Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -38,12 +40,12 @@ class CardStreamView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      AppText.body(
+                      AppText.bodyBold(
                         username,
                         color: kcIceWhite,
                       ),
                       AppText.caption(
-                        game,
+                        game ?? '',
                         color: kcIceWhite,
                         maxLines: 1,
                       ),
@@ -57,11 +59,11 @@ class CardStreamView extends StatelessWidget {
                       height: 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
-                        color: Colors.red,
+                        color: Colors.redAccent,
                       ),
                     ),
                     SizedBox(width: 4),
-                    AppText.caption(
+                    AppText.captionBold(
                       int.parse(totalViewers).thousandToK(),
                       color: kcIceWhite,
                     ),

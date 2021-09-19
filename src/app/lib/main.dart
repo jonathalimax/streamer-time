@@ -2,6 +2,7 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/authentication/authentication_model.dart';
 import 'package:design_system/design_system.dart';
+import 'package:design_system/styles/app_text_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,15 @@ class MyApp extends StatelessWidget {
     primaryColor: kcPurple,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     fontFamily: 'Nunito',
+    appBarTheme: AppBarTheme(
+      color: kcLightPurple,
+      elevation: 2,
+      iconTheme: IconThemeData(color: kcIceWhite),
+      actionsIconTheme: IconThemeData(color: kcIceWhite),
+      titleTextStyle: ktsHeading4Style.copyWith(
+        color: kcIceWhite,
+      ),
+    ),
   );
 
   @override

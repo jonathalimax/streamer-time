@@ -21,11 +21,10 @@ class ChannelsScreen extends StatelessWidget {
       viewModelBuilder: () => ChannelsViewModel(_gameId),
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(
-          title: AppText.heading4(
+          title: Text(
             _game,
-            color: Colors.white,
+            style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
-          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         body: viewModel.isBusy
             ? Center(
@@ -33,22 +32,25 @@ class ChannelsScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView(
-                  key: PageStorageKey('ChannelsScreenList'),
-                  scrollDirection: Axis.vertical,
-                  children: viewModel.data!
-                      .map(
-                        (channel) => CardStreamView(
-                          game: '',
-                          username: channel.userName,
-                          totalViewers: channel.viewerCount.toString(),
-                          onTap: () =>
-                              viewModel.startStreamerScreen(channel.userId),
-                        ),
-                      )
-                      .toList(),
+            : SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    key: PageStorageKey('ChannelsScreenList'),
+                    scrollDirection: Axis.vertical,
+                    children: viewModel.data!
+                        .map(
+                          (channel) => CardStreamView(
+                            username: channel.userName,
+                            totalViewers: channel.viewerCount.toString(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            onTap: () =>
+                                viewModel.startStreamerScreen(channel.userId),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
       ),

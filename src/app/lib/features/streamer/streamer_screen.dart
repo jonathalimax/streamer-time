@@ -36,7 +36,7 @@ class StreamerScreen extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.all(14.0),
+                      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -44,7 +44,7 @@ class StreamerScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               _buildProfileImage(context, viewModel),
-                              SizedBox(width: 6),
+                              SizedBox(width: 10),
                               viewModel.fetchingStreamer
                                   ? Container()
                                   : AppText.heading3(
@@ -78,7 +78,6 @@ class StreamerScreen extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context, StreamerViewModel viewModel) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
       actions: [
         IconButton(
           onPressed: () {},

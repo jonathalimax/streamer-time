@@ -43,8 +43,20 @@ const TextStyle ktsBodyStyle = TextStyle(
   fontWeight: FontWeight.w400,
 );
 
+const TextStyle ktsBodyBoldStyle = TextStyle(
+  color: kcBlack,
+  fontSize: 16,
+  fontWeight: FontWeight.w700,
+);
+
 const TextStyle ktsCaptionStyle = TextStyle(
   color: kcBlack,
   fontSize: 14,
   fontWeight: FontWeight.w500,
+);
+
+const TextStyle ktsCaptionBoldStyle = TextStyle(
+  color: kcBlack,
+  fontSize: 14,
+  fontWeight: FontWeight.w700,
 );

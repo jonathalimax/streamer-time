@@ -15,7 +15,10 @@ class ProfileScreen extends StatelessWidget {
       builder: (context, viewModel, _) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Text(
+              'Perfil',
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
             actions: [
               IconButton(
                 onPressed: viewModel.logout,

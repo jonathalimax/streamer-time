@@ -24,11 +24,10 @@ class DiscoverScreen extends StatelessWidget {
   Widget _buildScreen(BuildContext context, DiscoverViewmodel viewModel) {
     return Scaffold(
       appBar: AppBar(
-        title: AppText.heading4(
+        title: Text(
           'Descobrir',
-          color: Colors.white,
+          style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
         actions: [
           _buildAppBarActions(context),
         ],
@@ -64,7 +63,6 @@ class DiscoverScreen extends StatelessWidget {
       },
       icon: Icon(
         Icons.search,
-        color: kcIceWhite,
       ),
     );
   }
