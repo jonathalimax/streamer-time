@@ -8,6 +8,7 @@ class App {
     this.home();
     this.routes();
     this.exceptionHandler();
+    
   }
 
   home() {
