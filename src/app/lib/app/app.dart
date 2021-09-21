@@ -1,3 +1,4 @@
+import 'package:app/api/firestore_api.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/authentication/app_authentication.dart';
@@ -41,6 +42,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: CardGameListViewModel),
     LazySingleton(classType: CardStreamListViewModel),
     LazySingleton(classType: WebviewViewModel),
+    LazySingleton(classType: FirestoreApi),
   ],
 )
 class AppSetup {}
