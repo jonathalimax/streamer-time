@@ -5,11 +5,11 @@ import 'package:app/models/user.dart';
 class UserService {
   final _firestoreApi = locator<FirestoreApi>();
 
-  User? _currentUser;
-
-  User get currentUser => _currentUser!;
-
   Future<void> createOrUpdate({required User user}) async {
-    await _firestoreApi.createUser(user: user);
+    return await _firestoreApi.createUser(user: user);
+  }
+
+  Future<User?> getBy({required String id}) async {
+    return await _firestoreApi.getUser(id: id);
   }
 }

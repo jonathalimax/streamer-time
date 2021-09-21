@@ -13,8 +13,10 @@ dependencies:
     sdk: flutter
 
   # UI
+  animations: ^2.0.1
   cupertino_icons: ^1.0.2
   flutter_spinkit: ^5.0.0
+  loading_overlay: ^0.3.0
   design_system:
     path: ../design_system
 
@@ -31,13 +33,11 @@ dependencies:
   firebase_core: ^1.6.0
   cloud_firestore: ^2.5.3
 
-  animations: ^2.0.1
   injectable: ^1.5.0
   twitch_api: #^0.4.0
     path: ../../../twitch_api_flutter
   cached_network_image: ^3.1.0
   webview_flutter: ^2.0.14
-  loading_overlay: ^0.3.0
   intl: ^0.17.0
 
 dev_dependencies:

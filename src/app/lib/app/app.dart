@@ -3,7 +3,6 @@ import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/authentication/app_authentication.dart';
 import 'package:app/features/channels/channels_screen.dart';
-import 'package:app/features/channels/channels_viewmodel.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/features/home/home_screen.dart';
@@ -15,6 +14,7 @@ import 'package:app/features/streamer/streamer_screen.dart';
 import 'package:app/features/webview/webview_screen.dart';
 import 'package:app/features/webview/webview_viewmodel.dart';
 import 'package:app/services/twitch_service.dart';
+import 'package:app/services/user_service.dart';
 import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -43,6 +43,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: CardStreamListViewModel),
     LazySingleton(classType: WebviewViewModel),
     LazySingleton(classType: FirestoreApi),
+    LazySingleton(classType: UserService),
   ],
 )
 class AppSetup {}

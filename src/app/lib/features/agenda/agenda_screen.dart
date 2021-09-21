@@ -1,7 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
-import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';

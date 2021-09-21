@@ -3,7 +3,6 @@ import 'package:app/features/discover/discover_search_delegate.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/widgets/card_game/card_game_list_view.dart';
 import 'package:app/widgets/card_streams/card_stream_list_view.dart';
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';

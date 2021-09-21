@@ -1,6 +1,10 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';
+import 'package:app/widgets/profile_image_view.dart';
+import 'package:design_system/design_system.dart';
+import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -26,6 +30,42 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
+          body: viewModel.isBusy
+              ? Center(
+                  child: SpinKitDoubleBounce(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                )
+              : SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: viewModel.data == null
+                        ? AppEmptyState(
+                            title: 'Ocorreu um erro, tente novamente!',
+                            type: AppEmptyStateType.noDocument,
+                          )
+                        : Column(
+                            children: <Widget>[
+                              SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  ProfileImageView(
+                                    context: context,
+                                    imageUrl: viewModel.data!.profileImageUrl,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Flexible(
+                                    child: AppText.heading3(
+                                      viewModel.data!.name,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
         );
       },
     );

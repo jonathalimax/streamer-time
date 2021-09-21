@@ -1,6 +1,6 @@
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:app/widgets/profile_image_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,12 @@ class StreamerScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              _buildProfileImage(context, viewModel),
+                              if (viewModel.fetchedStreamer != null)
+                                ProfileImageView(
+                                  context: context,
+                                  imageUrl: viewModel
+                                      .fetchedStreamer!.profileImageUrl,
+                                ),
                               SizedBox(width: 10),
                               viewModel.fetchingStreamer
                                   ? Container()
@@ -86,35 +91,6 @@ class StreamerScreen extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-
-  Widget _buildProfileImage(BuildContext context, StreamerViewModel viewModel) {
-    return Container(
-      padding: const EdgeInsets.all(2),
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.secondary.withOpacity(.8),
-          width: 2.0,
-        ),
-      ),
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        child: ClipOval(
-          child: CachedNetworkImage(
-            imageUrl: viewModel.fetchedStreamer?.profileImageUrl ?? '',
-            placeholder: (context, url) => Center(
-              child: SpinKitDoubleBounce(
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

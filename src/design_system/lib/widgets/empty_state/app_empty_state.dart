@@ -39,7 +39,10 @@ class AppEmptyState extends StatelessWidget {
               child: Container(
                 alignment: Alignment.topCenter,
                 width: 350,
-                child: AppText.heading4(title),
+                child: AppText.heading4(
+                  title,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             if (subtitle != null)

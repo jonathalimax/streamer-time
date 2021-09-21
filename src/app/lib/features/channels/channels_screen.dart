@@ -1,6 +1,5 @@
 import 'package:app/features/channels/channels_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_view.dart';
-import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
