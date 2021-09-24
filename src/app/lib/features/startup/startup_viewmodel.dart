@@ -1,7 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/authentication/app_authentication.dart';
-import 'package:app/services/twitch_service.dart';
+import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

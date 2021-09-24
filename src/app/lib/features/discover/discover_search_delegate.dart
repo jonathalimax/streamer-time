@@ -1,5 +1,5 @@
 import 'package:app/app/app.locator.dart';
-import 'package:app/services/twitch_service.dart';
+import 'package:app/network/services/twitch_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

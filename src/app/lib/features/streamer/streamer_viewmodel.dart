@@ -1,5 +1,5 @@
 import 'package:app/app/app.locator.dart';
-import 'package:app/services/twitch_service.dart';
+import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:twitch_api/twitch_api.dart';
 

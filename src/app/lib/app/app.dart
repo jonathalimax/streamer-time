@@ -1,4 +1,4 @@
-import 'package:app/api/firestore_api.dart';
+import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/authentication/app_authentication.dart';
@@ -13,8 +13,10 @@ import 'package:app/features/startup/startup_screen.dart';
 import 'package:app/features/streamer/streamer_screen.dart';
 import 'package:app/features/webview/webview_screen.dart';
 import 'package:app/features/webview/webview_viewmodel.dart';
-import 'package:app/services/twitch_service.dart';
-import 'package:app/services/user_service.dart';
+import 'package:app/network/services/event_service.dart';
+import 'package:app/network/services/streamer_service.dart';
+import 'package:app/network/services/twitch_service.dart';
+import 'package:app/network/services/user_service.dart';
 import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -44,6 +46,8 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: WebviewViewModel),
     LazySingleton(classType: FirestoreApi),
     LazySingleton(classType: UserService),
+    LazySingleton(classType: EventService),
+    LazySingleton(classType: StreamerService),
   ],
 )
 class AppSetup {}
