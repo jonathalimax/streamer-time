@@ -1,7 +1,8 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/network/models/user.dart';
+import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:twitch_api/twitch_api.dart';
 
 const String _agendaFuture = 'agendaFuture';
 const String _streamerFuture = 'streamerFuture';
@@ -10,13 +11,14 @@ class StreamerViewModel extends MultipleFutureViewModel {
   final String streamerId;
 
   final _twitchService = locator<TwitchService>();
+  final _streamerService = locator<StreamerService>();
 
   StreamerViewModel({
     required this.streamerId,
   });
 
   String get fetchedAgenda => dataMap![_agendaFuture];
-  TwitchUser? get fetchedStreamer => dataMap![_streamerFuture];
+  User? get fetchedStreamer => dataMap![_streamerFuture];
 
   bool get fetchingAgenda => busy(_agendaFuture);
   bool get fetchingStreamer => busy(_streamerFuture);
@@ -27,13 +29,27 @@ class StreamerViewModel extends MultipleFutureViewModel {
         _streamerFuture: getStreamerById,
       };
 
-  Future<TwitchUser?> getStreamerById() async {
-    final user = await _twitchService.client.getUsers(ids: [streamerId]);
-    if (user.data == null) return null;
-    return user.data?.first ?? null;
+  Future<User?> getStreamerById() async {
+    final twitchUser = await _twitchService.client.getUsers(ids: [streamerId]);
+    if (twitchUser.data?.first == null) return null;
+    final user = User.fromTwitch(twitchUser: twitchUser.data!.first);
+    user.following = await _streamerService.isFollowingStreamer(streamerId);
+    return user;
   }
 
   Future<String> getStreamerAgenda() async {
     return 'String data';
+  }
+
+  Future<void> followStreamer() async {
+    await runBusyFuture(_streamerService.followStreamer(streamerId));
+    (dataMap![_streamerFuture] as User).following = true;
+    notifyListeners();
+  }
+
+  Future<void> unfollowStreamer() async {
+    await runBusyFuture(_streamerService.unfollowStreamer(streamerId));
+    (dataMap![_streamerFuture] as User).following = false;
+    notifyListeners();
   }
 }

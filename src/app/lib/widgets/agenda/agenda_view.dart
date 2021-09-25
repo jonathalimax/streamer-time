@@ -1,15 +1,19 @@
+import 'package:app/network/models/event.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
+import 'package:app/widgets/profile_image_view.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
 class AgendaView extends StatelessWidget {
   final String title;
-  final Image? profile;
+  final String? profileImageUrl;
+  final List<Event> events;
 
   const AgendaView({
     Key? key,
     required this.title,
-    this.profile,
+    required this.events,
+    this.profileImageUrl,
   }) : super(key: key);
 
   @override
@@ -20,10 +24,10 @@ class AgendaView extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              if (profile != null)
-                Container(
-                  width: 25,
-                  child: CircleAvatar(),
+              if (profileImageUrl != null)
+                ProfileImageView(
+                  context: context,
+                  imageUrl: profileImageUrl!,
                 ),
               SizedBox(width: 5),
               AppText.heading4(title),
@@ -31,26 +35,18 @@ class AgendaView extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Flexible(
-            child: ListView(
-              key: PageStorageKey('GaulesAgendaKey'),
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                CardEventView(
-                  day: '08',
-                  month: 'out',
-                  weekday: 'seg',
-                  game: 'Counter-Strike: Global Offensive',
-                  title: 'Furia vs NIP ESL Pro League S14',
-                ),
-                CardEventView(
-                  day: '09',
-                  month: 'out',
-                  weekday: 'ter',
-                  game: 'Counter-Strike: Global Offensive',
-                  title: 'Furia vs Team Liquid ESL Pro League S14',
-                ),
-              ],
-            ),
+            child: ListView.builder(
+                itemCount: events.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return CardEventView(
+                    day: '08',
+                    month: 'out',
+                    weekday: 'seg',
+                    game: events[index].categoryName,
+                    title: events[index].title,
+                  );
+                }),
           ),
         ],
       ),

@@ -1,15 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Follower {
-  final DocumentReference userRef;
+  final String userId;
 
   Follower({
-    required this.userRef,
+    required this.userId,
   });
 
-  Follower.fromJson(Map<String, dynamic> json) : userRef = json['userRef'];
+  Follower.fromJson(Map<String, dynamic> json) : userId = json['userId'];
 
   Map<String, dynamic> toJson() => {
-        'userRef': userRef,
+        'userId': userId,
       };
 }

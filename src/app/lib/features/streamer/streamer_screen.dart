@@ -53,8 +53,7 @@ class StreamerScreen extends StatelessWidget {
                               viewModel.fetchingStreamer
                                   ? Container()
                                   : AppText.heading3(
-                                      viewModel.fetchedStreamer?.displayName ??
-                                          '',
+                                      viewModel.fetchedStreamer?.name ?? '',
                                     ),
                             ],
                           ),
@@ -72,7 +71,10 @@ class StreamerScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    child: AgendaView(title: 'Agenda'),
+                    child: AgendaView(
+                      title: 'Agenda',
+                      events: [],
+                    ),
                   ),
                   Spacer(),
                 ],
@@ -85,9 +87,16 @@ class StreamerScreen extends StatelessWidget {
     return AppBar(
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            if (viewModel.fetchedStreamer == null) return;
+            viewModel.fetchedStreamer!.following
+                ? viewModel.unfollowStreamer()
+                : viewModel.followStreamer();
+          },
           icon: Icon(
-            Icons.favorite_outline,
+            viewModel.fetchedStreamer?.following ?? false
+                ? Icons.favorite
+                : Icons.favorite_outline,
           ),
         )
       ],

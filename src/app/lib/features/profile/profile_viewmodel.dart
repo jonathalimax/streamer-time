@@ -20,9 +20,6 @@ class ProfileViewModel extends FutureViewModel<User?> {
 
   @override
   Future<User?> futureToRun() async {
-    final token = await _authentication.getTwitchToken();
-    if (token == null) return null;
-    if (token.userId == null) return null;
-    return await _userService.getBy(id: token.userId!);
+    return await _userService.getUserData();
   }
 }

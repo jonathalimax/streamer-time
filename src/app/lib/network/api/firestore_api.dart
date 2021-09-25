@@ -1,3 +1,5 @@
+import 'package:app/app/app.locator.dart';
+import 'package:app/features/authentication/app_authentication.dart';
 import 'package:app/network/models/event.dart';
 import 'package:app/network/models/follower.dart';
 import 'package:app/network/models/user.dart';
@@ -5,12 +7,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firestore_api_constants.dart';
 import 'firestore_api_exceptions.dart';
 
+typedef FirestoreQueryDocument = QueryDocumentSnapshot<Map<String, dynamic>>;
+
 class FirestoreApi {
+  final _appAuthentication = locator<AppAuthentication>();
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection(UsersFirestoreKey);
 
+  Future<String?> _getUserId() async {
+    final token = await _appAuthentication.getTwitchToken();
+    return token?.userId;
+  }
+
   // Users Collection
-  Future<void> createUser({required User user}) async {
+  Future<void> createUser(User user) async {
     try {
       final document = usersCollection.doc(user.id);
       await document.set(user.toJson());
@@ -22,24 +32,56 @@ class FirestoreApi {
     }
   }
 
-  Future<User?> getUser({required String id}) async {
+  Future<User?> getUser() async {
+    final userId = await _getUserId();
+    if (userId == null) return null;
+
     try {
-      final document = await usersCollection.doc(id).get();
+      final document = await usersCollection.doc(userId).get();
       if (!document.exists) return null;
       return User.fromJson(document.data() as Map<String, dynamic>);
     } catch (error) {
       throw FirestoreApiException(
-        message: 'Failed to get user with id ${id}',
+        message: 'Failed to get user with id ${userId}',
+        devDetails: '$error',
+      );
+    }
+  }
+
+  Future<User?> getUserById(String userId) async {
+    try {
+      final document = await usersCollection.doc(userId).get();
+      if (!document.exists) return null;
+      User user = User.fromJson(document.data() as Map<String, dynamic>);
+      final eventCollection = await usersCollection
+          .doc(userId)
+          .collection(EventsFirestoreKey)
+          .get();
+
+      await Future.forEach(
+        eventCollection.docs,
+        (FirestoreQueryDocument document) async {
+          final Map<String, dynamic>? data = document.data();
+          if (data == null) return;
+          final event = Event.fromJson(data);
+          user.event.add(event);
+        },
+      );
+
+      return user;
+    } catch (error) {
+      throw FirestoreApiException(
+        message: 'Failed to get user with id ${userId}',
         devDetails: '$error',
       );
     }
   }
 
   // Events Collection
-  Future<void> createEvent({
-    required String userId,
-    required Event event,
-  }) async {
+  Future<void> createEvent(Event event) async {
+    final userId = await _getUserId();
+    if (userId == null) return null;
+
     try {
       await usersCollection
           .doc(userId)
@@ -54,9 +96,12 @@ class FirestoreApi {
     }
   }
 
-  Future<List<Event>> getOwnEvents({required String userId}) async {
+  Future<List<Event>> getOwnEvents() async {
     try {
       List<Event> events = [];
+      final userId = await _getUserId();
+      if (userId == null) return events;
+
       final document = await usersCollection
           .doc(userId)
           .collection(EventsFirestoreKey)
@@ -78,14 +123,12 @@ class FirestoreApi {
   }
 
   // Followers Collection
-  Future<void> followStreamer({
-    required String userId,
-    required String streamerId,
-  }) async {
+  Future<void> followStreamer(String streamerId) async {
+    final userId = await _getUserId();
+    if (userId == null) return;
+
     try {
-      final DocumentReference streamerRef =
-          FirebaseFirestore.instance.doc('$UsersFirestoreKey/$streamerId');
-      final streamer = Follower(userRef: streamerRef);
+      final streamer = Follower(userId: streamerId);
       await usersCollection
           .doc(userId)
           .collection(FollowingFirestoreKey)
@@ -99,22 +142,68 @@ class FirestoreApi {
     }
   }
 
-  Future<List<User>> getFollowingStreamers({
-    required String userId,
-  }) async {
+  Future<void> unfollowStreamer(String streamerId) async {
+    final userId = await _getUserId();
+    if (userId == null) return;
+
     try {
-      List<User> users = [];
+      final collection = await usersCollection
+          .doc(userId)
+          .collection(FollowingFirestoreKey)
+          .where('userId', isEqualTo: streamerId)
+          .get();
+
+      collection.docs.forEach((document) {
+        document.reference.delete();
+      });
+    } catch (error) {
+      throw FirestoreApiException(
+        message: 'Failed to unfollow streamer with id $streamerId',
+        devDetails: '$error',
+      );
+    }
+  }
+
+  // Followers Collection
+  Future<bool> isFollowingStreamer(String streamerId) async {
+    final userId = await _getUserId();
+    if (userId == null) return false;
+
+    try {
+      final collection = await usersCollection
+          .doc(userId)
+          .collection(FollowingFirestoreKey)
+          .where('userId', isEqualTo: streamerId)
+          .get();
+
+      return collection.docs.isNotEmpty;
+    } catch (error) {
+      throw FirestoreApiException(
+        message:
+            'Failed to verify if user is following streamer with id $streamerId',
+        devDetails: '$error',
+      );
+    }
+  }
+
+  Future<List<User>> getFollowingStreamers() async {
+    List<User> users = [];
+    final userId = await _getUserId();
+    if (userId == null) return users;
+
+    try {
       final collection = await usersCollection
           .doc(userId)
           .collection(FollowingFirestoreKey)
           .get();
 
       await Future.forEach(collection.docs,
-          (QueryDocumentSnapshot<Map<String, dynamic>> document) async {
+          (FirestoreQueryDocument document) async {
         final follower = Follower.fromJson(document.data());
-        final user = await follower.userRef.get();
-
-        users.add(User.fromJson(user.data() as Map<String, dynamic>));
+        final user = await getUserById(follower.userId);
+        if (user != null) {
+          users.add(user);
+        }
       });
 
       return users;

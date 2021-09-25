@@ -7,7 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-typedef TwitchStreamInfoList = List<TwitchStreamInfo>;
+typedef TwitchStreamInfoList = List<TwitchStreamInfo>?;
 
 @singleton
 class CardStreamListViewModel extends FutureViewModel<TwitchStreamInfoList> {
@@ -19,15 +19,15 @@ class CardStreamListViewModel extends FutureViewModel<TwitchStreamInfoList> {
     return _getStreams();
   }
 
-  Future<List<TwitchStreamInfo>> _getStreams() async {
+  Future<TwitchStreamInfoList> _getStreams() async {
     final userId =
         await _twitchService.client.twitchHttpClient.twitchToken.userId;
     if (userId != null) {
       final streams =
           await _twitchService.client.getFollowedStreams(userId: userId);
-      return streams.data?.toList() ?? [];
+      return streams.data?.toList();
     }
-    return [];
+    return null;
   }
 
   startStreamerScreen(String streamerId) {

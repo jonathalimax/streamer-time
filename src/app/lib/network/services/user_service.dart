@@ -6,10 +6,10 @@ class UserService {
   final _firestoreApi = locator<FirestoreApi>();
 
   Future<void> createOrUpdate({required User user}) async {
-    return await _firestoreApi.createUser(user: user);
+    return await _firestoreApi.createUser(user);
   }
 
-  Future<User?> getBy({required String id}) async {
-    return await _firestoreApi.getUser(id: id);
+  Future<User?> getUserData() async {
+    return await _firestoreApi.getUser();
   }
 }

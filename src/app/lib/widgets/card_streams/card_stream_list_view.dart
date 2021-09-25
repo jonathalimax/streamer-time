@@ -27,10 +27,11 @@ class CardStreamListView extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, CardStreamListViewModel viewModel) {
+    final shouldLoad = viewModel.isBusy && hasLoader;
     return Container(
-      height: 120,
+      height: shouldLoad || viewModel.data != null ? 120 : 0,
       child: LoadingOverlay(
-        isLoading: viewModel.isBusy && hasLoader,
+        isLoading: shouldLoad,
         color: Theme.of(context).scaffoldBackgroundColor,
         progressIndicator: SpinKitDoubleBounce(
           color: Theme.of(context).colorScheme.secondary,

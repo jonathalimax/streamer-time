@@ -3,6 +3,7 @@ import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
 class AgendaScreen extends StatelessWidget {
@@ -12,11 +13,14 @@ class AgendaScreen extends StatelessWidget {
       disposeViewModel: false,
       initialiseSpecialViewModelsOnce: true,
       viewModelBuilder: () => locator<AgendaViewModel>(),
-      builder: (context, viewModel, child) => _buildScreen(context),
+      builder: (context, viewModel, child) => _buildScreen(context, viewModel),
     );
   }
 
-  Scaffold _buildScreen(BuildContext context) {
+  Scaffold _buildScreen(
+    BuildContext context,
+    AgendaViewModel viewModel,
+  ) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -35,9 +39,20 @@ class AgendaScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: AgendaView(
-              title: 'Gaules',
-            ),
+            child: viewModel.isBusy
+                ? SpinKitDoubleBounce(
+                    color: Theme.of(context).colorScheme.secondary,
+                  )
+                : ListView.builder(
+                    itemCount:
+                        viewModel.data == null ? 0 : viewModel.data!.length,
+                    itemBuilder: (context, index) {
+                      return AgendaView(
+                        title: viewModel.data![index].name,
+                        events: viewModel.data![index].event,
+                      );
+                    },
+                  ),
           ),
         ),
       ),
