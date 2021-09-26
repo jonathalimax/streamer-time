@@ -29,7 +29,7 @@ class AgendaScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => viewModel.startCreateEvent(),
             icon: Icon(Icons.add),
           ),
         ],

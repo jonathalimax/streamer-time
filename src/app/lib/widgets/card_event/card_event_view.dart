@@ -8,6 +8,7 @@ class CardEventView extends StatelessWidget {
   final String month;
   final String weekday;
   final Color? color;
+  final double? width;
 
   const CardEventView({
     Key? key,
@@ -17,12 +18,13 @@ class CardEventView extends StatelessWidget {
     required this.month,
     required this.weekday,
     this.color,
+    this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: width ?? 300,
       child: Card(
         color: color ?? kcLightPurple.withOpacity(.7),
         child: Padding(
@@ -40,14 +42,14 @@ class CardEventView extends StatelessWidget {
                       AppText(
                         day,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       AppText(
                         month.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.w800,
                         ),
                       ),

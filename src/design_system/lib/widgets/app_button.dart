@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppButton extends StatelessWidget {
   final String title;
   final Color? titleColor;
-  final Color? color;
+  final Color color;
   final bool outlined;
   final VoidCallback action;
   final AssetImage? leading;
@@ -13,7 +13,7 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.action,
     this.titleColor,
-    this.color,
+    this.color = kcIceWhite,
     this.leading,
   }) : outlined = true;
 
@@ -21,7 +21,7 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.action,
     this.titleColor,
-    this.color,
+    this.color = kcIceWhite,
     this.leading,
   }) : outlined = false;
 
@@ -32,9 +32,7 @@ class AppButton extends StatelessWidget {
       height: 44,
       decoration: !outlined
           ? BoxDecoration(
-              gradient: LinearGradient(
-                colors: [kcIceWhite, kcIceWhite],
-              ),
+              color: color,
               borderRadius: BorderRadius.circular(4),
             )
           : BoxDecoration(
