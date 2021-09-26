@@ -40,10 +40,9 @@ class AgendaView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return CardEventView(
-                    day: '08',
-                    month: 'out',
-                    weekday: 'seg',
-                    game: events[index].categoryName,
+                    date: '08 OUT',
+                    time: '',
+                    category: events[index].categoryName,
                     title: events[index].title,
                   );
                 }),

@@ -39,7 +39,7 @@ class AppButton extends StatelessWidget {
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(4),
               border: Border.all(
-                color: color ?? kcPurple,
+                color: color,
                 width: 1.5,
               ),
             ),

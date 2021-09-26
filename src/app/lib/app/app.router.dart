@@ -13,8 +13,7 @@ import 'package:stacked/stacked_annotations.dart';
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
-import '../features/event/event_date/create_event_date_screen.dart';
-import '../features/event/event_time/create_event_time_screen.dart';
+import '../features/event/event_date/create_event_date_time_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -33,8 +32,8 @@ class Routes {
   static const String profileScreen = '/profile-screen';
   static const String streamerScreen = '/streamer-screen';
   static const String channelsScreen = '/channels-screen';
-  static const String createEventDateScreen = '/create-event-date-screen';
-  static const String createEventTimeScreen = '/create-event-time-screen';
+  static const String createEventDateTimeScreen =
+      '/create-event-date-time-screen';
   static const all = <String>{
     startupScreen,
     loginScreen,
@@ -45,8 +44,7 @@ class Routes {
     profileScreen,
     streamerScreen,
     channelsScreen,
-    createEventDateScreen,
-    createEventTimeScreen,
+    createEventDateTimeScreen,
   };
 }
 
@@ -63,8 +61,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.profileScreen, page: ProfileScreen),
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
     RouteDef(Routes.channelsScreen, page: ChannelsScreen),
-    RouteDef(Routes.createEventDateScreen, page: CreateEventDateScreen),
-    RouteDef(Routes.createEventTimeScreen, page: CreateEventTimeScreen),
+    RouteDef(Routes.createEventDateTimeScreen, page: CreateEventDateTimeScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -136,15 +133,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CreateEventDateScreen: (data) {
+    CreateEventDateTimeScreen: (data) {
       return MaterialPageRoute<MaterialRoute<dynamic>>(
-        builder: (context) => const CreateEventDateScreen(),
-        settings: data,
-      );
-    },
-    CreateEventTimeScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
-        builder: (context) => const CreateEventTimeScreen(),
+        builder: (context) => const CreateEventDateTimeScreen(),
         settings: data,
       );
     },

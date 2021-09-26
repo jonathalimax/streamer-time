@@ -23,6 +23,6 @@ class AgendaViewModel extends FutureViewModel<Users> {
   }
 
   Future<void> startCreateEvent() async {
-    return await _navigation.navigateTo(Routes.createEventDateScreen);
+    return await _navigation.navigateTo(Routes.createEventDateTimeScreen);
   }
 }

@@ -2,21 +2,19 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class CardEventView extends StatelessWidget {
-  final String game;
+  final String category;
   final String title;
-  final String day;
-  final String month;
-  final String weekday;
+  final String date;
+  final String? time;
   final Color? color;
   final double? width;
 
   const CardEventView({
     Key? key,
-    required this.game,
+    required this.category,
     required this.title,
-    required this.day,
-    required this.month,
-    required this.weekday,
+    required this.date,
+    this.time,
     this.color,
     this.width,
   }) : super(key: key);
@@ -40,35 +38,29 @@ class CardEventView extends StatelessWidget {
                   Column(
                     children: [
                       AppText(
-                        day,
+                        date,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      AppText(
-                        month.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
+                      if (time != null)
+                        AppText(
+                          time!.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
-                      ),
-                      AppText(
-                        weekday.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
                     ],
                   ),
                 ],
               ),
               Spacer(),
               AppText(
-                game,
+                category,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
               ),
               SizedBox(height: 2),
