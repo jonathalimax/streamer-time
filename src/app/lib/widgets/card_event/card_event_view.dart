@@ -70,6 +70,7 @@ class CardEventView extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
+                maxLines: 2,
               ),
             ],
           ),

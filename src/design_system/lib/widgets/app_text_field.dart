@@ -1,3 +1,4 @@
+import 'package:design_system/styles/app_decorations.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
@@ -10,6 +11,8 @@ class AppTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final Iterable<String>? autofillHints;
   final TextInputAction? textInputAction;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
 
   const AppTextField({
     Key? key,
@@ -22,11 +25,15 @@ class AppTextField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.autofillHints,
     this.textInputAction,
+    this.controller,
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChanged,
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword,
       autocorrect: autoCorrect,
@@ -38,27 +45,7 @@ class AppTextField extends StatelessWidget {
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
-      decoration: InputDecoration(
-        suffix: suffix,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black12,
-            width: 1,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: tintColor ?? Theme.of(context).primaryColor,
-            width: 2,
-          ),
-        ),
-        hintText: placeholder,
-        hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      decoration: appInputTextDecoration(context, placeholder),
     );
   }
 }

@@ -10,3 +10,4 @@ export 'widgets/empty_state/app_empty_state_type.dart';
 
 // Resources
 export 'styles/app_colors.dart';
+export 'styles/app_decorations.dart';

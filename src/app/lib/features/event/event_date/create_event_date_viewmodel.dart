@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/features/event/event_title/create_event_title_viewmodel.dart';
 import 'package:design_system/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -83,5 +84,14 @@ class CreateEventDateViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> startEventTimeScreen() async {}
+  Future<void> startEventTimeScreen() async {
+    final viewModel = CreateEventTitleViewModel(
+      selectedDateFormated,
+      selectedTimeFormated,
+    );
+    return await _navigation.navigateTo(
+      Routes.createEventTitleScreen,
+      arguments: CreateEventTitleScreenArguments(viewModel: viewModel),
+    );
+  }
 }

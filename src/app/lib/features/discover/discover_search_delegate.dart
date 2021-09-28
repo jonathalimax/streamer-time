@@ -59,7 +59,7 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
           case ConnectionState.done:
             if (!snapshot.hasData || snapshot.data!.data!.isEmpty)
               return AppEmptyState(
-                title: 'Nenhum streamer foi encontrado!',
+                title: 'Nenhum streamer encontrado!',
                 type: AppEmptyStateType.noSearchResult,
               );
 

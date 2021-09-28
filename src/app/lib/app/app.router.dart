@@ -14,6 +14,8 @@ import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/event/event_date/create_event_date_time_screen.dart';
+import '../features/event/event_title/create_event_title_screen.dart';
+import '../features/event/event_title/create_event_title_viewmodel.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -34,6 +36,7 @@ class Routes {
   static const String channelsScreen = '/channels-screen';
   static const String createEventDateTimeScreen =
       '/create-event-date-time-screen';
+  static const String createEventTitleScreen = '/create-event-title-screen';
   static const all = <String>{
     startupScreen,
     loginScreen,
@@ -45,6 +48,7 @@ class Routes {
     streamerScreen,
     channelsScreen,
     createEventDateTimeScreen,
+    createEventTitleScreen,
   };
 }
 
@@ -62,6 +66,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
     RouteDef(Routes.channelsScreen, page: ChannelsScreen),
     RouteDef(Routes.createEventDateTimeScreen, page: CreateEventDateTimeScreen),
+    RouteDef(Routes.createEventTitleScreen, page: CreateEventTitleScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -139,6 +144,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    CreateEventTitleScreen: (data) {
+      var args = data.getArgs<CreateEventTitleScreenArguments>(nullOk: false);
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => CreateEventTitleScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -166,4 +181,11 @@ class ChannelsScreenArguments {
   final String gameId;
   final Key? key;
   ChannelsScreenArguments({required this.game, required this.gameId, this.key});
+}
+
+/// CreateEventTitleScreen arguments holder class
+class CreateEventTitleScreenArguments {
+  final Key? key;
+  final CreateEventTitleViewModel viewModel;
+  CreateEventTitleScreenArguments({this.key, required this.viewModel});
 }
