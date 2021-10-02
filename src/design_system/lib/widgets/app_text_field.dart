@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
 
   const AppTextField({
     Key? key,
@@ -27,6 +28,7 @@ class AppTextField extends StatelessWidget {
     this.textInputAction,
     this.controller,
     this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class AppTextField extends StatelessWidget {
       enableSuggestions: true,
       autofillHints: autofillHints,
       textInputAction: textInputAction,
+      onSubmitted: onSubmitted,
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
