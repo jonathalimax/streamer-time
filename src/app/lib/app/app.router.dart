@@ -13,9 +13,8 @@ import 'package:stacked/stacked_annotations.dart';
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
+import '../features/event/event_data/create_event_data_screen.dart';
 import '../features/event/event_date/create_event_date_time_screen.dart';
-import '../features/event/event_title/create_event_title_screen.dart';
-import '../features/event/event_title/create_event_title_viewmodel.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -36,7 +35,7 @@ class Routes {
   static const String channelsScreen = '/channels-screen';
   static const String createEventDateTimeScreen =
       '/create-event-date-time-screen';
-  static const String createEventTitleScreen = '/create-event-title-screen';
+  static const String createEventDataScreen = '/create-event-data-screen';
   static const all = <String>{
     startupScreen,
     loginScreen,
@@ -48,7 +47,7 @@ class Routes {
     streamerScreen,
     channelsScreen,
     createEventDateTimeScreen,
-    createEventTitleScreen,
+    createEventDataScreen,
   };
 }
 
@@ -66,7 +65,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
     RouteDef(Routes.channelsScreen, page: ChannelsScreen),
     RouteDef(Routes.createEventDateTimeScreen, page: CreateEventDateTimeScreen),
-    RouteDef(Routes.createEventTitleScreen, page: CreateEventTitleScreen),
+    RouteDef(Routes.createEventDataScreen, page: CreateEventDataScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -144,10 +143,10 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CreateEventTitleScreen: (data) {
-      var args = data.getArgs<CreateEventTitleScreenArguments>(nullOk: false);
+    CreateEventDataScreen: (data) {
+      var args = data.getArgs<CreateEventDataScreenArguments>(nullOk: false);
       return MaterialPageRoute<MaterialRoute<dynamic>>(
-        builder: (context) => CreateEventTitleScreen(
+        builder: (context) => CreateEventDataScreen(
           key: args.key,
           viewModel: args.viewModel,
         ),
@@ -183,9 +182,9 @@ class ChannelsScreenArguments {
   ChannelsScreenArguments({required this.game, required this.gameId, this.key});
 }
 
-/// CreateEventTitleScreen arguments holder class
-class CreateEventTitleScreenArguments {
+/// CreateEventDataScreen arguments holder class
+class CreateEventDataScreenArguments {
   final Key? key;
-  final CreateEventTitleViewModel viewModel;
-  CreateEventTitleScreenArguments({this.key, required this.viewModel});
+  final dynamic viewModel;
+  CreateEventDataScreenArguments({this.key, required this.viewModel});
 }

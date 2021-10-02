@@ -1,5 +1,5 @@
+import 'package:app/features/event/event_data/create_event_data_screen.dart';
 import 'package:app/features/event/event_date/create_event_date_time_screen.dart';
-import 'package:app/features/event/event_title/create_event_title_screen.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
@@ -36,7 +36,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: StreamerScreen),
     MaterialRoute(page: ChannelsScreen),
     MaterialRoute(page: CreateEventDateTimeScreen),
-    MaterialRoute(page: CreateEventTitleScreen),
+    MaterialRoute(page: CreateEventDataScreen),
   ],
   dependencies: [
     LazySingleton(classType: TwitchService),

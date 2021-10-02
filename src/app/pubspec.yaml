@@ -34,12 +34,18 @@ dependencies:
   firebase_core: ^1.6.0
   cloud_firestore: ^2.5.3
 
-  injectable: ^1.5.0
+  # Network
   twitch_api: #^0.4.0
     path: ../../../twitch_api_flutter
-  cached_network_image: ^3.1.0
-  webview_flutter: ^2.0.14
+    
+  # Utils
   intl: ^0.17.0
+  injectable: ^1.5.0
+  webview_flutter: ^2.0.14
+
+  # Media
+  image_picker: ^0.8.4+2
+  cached_network_image: ^3.1.0
 
   # Localization
   flutter_localizations:

@@ -7,14 +7,14 @@ class AppButton extends StatelessWidget {
   final Color color;
   final bool outlined;
   final VoidCallback action;
-  final AssetImage? leading;
+  final Icon? trailing;
 
   const AppButton.outlined({
     required this.title,
     required this.action,
     this.titleColor,
     this.color = kcIceWhite,
-    this.leading,
+    this.trailing,
   }) : outlined = true;
 
   const AppButton({
@@ -22,7 +22,7 @@ class AppButton extends StatelessWidget {
     required this.action,
     this.titleColor,
     this.color = kcIceWhite,
-    this.leading,
+    this.trailing,
   }) : outlined = false;
 
   @override
@@ -46,15 +46,8 @@ class AppButton extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          if (leading != null)
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Image(
-                image: leading!,
-                width: 40,
-                fit: BoxFit.fill,
-              ),
-            ),
+          if (trailing != null)
+            Container(alignment: Alignment.centerRight, child: trailing),
           ElevatedButton(
             onPressed: action,
             child: Text(

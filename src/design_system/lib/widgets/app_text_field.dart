@@ -12,6 +12,7 @@ class AppTextField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final TextInputAction? textInputAction;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
 
@@ -27,6 +28,7 @@ class AppTextField extends StatelessWidget {
     this.autofillHints,
     this.textInputAction,
     this.controller,
+    this.focusNode,
     this.onChanged,
     this.onSubmitted,
   }) : super(key: key);
@@ -36,6 +38,7 @@ class AppTextField extends StatelessWidget {
     return TextField(
       onChanged: onChanged,
       controller: controller,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       obscureText: isPassword,
       autocorrect: autoCorrect,

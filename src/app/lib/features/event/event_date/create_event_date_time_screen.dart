@@ -74,7 +74,7 @@ class CreateEventDateTimeScreen extends StatelessWidget {
                     titleColor: Theme.of(context).primaryColor,
                   ),
                 ),
-                Spacer(flex: 1),
+                SizedBox(height: 24),
               ],
             ),
           ),

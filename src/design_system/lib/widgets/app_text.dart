@@ -7,12 +7,14 @@ class AppText extends StatelessWidget {
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
+  final bool hasShadow;
 
   const AppText.heading1(
     this.text, {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsHeading1Style;
 
   const AppText.heading2(
@@ -20,6 +22,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsHeading2Style;
 
   const AppText.heading3(
@@ -27,6 +30,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsHeading3Style;
 
   const AppText.heading4(
@@ -34,6 +38,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsHeading4Style;
 
   const AppText.headline(
@@ -41,6 +46,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsHeadlineStyle;
 
   const AppText.subheading(
@@ -48,6 +54,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsSubheadingStyle;
 
   const AppText.caption(
@@ -55,6 +62,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsCaptionStyle;
 
   const AppText.captionBold(
@@ -62,6 +70,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsCaptionBoldStyle;
 
   const AppText.body(
@@ -69,6 +78,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsBodyStyle;
 
   const AppText.bodyBold(
@@ -76,6 +86,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   }) : style = ktsBodyBoldStyle;
 
   AppText(
@@ -84,6 +95,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.hasShadow = false,
   });
 
   @override
@@ -92,6 +104,14 @@ class AppText extends StatelessWidget {
       text,
       style: style.copyWith(
         color: color,
+        shadows: <Shadow>[
+          if (hasShadow)
+            Shadow(
+              offset: Offset(.1, .1),
+              blurRadius: 15.0,
+              color: Colors.black,
+            ),
+        ],
       ),
       maxLines: maxLines,
       textAlign: textAlign,
