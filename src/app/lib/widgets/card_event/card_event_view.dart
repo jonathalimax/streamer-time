@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +8,7 @@ class CardEventView extends StatelessWidget {
   final String? time;
   final Color? color;
   final double? width;
-  final File? backgroundImage;
+  final Image? backgroundImage;
   final Color? fontColor;
   final bool hasOverlay;
 
@@ -23,7 +21,7 @@ class CardEventView extends StatelessWidget {
     this.color,
     this.width = 300,
     this.backgroundImage,
-    this.fontColor,
+    this.fontColor = Colors.white,
     this.hasOverlay = false,
   }) : super(key: key);
 
@@ -33,7 +31,7 @@ class CardEventView extends StatelessWidget {
       width: width,
       child: Card(
         clipBehavior: Clip.antiAlias,
-        elevation: 4,
+        elevation: 2,
         color: color ?? kcLightPurple.withOpacity(.7),
         child: Stack(
           alignment: Alignment.center,
@@ -48,13 +46,8 @@ class CardEventView extends StatelessWidget {
                           : Colors.black.withOpacity(1),
                       BlendMode.dstATop,
                     ),
-                    fit: BoxFit.fill,
-                    image: Image.file(
-                      backgroundImage!,
-                      isAntiAlias: true,
-                      filterQuality: FilterQuality.high,
-                      errorBuilder: (context, _, stackTrack) => Container(),
-                    ).image,
+                    fit: BoxFit.cover,
+                    image: backgroundImage!.image,
                   ),
                 ),
               ),

@@ -64,7 +64,7 @@ class FirestoreApi {
           final Map<String, dynamic>? data = document.data();
           if (data == null) return;
           final event = Event.fromJson(data);
-          user.event.add(event);
+          user.events.add(event);
         },
       );
 
@@ -84,7 +84,7 @@ class FirestoreApi {
 
     try {
       await usersCollection
-          .doc(userId)
+          .doc('677212294')
           .collection(EventsFirestoreKey)
           .doc()
           .set(event.toJson());

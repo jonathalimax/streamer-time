@@ -14,6 +14,7 @@ import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/event/event_data/create_event_data_screen.dart';
+import '../features/event/event_data/create_event_data_viewmodel.dart';
 import '../features/event/event_date/create_event_date_time_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
@@ -185,6 +186,6 @@ class ChannelsScreenArguments {
 /// CreateEventDataScreen arguments holder class
 class CreateEventDataScreenArguments {
   final Key? key;
-  final dynamic viewModel;
+  final CreateEventDataViewModel viewModel;
   CreateEventDataScreenArguments({this.key, required this.viewModel});
 }

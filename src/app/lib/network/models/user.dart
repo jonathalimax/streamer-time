@@ -7,7 +7,7 @@ class User {
   final String profileImageUrl;
   final String? description;
   late bool following;
-  List<Event> event = [];
+  List<Event> events = [];
 
   User({
     required this.id,

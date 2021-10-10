@@ -62,7 +62,10 @@ class CreateEventDataScreen extends StatelessWidget {
                           time: viewModel.selectedTimeFormated,
                           width: double.infinity,
                           fontColor: kcIceWhite,
-                          backgroundImage: viewModel.selectedImage,
+                          backgroundImage: Image.file(
+                            viewModel.selectedImage!,
+                            filterQuality: FilterQuality.high,
+                          ),
                         ),
                       ),
                       SizedBox(height: 24),
@@ -92,7 +95,7 @@ class CreateEventDataScreen extends StatelessWidget {
                         width: 290,
                         child: AppButton(
                           title: 'Continuar',
-                          action: () => {},
+                          action: () => viewModel.createEvent(),
                           color: Colors.transparent,
                           titleColor: Theme.of(context).primaryColor,
                         ),

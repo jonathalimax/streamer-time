@@ -47,10 +47,12 @@ class AgendaScreen extends StatelessWidget {
                     itemCount:
                         viewModel.data == null ? 0 : viewModel.data!.length,
                     itemBuilder: (context, index) {
-                      return AgendaView(
-                        title: viewModel.data![index].name,
-                        events: viewModel.data![index].event,
-                      );
+                      return viewModel.data![index].events.isNotEmpty
+                          ? AgendaView(
+                              title: viewModel.data![index].name,
+                              events: viewModel.data![index].events,
+                            )
+                          : Container();
                     },
                   ),
           ),

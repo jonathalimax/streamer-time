@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:app/app/app.locator.dart';
+import 'package:app/network/api/firebase_storage_api.dart';
+import 'package:app/network/api/firestore_api.dart';
+import 'package:app/network/models/event.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +14,19 @@ import 'package:twitch_api/twitch_api.dart';
 class CreateEventDataViewModel extends BaseViewModel {
   final _picker = ImagePicker();
   final _twitchService = locator<TwitchService>();
+  final _firestoreApi = locator<FirestoreApi>();
+  final _firebaseStorageApi = locator<FirebaseStorageApi>();
 
   String? selectedTitle;
   TwitchGame? selectedCategory;
   File? selectedImage;
 
+  final DateTime selectedDateTime;
   final String selectedDateFormated;
   final String selectedTimeFormated;
 
   CreateEventDataViewModel(
+    this.selectedDateTime,
     this.selectedDateFormated,
     this.selectedTimeFormated,
   );
@@ -105,6 +112,37 @@ class CreateEventDataViewModel extends BaseViewModel {
       notifyListeners();
     } catch (error) {
       print(error.toString());
+    }
+  }
+
+  Future<String> _buildImageName() async {
+    final user = await _firestoreApi.getUser();
+    final userName = user?.name ?? '';
+    final title = selectedTitle?.toLowerCase().replaceAll(' ', '_') ?? '';
+    return '${userName}_${title}';
+  }
+
+  Future<String?> _uploadSelectedImage() async {
+    if (selectedImage == null) return null;
+    final imageName = await _buildImageName();
+    final result = await _firebaseStorageApi.uploadImage(
+      selectedImage!,
+      name: imageName,
+    );
+    return result;
+  }
+
+  Future<void> createEvent() async {
+    if (selectedTitle != null && selectedCategory != null) {
+      final imageUrl = await _uploadSelectedImage();
+      final event = Event(
+        title: selectedTitle!,
+        starTime: selectedDateTime,
+        categoryId: selectedCategory!.id,
+        categoryName: selectedCategory!.name,
+        imageUrl: imageUrl,
+      );
+      await _firestoreApi.createEvent(event);
     }
   }
 }

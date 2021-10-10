@@ -85,7 +85,10 @@ class CreateEventDateViewModel extends BaseViewModel {
   }
 
   Future<void> startEventTimeScreen() async {
+    if (_selectedDateTime == null) return;
+
     final viewModel = CreateEventDataViewModel(
+      _selectedDateTime!,
       selectedDateFormated,
       selectedTimeFormated,
     );

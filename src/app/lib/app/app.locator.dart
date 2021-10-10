@@ -15,6 +15,7 @@ import '../features/authentication/app_authentication.dart';
 import '../features/discover/discover_viewmodel.dart';
 import '../features/profile/profile_viewmodel.dart';
 import '../features/webview/webview_viewmodel.dart';
+import '../network/api/firebase_storage_api.dart';
 import '../network/api/firestore_api.dart';
 import '../network/services/event_service.dart';
 import '../network/services/streamer_service.dart';
@@ -41,6 +42,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => CardStreamListViewModel());
   locator.registerLazySingleton(() => WebviewViewModel());
   locator.registerLazySingleton(() => FirestoreApi());
+  locator.registerLazySingleton(() => FirebaseStorageApi());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => EventService());
   locator.registerLazySingleton(() => StreamerService());
