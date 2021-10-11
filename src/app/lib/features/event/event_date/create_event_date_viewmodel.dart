@@ -10,24 +10,21 @@ import 'package:stacked_services/stacked_services.dart';
 class CreateEventDateViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
 
-  DateTime? _selectedDateTime;
+  DateTime _selectedDateTime = DateTime.now();
 
   String get selectedDateFormated {
-    final now = _selectedDateTime ?? DateTime.now();
-    return DateFormat('dd MMM').format(now);
+    return DateFormat('dd MMM').format(_selectedDateTime);
   }
 
   String get selectedTimeFormated {
-    final date = _selectedDateTime ?? DateTime.now().add(Duration(hours: 1));
-    final DateFormat formatter = DateFormat('jm');
-    return formatter.format(date);
+    return DateFormat('jm').format(_selectedDateTime);
   }
 
   Future<void> selectDate(BuildContext context) async {
     final today = DateTime.now();
     final selected = await showDatePicker(
       context: context,
-      initialDate: _selectedDateTime ?? today,
+      initialDate: _selectedDateTime,
       firstDate: today,
       lastDate: DateTime(DateTime.now().year + 5),
       builder: (context, child) {
@@ -50,11 +47,9 @@ class CreateEventDateViewModel extends BaseViewModel {
   }
 
   Future<void> selectTime(BuildContext context) async {
-    final dateTime =
-        _selectedDateTime ?? DateTime.now().add(Duration(hours: 1));
     final time = TimeOfDay(
-      hour: dateTime.hour,
-      minute: dateTime.minute,
+      hour: _selectedDateTime.hour,
+      minute: _selectedDateTime.minute,
     );
     final selected = await showTimePicker(
       context: context,
@@ -75,9 +70,9 @@ class CreateEventDateViewModel extends BaseViewModel {
     if (selected == null) return;
 
     this._selectedDateTime = DateTime(
-      dateTime.year,
-      dateTime.month,
-      dateTime.day,
+      _selectedDateTime.year,
+      _selectedDateTime.month,
+      _selectedDateTime.day,
       selected.hour,
       selected.minute,
     );
@@ -85,10 +80,8 @@ class CreateEventDateViewModel extends BaseViewModel {
   }
 
   Future<void> startEventTimeScreen() async {
-    if (_selectedDateTime == null) return;
-
     final viewModel = CreateEventDataViewModel(
-      _selectedDateTime!,
+      _selectedDateTime,
       selectedDateFormated,
       selectedTimeFormated,
     );

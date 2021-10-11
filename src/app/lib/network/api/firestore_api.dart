@@ -84,7 +84,7 @@ class FirestoreApi {
 
     try {
       await usersCollection
-          .doc('677212294')
+          .doc(userId)
           .collection(EventsFirestoreKey)
           .doc()
           .set(event.toJson());

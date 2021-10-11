@@ -34,80 +34,85 @@ class CreateEventDataScreen extends StatelessWidget {
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 8,
-            ),
-            child: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      SizedBox(height: 30),
-                      AppText.heading4('Pré-visualização'),
-                      SizedBox(height: 12),
-                      Container(
-                        height: 200,
-                        child: CardEventView(
-                          category:
-                              viewModel.selectedCategory?.name ?? 'Categoria',
-                          title: viewModel.selectedTitle ?? 'Título do evento',
-                          date: viewModel.selectedDateFormated,
-                          time: viewModel.selectedTimeFormated,
-                          width: double.infinity,
-                          fontColor: kcIceWhite,
-                          backgroundImage: Image.file(
-                            viewModel.selectedImage!,
-                            filterQuality: FilterQuality.high,
-                          ),
+        body: viewModel.isBusy
+            ? Center(
+                child: SpinKitDoubleBounce(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              )
+            : SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            SizedBox(height: 30),
+                            AppText.heading4('Pré-visualização'),
+                            SizedBox(height: 12),
+                            Container(
+                              height: 200,
+                              child: CardEventView(
+                                category: viewModel.selectedCategory?.name ??
+                                    'Categoria',
+                                title: viewModel.selectedTitle ??
+                                    'Título do evento',
+                                date: viewModel.selectedDateFormated,
+                                time: viewModel.selectedTimeFormated,
+                                width: double.infinity,
+                                fontColor: kcIceWhite,
+                                imageFile: viewModel.selectedImage,
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                            buildCategorySearch(context, viewModel),
+                            SizedBox(height: 12),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: AppTextField(
+                                focusNode: _focusNode,
+                                placeholder: 'Título do evento',
+                                onChanged: viewModel.setTitle,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            SizedBox(
+                              width: 290,
+                              child: AppButton(
+                                title: 'Adicionar imagem de fundo',
+                                action: () => viewModel
+                                    .showImageSourceActionSheet(context),
+                                color: Colors.transparent,
+                                titleColor: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Spacer(flex: 5),
+                            SizedBox(
+                              width: 290,
+                              child: AppButton(
+                                title: 'Continuar',
+                                action: () => viewModel.createEvent(),
+                                color: Colors.transparent,
+                                titleColor: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 24),
-                      buildCategorySearch(context, viewModel),
-                      SizedBox(height: 12),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: AppTextField(
-                          focusNode: _focusNode,
-                          placeholder: 'Título do evento',
-                          onChanged: viewModel.setTitle,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: 290,
-                        child: AppButton(
-                          title: 'Adicionar imagem de fundo',
-                          action: () =>
-                              viewModel.showImageSourceActionSheet(context),
-                          color: Colors.transparent,
-                          titleColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Spacer(flex: 5),
-                      SizedBox(
-                        width: 290,
-                        child: AppButton(
-                          title: 'Continuar',
-                          action: () => viewModel.createEvent(),
-                          color: Colors.transparent,
-                          titleColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 24),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/app/app.locator.dart';
+import 'package:app/app/app.router.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
@@ -9,13 +10,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class CreateEventDataViewModel extends BaseViewModel {
   final _picker = ImagePicker();
-  final _twitchService = locator<TwitchService>();
   final _firestoreApi = locator<FirestoreApi>();
   final _firebaseStorageApi = locator<FirebaseStorageApi>();
+  final _twitchService = locator<TwitchService>();
+  final _navigationService = locator<NavigationService>();
 
   String? selectedTitle;
   TwitchGame? selectedCategory;
@@ -134,6 +137,7 @@ class CreateEventDataViewModel extends BaseViewModel {
 
   Future<void> createEvent() async {
     if (selectedTitle != null && selectedCategory != null) {
+      setBusy(true);
       final imageUrl = await _uploadSelectedImage();
       final event = Event(
         title: selectedTitle!,
@@ -143,6 +147,8 @@ class CreateEventDataViewModel extends BaseViewModel {
         imageUrl: imageUrl,
       );
       await _firestoreApi.createEvent(event);
+      setBusy(false);
+      _navigationService.popRepeated(2);
     }
   }
 }

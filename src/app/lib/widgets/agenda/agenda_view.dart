@@ -1,8 +1,10 @@
 import 'package:app/network/models/event.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:app/widgets/profile_image_view.dart';
+import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AgendaView extends StatelessWidget {
   final String title;
@@ -36,19 +38,18 @@ class AgendaView extends StatelessWidget {
           SizedBox(height: 4),
           Flexible(
             child: ListView.builder(
-                itemCount: events.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return CardEventView(
-                    date: events[index].dateDisplay,
-                    time: events[index].timeDisplay,
-                    category: events[index].categoryName,
-                    title: events[index].title,
-                    backgroundImage: events[index].imageUrl != null
-                        ? Image.network(events[index].imageUrl!)
-                        : null,
-                  );
-                }),
+              itemCount: events.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return CardEventView(
+                  date: events[index].dateDisplay,
+                  time: events[index].timeDisplay,
+                  category: events[index].categoryName,
+                  title: events[index].title,
+                  imageUrl: events[index].imageUrl,
+                );
+              },
+            ),
           ),
         ],
       ),

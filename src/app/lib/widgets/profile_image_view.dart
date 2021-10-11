@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -33,7 +34,7 @@ class ProfileImageView extends StatelessWidget {
             placeholder: (context, url) => Center(
               child: SpinKitDoubleBounce(
                 size: 30,
-                color: Colors.white,
+                color: kcIceWhite,
               ),
             ),
           ),
