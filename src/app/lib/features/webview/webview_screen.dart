@@ -13,7 +13,7 @@ class WebViewScreen extends StatelessWidget {
   final String url;
   final ShouldNavigateCallback shouldNavigate;
 
-  const WebViewScreen(
+  WebViewScreen(
     this.url,
     this.shouldNavigate,
   );
@@ -44,10 +44,12 @@ class WebViewScreen extends StatelessWidget {
                   ? NavigationDecision.navigate
                   : NavigationDecision.prevent;
             },
+            onWebViewCreated: (controller) {
+              controller.clearCache();
+            },
             onPageFinished: (_) {
               viewModel.finishLoader();
             },
-            gestureNavigationEnabled: true,
           ),
         ),
       ),

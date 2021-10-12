@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/app/app.locator.dart';
-import 'package:app/app/app.router.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';

@@ -56,6 +56,8 @@ class FirestoreApi {
       final eventCollection = await usersCollection
           .doc(userId)
           .collection(EventsFirestoreKey)
+          .orderBy('starTime')
+          .where('starTime', isGreaterThanOrEqualTo: DateTime.now())
           .get();
 
       await Future.forEach(

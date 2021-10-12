@@ -1,10 +1,8 @@
 import 'package:app/network/models/event.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:app/widgets/profile_image_view.dart';
-import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AgendaView extends StatelessWidget {
   final String title;
@@ -21,7 +19,7 @@ class AgendaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      height: 290,
       child: Column(
         children: <Widget>[
           Row(
@@ -30,12 +28,13 @@ class AgendaView extends StatelessWidget {
                 ProfileImageView(
                   context: context,
                   imageUrl: profileImageUrl!,
+                  size: 40,
                 ),
-              SizedBox(width: 5),
+              SizedBox(width: 10),
               AppText.heading4(title),
             ],
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 6),
           Flexible(
             child: ListView.builder(
               itemCount: events.length,
@@ -51,6 +50,7 @@ class AgendaView extends StatelessWidget {
               },
             ),
           ),
+          SizedBox(height: 14),
         ],
       ),
     );

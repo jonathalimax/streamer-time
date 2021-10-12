@@ -15,7 +15,6 @@ class CardEventView extends StatelessWidget {
   final File? imageFile;
   final String? imageUrl;
   final Color? fontColor;
-  final bool hasOverlay;
 
   const CardEventView({
     Key? key,
@@ -24,23 +23,21 @@ class CardEventView extends StatelessWidget {
     required this.date,
     this.time,
     this.color,
-    this.width = 300,
+    this.width,
     this.imageFile,
     this.imageUrl,
     this.fontColor = Colors.white,
-    this.hasOverlay = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
+      width: width ?? MediaQuery.of(context).size.width / 1.15,
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 2,
-        color: color ?? kcLightPurple.withOpacity(.7),
+        color: color ?? Theme.of(context).colorScheme.secondary,
         child: Stack(
-          alignment: Alignment.center,
           children: <Widget>[
             if (imageFile != null)
               Container(
@@ -67,71 +64,83 @@ class CardEventView extends StatelessWidget {
                   color: kcIceWhite,
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Column(
-                        children: [
-                          AppText(
-                            date,
-                            hasShadow: imageFile != null || imageUrl != null,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                              color: imageFile != null || imageUrl != null
-                                  ? fontColor
-                                  : Colors.black,
-                            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
                           ),
-                          if (time != null)
+                        ),
+                        child: Row(
+                          children: [
                             AppText(
-                              time!,
-                              hasShadow: imageFile != null || imageUrl != null,
+                              date,
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w800,
-                                color: imageFile != null || imageUrl != null
-                                    ? fontColor
-                                    : Colors.black,
+                                color: fontColor,
                               ),
                             ),
-                        ],
+                            if (time != null) SizedBox(width: 3),
+                            if (time != null)
+                              AppText(
+                                time!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800,
+                                  color: fontColor,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Container(
+                  width: double.infinity,
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(.8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      AppText(
+                        category,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: fontColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      AppText(
+                        title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: fontColor,
+                        ),
+                        maxLines: 2,
                       ),
                     ],
                   ),
-                  Spacer(),
-                  AppText(
-                    category,
-                    hasShadow: imageFile != null || imageUrl != null,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: imageFile != null || imageUrl != null
-                          ? fontColor
-                          : Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 2),
-                  AppText(
-                    title,
-                    hasShadow: imageFile != null || imageUrl != null,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: imageFile != null || imageUrl != null
-                          ? fontColor
-                          : Colors.black,
-                    ),
-                    maxLines: 2,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

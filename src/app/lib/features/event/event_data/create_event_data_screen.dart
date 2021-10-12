@@ -59,7 +59,7 @@ class CreateEventDataScreen extends StatelessWidget {
                             AppText.heading4('Pré-visualização'),
                             SizedBox(height: 12),
                             Container(
-                              height: 200,
+                              height: 230,
                               child: CardEventView(
                                 category: viewModel.selectedCategory?.name ??
                                     'Categoria',

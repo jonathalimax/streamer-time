@@ -1,13 +1,17 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/app/app.router.dart';
+import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class DiscoverSearchDelegate extends SearchDelegate<String> {
   final _twitchService = locator<TwitchService>();
+  final _navigationService = locator<NavigationService>();
 
   DiscoverSearchDelegate() : super(searchFieldLabel: 'Buscar streamer');
 
@@ -95,6 +99,14 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
       title: AppText.body(
         channel.displayName,
       ),
+      onTap: () {
+        _navigationService.navigateTo(
+          Routes.streamerScreen,
+          arguments: StreamerScreenArguments(
+            viewModel: StreamerViewModel(streamerId: channel.id),
+          ),
+        );
+      },
     );
   }
 

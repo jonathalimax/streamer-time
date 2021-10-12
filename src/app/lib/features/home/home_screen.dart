@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(15, 5, 15, 25),
         items: [
           BottomNavigationBarItem(
-            label: 'Agenda',
+            label: 'Eventos',
             icon: Icon(Icons.event_note),
           ),
           BottomNavigationBarItem(
