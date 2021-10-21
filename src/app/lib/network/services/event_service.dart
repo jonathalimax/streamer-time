@@ -12,4 +12,8 @@ class EventService {
   Future<List<Event>> getEvents() async {
     return await _firestoreApi.getOwnEvents();
   }
+
+  Future<List<Event>> getStreamerEvents(String streamerId) async {
+    return await _firestoreApi.getStreamerEvents(streamerId);
+  }
 }

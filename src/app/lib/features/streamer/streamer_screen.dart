@@ -69,14 +69,17 @@ class StreamerScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    child: AgendaView(
-                      title: 'Agenda',
-                      events: [],
+                  if (viewModel.fetchedStreamer != null)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: viewModel.fetchedStreamer!.events.isNotEmpty
+                          ? AgendaView(
+                              title: 'Agenda',
+                              events: viewModel.fetchedStreamer!.events,
+                            )
+                          : Container(),
                     ),
-                  ),
-                  Spacer(),
+                  // Spacer(),
                 ],
               ),
       ),

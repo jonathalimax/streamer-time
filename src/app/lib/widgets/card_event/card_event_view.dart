@@ -35,7 +35,7 @@ class CardEventView extends StatelessWidget {
       width: width ?? MediaQuery.of(context).size.width / 1.15,
       child: Card(
         clipBehavior: Clip.antiAlias,
-        elevation: 2,
+        elevation: 1,
         color: color ?? Theme.of(context).colorScheme.secondary,
         child: Stack(
           children: <Widget>[

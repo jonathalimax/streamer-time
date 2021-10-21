@@ -57,7 +57,10 @@ class FirestoreApi {
           .doc(userId)
           .collection(EventsFirestoreKey)
           .orderBy('starTime')
-          .where('starTime', isGreaterThanOrEqualTo: DateTime.now())
+          .where(
+            'starTime',
+            isGreaterThanOrEqualTo: DateTime.now(),
+          )
           .get();
 
       await Future.forEach(
@@ -124,6 +127,35 @@ class FirestoreApi {
     }
   }
 
+  Future<List<Event>> getStreamerEvents(String streamerId) async {
+    try {
+      List<Event> events = [];
+
+      final document = await usersCollection
+          .doc(streamerId)
+          .collection(EventsFirestoreKey)
+          .orderBy('starTime')
+          .where(
+            'starTime',
+            isGreaterThanOrEqualTo: DateTime.now(),
+          )
+          .get();
+
+      document.docs.forEach(
+        (document) {
+          events.add(Event.fromJson(document.data()));
+        },
+      );
+
+      return events;
+    } catch (error) {
+      throw FirestoreApiException(
+        message: 'Failed to get streamer events for streamerid: $streamerId',
+        devDetails: '$error',
+      );
+    }
+  }
+
   // Followers Collection
   Future<void> followStreamer(String streamerId) async {
     final userId = await _getUserId();
@@ -152,7 +184,10 @@ class FirestoreApi {
       final collection = await usersCollection
           .doc(userId)
           .collection(FollowingFirestoreKey)
-          .where('userId', isEqualTo: streamerId)
+          .where(
+            'userId',
+            isEqualTo: streamerId,
+          )
           .get();
 
       collection.docs.forEach((document) {

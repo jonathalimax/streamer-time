@@ -36,12 +36,13 @@ dependencies:
   cloud_firestore: ^2.5.3
 
   # Network
-  twitch_api: #^0.4.0
-    path: ../../../twitch_api_flutter
+  twitch_api:
+    path: ../twitch_api_flutter
 
   # Utils
   intl: ^0.17.0
   injectable: ^1.5.0
+  url_launcher: ^6.0.12
   webview_flutter: ^2.0.14
 
   # Media

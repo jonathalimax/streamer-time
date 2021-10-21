@@ -55,7 +55,7 @@ class CreateEventDataScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             AppText.heading4('Pré-visualização'),
                             SizedBox(height: 12),
                             Container(

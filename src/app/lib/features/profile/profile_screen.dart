@@ -37,37 +37,82 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 )
               : SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: viewModel.data == null
-                        ? AppEmptyState(
-                            title: 'Ocorreu um erro, tente novamente!',
-                            type: AppEmptyStateType.noDocument,
-                          )
-                        : Column(
-                            children: <Widget>[
-                              SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                  child: viewModel.data == null
+                      ? AppEmptyState(
+                          title: 'Ocorreu um erro, tente novamente!',
+                          type: AppEmptyStateType.noDocument,
+                        )
+                      : ListView(
+                          physics: NeverScrollableScrollPhysics(),
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(16, 16, 16, 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   ProfileImageView(
                                     context: context,
                                     imageUrl: viewModel.data!.profileImageUrl,
+                                    size: 80,
                                   ),
-                                  SizedBox(width: 10),
+                                  SizedBox(width: 20),
                                   Flexible(
-                                    child: AppText.heading3(
-                                      viewModel.data!.name,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        _buildStats(),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                  ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: AppText.heading4(
+                                viewModel.data!.name,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Divider(),
+                            ListTile(
+                              title: AppText.heading4('Notificacões'),
+                              trailing: Icon(Icons.notifications),
+                              onTap: () => {},
+                            ),
+                            ListTile(
+                              title: AppText.heading4('Meus favoritos'),
+                              trailing: Icon(Icons.favorite),
+                              onTap: () => {},
+                            ),
+                          ],
+                        ),
                 ),
         );
       },
+    );
+  }
+
+  Widget _buildStats() {
+    return Row(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            AppText.bodyBold('120'),
+            AppText.captionBold('Seguidores'),
+          ],
+        ),
+        SizedBox(width: 20),
+        Column(
+          children: <Widget>[
+            AppText.bodyBold('4'),
+            AppText.captionBold('Seguindo'),
+          ],
+        ),
+      ],
     );
   }
 }

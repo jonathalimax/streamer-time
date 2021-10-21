@@ -8,11 +8,11 @@ class AppEmptyState extends StatelessWidget {
   final String? subtitle;
   final String? buttonTitle;
   final Function? buttonAction;
-  final AppEmptyStateType type;
+  final AppEmptyStateType? type;
 
   const AppEmptyState({
     required this.title,
-    required this.type,
+    this.type,
     this.subtitle,
     this.buttonTitle,
     this.buttonAction,
@@ -25,15 +25,16 @@ class AppEmptyState extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Spacer(flex: 2),
-            Container(
-              height: 150,
-              width: 300,
-              child: Image(
-                image: AssetImage(type.path, package: 'design_system'),
-                fit: BoxFit.fitWidth,
+            if (type != null)
+              Container(
+                height: 150,
+                width: 300,
+                child: Image(
+                  image: AssetImage(type!.path, package: 'design_system'),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
-            ),
-            SizedBox(height: 30),
+            if (type != null) SizedBox(height: 30),
             Expanded(
               flex: 0,
               child: Container(

@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/network/models/user.dart';
+import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
@@ -11,6 +12,7 @@ class StreamerViewModel extends MultipleFutureViewModel {
   final String streamerId;
 
   final _twitchService = locator<TwitchService>();
+  final _eventsService = locator<EventService>();
   final _streamerService = locator<StreamerService>();
 
   StreamerViewModel({
@@ -34,6 +36,7 @@ class StreamerViewModel extends MultipleFutureViewModel {
     if (twitchUser.data?.first == null) return null;
     final user = User.fromTwitch(twitchUser: twitchUser.data!.first);
     user.following = await _streamerService.isFollowingStreamer(streamerId);
+    user.events = await _eventsService.getStreamerEvents(streamerId);
     return user;
   }
 

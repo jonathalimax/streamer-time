@@ -19,7 +19,7 @@ class CardGameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+      highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
       borderRadius: BorderRadius.all(Radius.circular(3)),
       child: Container(
         child: Column(
@@ -28,9 +28,11 @@ class CardGameView extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
+                clipBehavior: Clip.antiAlias,
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
+                  width: 200,
+                  height: 300,
                   imageUrl: imageUrl,
                   filterQuality: FilterQuality.high,
                   placeholder: (context, url) => Center(

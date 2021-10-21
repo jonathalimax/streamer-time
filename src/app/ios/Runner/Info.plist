@@ -54,5 +54,9 @@
 	<string>Precisamos de acesso a galeria, para você selecionar imagens.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Não utilizamos o acessso ao microfone.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>twitch-live-game-streaming</string>
+	</array>
 </dict>
 </plist>
