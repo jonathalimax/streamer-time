@@ -23,12 +23,6 @@ class ProfileScreen extends StatelessWidget {
               'Perfil',
               style: Theme.of(context).appBarTheme.titleTextStyle,
             ),
-            actions: [
-              IconButton(
-                onPressed: viewModel.logout,
-                icon: Icon(Icons.logout),
-              ),
-            ],
           ),
           body: viewModel.isBusy
               ? Center(
@@ -54,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                                   ProfileImageView(
                                     context: context,
                                     imageUrl: viewModel.data!.profileImageUrl,
-                                    size: 80,
+                                    size: 75,
                                   ),
                                   SizedBox(width: 20),
                                   Flexible(
@@ -78,15 +72,61 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Divider(),
-                            ListTile(
-                              title: AppText.heading4('Notificacões'),
-                              trailing: Icon(Icons.notifications),
+                            InkWell(
                               onTap: () => {},
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(.2),
+                              child: ListTile(
+                                title: Align(
+                                  alignment: Alignment(-1.2, 0),
+                                  child: AppText.heading4('Notificacões'),
+                                ),
+                                leading: Icon(Icons.notifications),
+                              ),
                             ),
-                            ListTile(
-                              title: AppText.heading4('Meus favoritos'),
-                              trailing: Icon(Icons.favorite),
+                            InkWell(
                               onTap: () => {},
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(.2),
+                              child: ListTile(
+                                title: Align(
+                                  alignment: Alignment(-1.2, 0),
+                                  child: AppText.heading4('Modo escuro'),
+                                ),
+                                leading: Icon(Icons.dark_mode),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () => {},
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(.2),
+                              child: ListTile(
+                                title: Align(
+                                  alignment: Alignment(-1.2, 0),
+                                  child: AppText.heading4('Meus favoritos'),
+                                ),
+                                leading: Icon(Icons.favorite),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: viewModel.logout,
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(.2),
+                              child: ListTile(
+                                title: Align(
+                                  alignment: Alignment(-1.2, 0),
+                                  child: AppText.heading4('Sair da conta'),
+                                ),
+                                leading: Icon(Icons.logout),
+                              ),
                             ),
                           ],
                         ),
@@ -102,14 +142,14 @@ class ProfileScreen extends StatelessWidget {
         Column(
           children: <Widget>[
             AppText.bodyBold('120'),
-            AppText.captionBold('Seguidores'),
+            AppText.bodyBold('Seguidores'),
           ],
         ),
         SizedBox(width: 20),
         Column(
           children: <Widget>[
             AppText.bodyBold('4'),
-            AppText.captionBold('Seguindo'),
+            AppText.bodyBold('Seguindo'),
           ],
         ),
       ],

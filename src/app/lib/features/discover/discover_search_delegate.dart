@@ -85,20 +85,11 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
     );
   }
 
-  ListTile _buildSearchList(
+  Widget _buildSearchList(
     BuildContext context,
     TwitchSearchChannel channel,
   ) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        foregroundImage: CachedNetworkImageProvider(
-          channel.thumbnailUrl,
-        ),
-      ),
-      title: AppText.body(
-        channel.displayName,
-      ),
+    return InkWell(
       onTap: () {
         _navigationService.navigateTo(
           Routes.streamerScreen,
@@ -107,6 +98,18 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
           ),
         );
       },
+      highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(.2),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          foregroundImage: CachedNetworkImageProvider(
+            channel.thumbnailUrl,
+          ),
+        ),
+        title: AppText.body(
+          channel.displayName,
+        ),
+      ),
     );
   }
 

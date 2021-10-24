@@ -3,14 +3,12 @@ import 'package:app/app/app.router.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/streamer_service.dart';
-import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef Users = List<User>?;
 
-@singleton
 class AgendaViewModel extends FutureViewModel<Users> {
   final _navigation = locator<NavigationService>();
   final _streamerService = locator<StreamerService>();
