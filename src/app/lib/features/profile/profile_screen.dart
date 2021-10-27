@@ -36,103 +36,88 @@ class ProfileScreen extends StatelessWidget {
                           title: 'Ocorreu um erro, tente novamente!',
                           type: AppEmptyStateType.noDocument,
                         )
-                      : ListView(
-                          physics: NeverScrollableScrollPhysics(),
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  ProfileImageView(
-                                    context: context,
-                                    imageUrl: viewModel.data!.profileImageUrl,
-                                    size: 75,
-                                  ),
-                                  SizedBox(width: 20),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        _buildStats(),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: AppText.heading4(
-                                viewModel.data!.name,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Divider(),
-                            InkWell(
-                              onTap: () => {},
-                              highlightColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(.2),
-                              child: ListTile(
-                                title: Align(
-                                  alignment: Alignment(-1.2, 0),
-                                  child: AppText.heading4('Notificacões'),
-                                ),
-                                leading: Icon(Icons.notifications),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () => {},
-                              highlightColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(.2),
-                              child: ListTile(
-                                title: Align(
-                                  alignment: Alignment(-1.2, 0),
-                                  child: AppText.heading4('Modo escuro'),
-                                ),
-                                leading: Icon(Icons.dark_mode),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () => {},
-                              highlightColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(.2),
-                              child: ListTile(
-                                title: Align(
-                                  alignment: Alignment(-1.2, 0),
-                                  child: AppText.heading4('Meus favoritos'),
-                                ),
-                                leading: Icon(Icons.favorite),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: viewModel.logout,
-                              highlightColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(.2),
-                              child: ListTile(
-                                title: Align(
-                                  alignment: Alignment(-1.2, 0),
-                                  child: AppText.heading4('Sair da conta'),
-                                ),
-                                leading: Icon(Icons.logout),
-                              ),
-                            ),
-                          ],
-                        ),
+                      : _buildItemList(context, viewModel),
                 ),
         );
       },
+    );
+  }
+
+  ListView _buildItemList(
+    BuildContext context,
+    ProfileViewModel viewModel,
+  ) {
+    return ListView(
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              ProfileImageView(
+                context: context,
+                imageUrl: viewModel.data!.profileImageUrl,
+                size: 75,
+              ),
+              SizedBox(width: 20),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildStats(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: AppText.heading4(
+            viewModel.data!.name,
+          ),
+        ),
+        SizedBox(height: 10),
+        Divider(),
+        ListTile(
+          title: Align(
+            alignment: Alignment(-1.2, 0),
+            child: AppText.heading4('Notificacões'),
+          ),
+          leading: Icon(Icons.notifications),
+          trailing: Switch.adaptive(
+            activeColor: Theme.of(context).colorScheme.secondary,
+            value: false,
+            onChanged: (value) => {},
+          ),
+          onTap: null,
+        ),
+        InkWell(
+          onTap: () => {},
+          highlightColor:
+              Theme.of(context).colorScheme.secondary.withOpacity(.2),
+          child: ListTile(
+            title: Align(
+              alignment: Alignment(-1.2, 0),
+              child: AppText.heading4('Meus favoritos'),
+            ),
+            leading: Icon(Icons.favorite),
+          ),
+        ),
+        InkWell(
+          onTap: viewModel.logout,
+          highlightColor:
+              Theme.of(context).colorScheme.secondary.withOpacity(.2),
+          child: ListTile(
+            title: Align(
+              alignment: Alignment(-1.2, 0),
+              child: AppText.heading4('Sair da conta'),
+            ),
+            leading: Icon(Icons.logout),
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,8 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/authentication/authentication_model.dart';
-import 'package:design_system/design_system.dart';
-import 'package:design_system/styles/app_text_styles.dart';
+import 'package:app/utils/constants/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,32 +25,15 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final theme = ThemeData(
-    primaryColor: kcPurple,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    fontFamily: 'Nunito',
-    appBarTheme: AppBarTheme(
-      color: kcLightPurple,
-      elevation: 2,
-      iconTheme: IconThemeData(color: kcIceWhite),
-      actionsIconTheme: IconThemeData(color: kcIceWhite),
-      titleTextStyle: ktsHeading4Style.copyWith(
-        color: kcIceWhite,
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
-      theme: theme.copyWith(
-        colorScheme: theme.colorScheme.copyWith(
-          secondary: kcLightPurple,
-        ),
-      ),
+      themeMode: ThemeMode.system,
+      theme: ThemeConstants.lightTheme,
+      darkTheme: ThemeConstants.darkTheme,
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       debugShowCheckedModeBanner: false,

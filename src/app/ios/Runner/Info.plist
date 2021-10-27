@@ -46,8 +46,6 @@
 	</dict>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Precisamos de acesso a camêra, para você capturar imagens.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

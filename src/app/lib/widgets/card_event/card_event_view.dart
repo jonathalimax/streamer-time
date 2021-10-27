@@ -37,6 +37,9 @@ class CardEventView extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 1,
         color: color ?? Theme.of(context).colorScheme.secondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Stack(
           children: <Widget>[
             if (imageFile != null)

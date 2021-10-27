@@ -1,5 +1,6 @@
 import 'package:app/features/event/event_date/create_event_date_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
+import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_button.dart';
 import 'package:design_system/widgets/app_text.dart';
 
@@ -42,6 +43,7 @@ class CreateEventDateTimeScreen extends StatelessWidget {
                     date: viewModel.selectedDateFormated,
                     time: viewModel.selectedTimeFormated,
                     width: double.infinity,
+                    fontColor: kcIceWhite,
                   ),
                 ),
                 SizedBox(height: 24),

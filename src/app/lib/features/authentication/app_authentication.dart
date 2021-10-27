@@ -1,19 +1,14 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:app/features/authentication/authentication_model.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/utils/caching/caching_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-const String AUTH_BOX_KEY = 'AuthenticationBox';
-const String AUTH_TOKEN_KEY = 'authToken';
-const String SECURE_TOKEN_KEY = 'SecureToken';
-
 class AppAuthentication {
+  final _cachingManager = CachingManager();
+
   persisteToken(TwitchToken token) async {
     final authToken = AuthenticationModel.fromToken(token);
-    final encryptionKey = await _getEncryptionKey();
+    final encryptionKey = await _cachingManager.getEncryptionKey();
 
     if (encryptionKey == null) return;
 
@@ -27,7 +22,7 @@ class AppAuthentication {
   }
 
   Future<bool> isAuthenticated() async {
-    final encryptionKey = await _getEncryptionKey();
+    final encryptionKey = await _cachingManager.getEncryptionKey();
 
     if (encryptionKey == null) return false;
 
@@ -44,7 +39,7 @@ class AppAuthentication {
   }
 
   Future logout() async {
-    final encryptionKey = await _getEncryptionKey();
+    final encryptionKey = await _cachingManager.getEncryptionKey();
 
     if (encryptionKey == null) return;
 
@@ -58,7 +53,7 @@ class AppAuthentication {
   }
 
   Future<TwitchToken?> getTwitchToken() async {
-    final encryptionKey = await _getEncryptionKey();
+    final encryptionKey = await _cachingManager.getEncryptionKey();
 
     if (encryptionKey == null) return null;
 
@@ -73,27 +68,5 @@ class AppAuthentication {
     if (authToken == null) return null;
 
     return authToken.twitchToken;
-  }
-
-  Future<Uint8List?> _getEncryptionKey() async {
-    final secureStorage = const FlutterSecureStorage();
-    final containsEncryptionKey =
-        await secureStorage.containsKey(key: SECURE_TOKEN_KEY);
-
-    if (!containsEncryptionKey) {
-      final key = Hive.generateSecureKey();
-      await secureStorage.write(
-        key: SECURE_TOKEN_KEY,
-        value: base64UrlEncode(key),
-      );
-    }
-
-    final secureToken = await secureStorage.read(
-      key: SECURE_TOKEN_KEY,
-    );
-
-    if (secureToken == null) return null;
-
-    return base64Url.decode(secureToken);
   }
 }

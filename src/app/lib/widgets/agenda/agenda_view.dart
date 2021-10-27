@@ -1,6 +1,7 @@
 import 'package:app/network/models/event.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:app/widgets/profile_image_view.dart';
+import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +65,7 @@ class AgendaView extends StatelessWidget {
                     category: events[index].categoryName,
                     title: events[index].title,
                     imageUrl: events[index].imageUrl,
+                    fontColor: kcIceWhite,
                   ),
                 );
               },
