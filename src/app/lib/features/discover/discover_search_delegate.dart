@@ -94,7 +94,10 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
         _navigationService.navigateTo(
           Routes.streamerScreen,
           arguments: StreamerScreenArguments(
-            viewModel: StreamerViewModel(streamerId: channel.id),
+            viewModel: StreamerViewModel(
+              streamerId: channel.id,
+              username: channel.broadcasterLogin,
+            ),
           ),
         );
       },

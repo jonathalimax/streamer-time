@@ -1,4 +1,4 @@
-package com.limx.streamertime
+package com.jlima.streamup
 
 import io.flutter.embedding.android.FlutterActivity
 

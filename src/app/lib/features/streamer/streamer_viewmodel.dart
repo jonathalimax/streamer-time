@@ -1,4 +1,5 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/core/push_notification_manager.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';
@@ -10,13 +11,16 @@ const String _streamerFuture = 'streamerFuture';
 
 class StreamerViewModel extends MultipleFutureViewModel {
   final String streamerId;
+  final String username;
 
   final _twitchService = locator<TwitchService>();
   final _eventsService = locator<EventService>();
   final _streamerService = locator<StreamerService>();
+  final _pushNotificationManager = locator<PushNotificationManager>();
 
   StreamerViewModel({
     required this.streamerId,
+    required this.username,
   });
 
   String get fetchedAgenda => dataMap![_agendaFuture];
@@ -46,12 +50,14 @@ class StreamerViewModel extends MultipleFutureViewModel {
 
   Future<void> followStreamer() async {
     await runBusyFuture(_streamerService.followStreamer(streamerId));
+    await _pushNotificationManager.subscribeToTopic(username);
     (dataMap![_streamerFuture] as User).following = true;
     notifyListeners();
   }
 
   Future<void> unfollowStreamer() async {
     await runBusyFuture(_streamerService.unfollowStreamer(streamerId));
+    await _pushNotificationManager.unsubscribeFromTopic(username);
     (dataMap![_streamerFuture] as User).following = false;
     notifyListeners();
   }

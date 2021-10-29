@@ -9,8 +9,6 @@ class AgendaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AgendaViewModel>.reactive(
-      // disposeViewModel: false,
-      // initialiseSpecialViewModelsOnce: true,
       viewModelBuilder: () => AgendaViewModel(),
       builder: (context, viewModel, child) => _buildScreen(context, viewModel),
     );
@@ -57,6 +55,7 @@ class AgendaScreen extends StatelessWidget {
                               ),
                               onStreamerTap: () => viewModel.openStreamerScreen(
                                 viewModel.data![index].id,
+                                viewModel.data![index].username,
                               ),
                             )
                           : Container();

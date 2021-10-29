@@ -1,3 +1,4 @@
+import 'package:app/core/push_notification_manager.dart';
 import 'package:app/features/event/event_data/create_event_data_screen.dart';
 import 'package:app/features/event/event_date/create_event_date_time_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
@@ -54,6 +55,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: UserService),
     LazySingleton(classType: EventService),
     LazySingleton(classType: StreamerService),
+    LazySingleton(classType: PushNotificationManager),
   ],
 )
 class AppSetup {}

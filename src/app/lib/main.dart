@@ -1,8 +1,10 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/push_notification_manager.dart';
 import 'package:app/features/authentication/authentication_model.dart';
 import 'package:app/utils/constants/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,10 +13,12 @@ import 'package:stacked_services/stacked_services.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   await Hive.initFlutter();
   await Firebase.initializeApp();
+  await locator<PushNotificationManager>().configure();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   Hive.registerAdapter(AuthenticationModelAdapter());
-  setupLocator();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
@@ -22,6 +26,10 @@ Future main() async {
     ),
   );
   runApp(MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
 }
 
 class MyApp extends StatelessWidget {

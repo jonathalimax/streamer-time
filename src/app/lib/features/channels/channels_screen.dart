@@ -44,8 +44,10 @@ class ChannelsScreen extends StatelessWidget {
                             totalViewers: channel.viewerCount.toString(),
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
-                            onTap: () =>
-                                viewModel.startStreamerScreen(channel.userId),
+                            onTap: () => viewModel.startStreamerScreen(
+                              channel.userId,
+                              channel.userName,
+                            ),
                           ),
                         )
                         .toList(),

@@ -47,8 +47,14 @@ class AgendaViewModel extends FutureViewModel<Users> {
     }
   }
 
-  Future<void> openStreamerScreen(String streamerId) async {
-    final viewModel = StreamerViewModel(streamerId: streamerId);
+  Future<void> openStreamerScreen(
+    String streamerId,
+    String username,
+  ) async {
+    final viewModel = StreamerViewModel(
+      streamerId: streamerId,
+      username: username,
+    );
     await _navigation.navigateTo(
       Routes.streamerScreen,
       arguments: StreamerScreenArguments(viewModel: viewModel),

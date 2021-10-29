@@ -28,7 +28,7 @@ class CardStreamView extends StatelessWidget {
             Theme.of(context).colorScheme.secondary.withOpacity(0.6),
         borderRadius: BorderRadius.all(Radius.circular(3)),
         child: Card(
-          color: backgroundColor ?? Theme.of(context).primaryColor,
+          color: backgroundColor ?? Theme.of(context).colorScheme.secondary,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

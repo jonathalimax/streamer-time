@@ -6,9 +6,9 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
@@ -72,26 +72,26 @@ class StackedRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     StartupScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => StartupScreen(),
         settings: data,
       );
     },
     LoginScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => LoginScreen(),
         settings: data,
       );
     },
     HomeScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => HomeScreen(),
         settings: data,
       );
     },
     WebViewScreen: (data) {
       var args = data.getArgs<WebViewScreenArguments>(nullOk: false);
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => WebViewScreen(
           args.url,
           args.shouldNavigate,
@@ -100,26 +100,26 @@ class StackedRouter extends RouterBase {
       );
     },
     AgendaScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => AgendaScreen(),
         settings: data,
       );
     },
     DiscoverScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => const DiscoverScreen(),
         settings: data,
       );
     },
     ProfileScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => const ProfileScreen(),
         settings: data,
       );
     },
     StreamerScreen: (data) {
       var args = data.getArgs<StreamerScreenArguments>(nullOk: false);
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => StreamerScreen(
           key: args.key,
           viewModel: args.viewModel,
@@ -129,7 +129,7 @@ class StackedRouter extends RouterBase {
     },
     ChannelsScreen: (data) {
       var args = data.getArgs<ChannelsScreenArguments>(nullOk: false);
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => ChannelsScreen(
           args.game,
           args.gameId,
@@ -139,14 +139,14 @@ class StackedRouter extends RouterBase {
       );
     },
     CreateEventDateTimeScreen: (data) {
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => const CreateEventDateTimeScreen(),
         settings: data,
       );
     },
     CreateEventDataScreen: (data) {
       var args = data.getArgs<CreateEventDataScreenArguments>(nullOk: false);
-      return MaterialPageRoute<MaterialRoute<dynamic>>(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => CreateEventDataScreen(
           key: args.key,
           viewModel: args.viewModel,

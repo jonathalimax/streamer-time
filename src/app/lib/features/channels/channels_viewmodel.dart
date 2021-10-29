@@ -26,8 +26,14 @@ class ChannelsViewModel extends FutureViewModel<TwitchStreamInfoList> {
     return streams.data?.toList() ?? [];
   }
 
-  startStreamerScreen(String streamerId) {
-    final viewModel = StreamerViewModel(streamerId: streamerId);
+  startStreamerScreen(
+    String streamerId,
+    String username,
+  ) {
+    final viewModel = StreamerViewModel(
+      streamerId: streamerId,
+      username: username,
+    );
     _navigation.navigateTo(
       Routes.streamerScreen,
       arguments: StreamerScreenArguments(viewModel: viewModel),
