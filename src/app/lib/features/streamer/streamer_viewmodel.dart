@@ -1,5 +1,5 @@
 import 'package:app/app/app.locator.dart';
-import 'package:app/core/push_notification_manager.dart';
+import 'package:app/core/Notifications/push_notification_manager.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';

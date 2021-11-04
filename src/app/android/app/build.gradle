@@ -56,6 +56,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.android.gms:play-services-ads:20.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

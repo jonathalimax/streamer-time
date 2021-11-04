@@ -36,22 +36,24 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     alignment: Alignment.center,
                     child: Image(
-                      image: AssetImage('resources/icons/twitch-logo.png'),
-                      color: kcIceWhite,
-                      width: 120,
+                      image: AssetImage('resources/icons/sup-icon.png'),
+                      // color: kcIceWhite,
+                      width: 250,
                     ),
                   ),
-                  Spacer(flex: 2),
-                  AppText.heading2(
-                    'Cadê o meu streamer?',
-                    color: kcIceWhite,
+                  Spacer(flex: 1),
+                  Center(
+                    child: AppText.heading3(
+                      'Seu streamer está online?',
+                      color: kcIceWhite,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
+                  SizedBox(height: 40),
                   AppText.heading4(
-                    'Não se preocupe, te informamos quando eles estarão em live!',
+                    'Saiba mais sobre a agenda e \neventos dos seus streamers favoritos!',
                     color: kcIceWhite,
+                    textAlign: TextAlign.center,
                   ),
                   Spacer(flex: 5),
                   AppButton(
@@ -59,6 +61,7 @@ class LoginScreen extends StatelessWidget {
                     action: () => viewModel.startAuthentication(),
                     titleColor: kcPurple,
                   ),
+                  SizedBox(height: 15),
                 ],
               ),
             ),

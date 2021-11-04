@@ -1,6 +1,8 @@
-import 'package:app/core/push_notification_manager.dart';
+import 'package:app/core/Ads/AdManager.dart';
+import 'package:app/core/Notifications/push_notification_manager.dart';
 import 'package:app/features/event/event_data/create_event_data_screen.dart';
 import 'package:app/features/event/event_date/create_event_date_time_screen.dart';
+import 'package:app/features/splash/splash_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
@@ -28,7 +30,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 @StackedApp(
   routes: [
-    MaterialRoute(page: StartupScreen, initial: true),
+    MaterialRoute(page: SplashScreen, initial: true),
+    MaterialRoute(page: StartupScreen),
     MaterialRoute(page: LoginScreen),
     MaterialRoute(page: HomeScreen),
     MaterialRoute(page: WebViewScreen),
@@ -56,6 +59,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: EventService),
     LazySingleton(classType: StreamerService),
     LazySingleton(classType: PushNotificationManager),
+    LazySingleton(classType: AdManager),
   ],
 )
 class AppSetup {}
