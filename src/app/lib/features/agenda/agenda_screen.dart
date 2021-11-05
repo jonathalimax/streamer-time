@@ -79,6 +79,7 @@ class AgendaScreen extends StatelessWidget {
                 events: item.events,
                 profileImageUrl: item.profileImageUrl,
                 onEventTap: () => viewModel.openStreamerWebview(
+                  context,
                   item.username,
                 ),
                 onStreamerTap: () => viewModel.openStreamerScreen(

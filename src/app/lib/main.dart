@@ -2,7 +2,7 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/Notifications/push_notification_manager.dart';
 import 'package:app/features/authentication/authentication_model.dart';
-import 'package:app/utils/constants/theme_constants.dart';
+import 'package:app/core/constants/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

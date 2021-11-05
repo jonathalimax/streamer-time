@@ -1,5 +1,5 @@
 import 'package:app/features/authentication/authentication_model.dart';
-import 'package:app/utils/caching/caching_manager.dart';
+import 'package:app/core/caching/caching_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:twitch_api/twitch_api.dart';
 

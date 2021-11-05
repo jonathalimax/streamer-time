@@ -20,6 +20,13 @@ class ThemeConstants {
         color: kcIceWhite,
       ),
     ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: kcPurple,
+      contentTextStyle: TextStyle(
+        color: kcIceWhite,
+      ),
+      behavior: SnackBarBehavior.fixed,
+    ),
   );
 
   static final darkTheme = ThemeData(
@@ -38,6 +45,13 @@ class ThemeConstants {
       titleTextStyle: ktsHeading4Style.copyWith(
         color: kcIceWhite,
       ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: kcLightPurple,
+      contentTextStyle: TextStyle(
+        color: kcIceWhite,
+      ),
+      behavior: SnackBarBehavior.fixed,
     ),
   );
 }

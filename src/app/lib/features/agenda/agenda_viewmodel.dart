@@ -1,9 +1,11 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
-import 'package:app/core/Ads/AdManager.dart';
+import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/streamer_service.dart';
+import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -31,17 +33,17 @@ class AgendaViewModel extends FutureViewModel<Users> {
     return await _navigation.navigateTo(Routes.createEventDateTimeScreen);
   }
 
-  Future<void> openStreamerWebview(String username) async {
+  Future<void> openStreamerWebview(
+      BuildContext context, String username) async {
     var url = 'https://twitch.tv/$username';
     if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        universalLinksOnly: true,
-      );
+      await launch(url);
     } else {
-      throw 'Could not launch $url';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AppText.captionBold('Ocorreu um erro ao abrir o evento!'),
+        ),
+      );
     }
   }
 

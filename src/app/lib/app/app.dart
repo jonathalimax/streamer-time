@@ -1,4 +1,4 @@
-import 'package:app/core/Ads/AdManager.dart';
+import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/core/Notifications/push_notification_manager.dart';
 import 'package:app/features/event/event_data/create_event_data_screen.dart';
 import 'package:app/features/event/event_date/create_event_date_time_screen.dart';

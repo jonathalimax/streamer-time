@@ -1,4 +1,4 @@
-import 'package:app/utils/extensions/number_extensions.dart';
+import 'package:app/core/extensions/number_extensions.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
