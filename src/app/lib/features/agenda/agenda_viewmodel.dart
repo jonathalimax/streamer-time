@@ -30,12 +30,13 @@ class AgendaViewModel extends BaseViewModel {
   Users get users => _users;
 
   AgendaViewModel() {
+    setBusy(true);
     _firestoreApi.followingStreamers.listen(_onUsersUpdated);
   }
 
   void _onUsersUpdated(Users users) {
     this._users = users;
-    setBusy(users == null ? true : false);
+    setBusy(false);
   }
 
   Future<void> startCreateEvent() async {

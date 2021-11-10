@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/authentication/app_authentication.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/network/models/user.dart';
@@ -15,6 +16,7 @@ class ProfileViewModel extends FutureViewModel<User?> {
   final _authentication = locator<AppAuthentication>();
 
   logout() async {
+    locator.resetLazySingleton<AgendaViewModel>();
     locator.resetLazySingleton<DiscoverViewmodel>();
     locator.resetLazySingleton<ProfileViewModel>();
     locator.resetLazySingleton<CardStreamListViewModel>();
