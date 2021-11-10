@@ -1,3 +1,4 @@
+import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,13 @@ class AgendaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AgendaViewModel>.reactive(
-      viewModelBuilder: () => AgendaViewModel(),
-      onModelReady: (viewModel) => viewModel.buildInlineBannerAd(),
-      onDispose: (viewModel) => viewModel.bannerAd.dispose(),
+      disposeViewModel: false,
+      fireOnModelReadyOnce: true,
+      initialiseSpecialViewModelsOnce: true,
+      onModelReady: (viewModel) {
+        viewModel.buildInlineBannerAd();
+      },
+      viewModelBuilder: () => locator<AgendaViewModel>(),
       builder: (context, viewModel, child) => _buildScreen(context, viewModel),
     );
   }
@@ -52,9 +57,9 @@ class AgendaScreen extends StatelessWidget {
 
   ListView _buildAgendaList(AgendaViewModel viewModel) {
     return ListView.builder(
-      itemCount: viewModel.data == null
+      itemCount: viewModel.users == null
           ? 0
-          : viewModel.data!.length + (viewModel.isAdLoaded ? 1 : 0),
+          : viewModel.users!.length + (viewModel.isAdLoaded ? 1 : 0),
       itemBuilder: (context, index) {
         if (viewModel.isAdLoaded && index == viewModel.AdIndex) {
           return viewModel.isAdLoaded
@@ -71,7 +76,7 @@ class AgendaScreen extends StatelessWidget {
         }
 
         final currentIndex = index > viewModel.AdIndex ? index - 1 : index;
-        final item = viewModel.data![currentIndex];
+        final item = viewModel.users![currentIndex];
 
         return item.events.isNotEmpty
             ? AgendaView(

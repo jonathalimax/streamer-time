@@ -1,6 +1,5 @@
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/app/app.locator.dart';
-import 'package:app/network/models/user.dart';
 
 class StreamerService {
   final _firestoreApi = locator<FirestoreApi>();
@@ -15,9 +14,5 @@ class StreamerService {
 
   Future<bool> isFollowingStreamer(String streamerId) async {
     return await _firestoreApi.isFollowingStreamer(streamerId);
-  }
-
-  Future<List<User>> getFollowingStreamers() async {
-    return await _firestoreApi.getFollowingStreamers();
   }
 }

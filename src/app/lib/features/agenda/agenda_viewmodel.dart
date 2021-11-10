@@ -2,6 +2,7 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
+import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:design_system/design_system.dart';
@@ -13,9 +14,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 typedef Users = List<User>?;
 
-class AgendaViewModel extends FutureViewModel<Users> {
+class AgendaViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
-  final _streamerService = locator<StreamerService>();
+  final _firestoreApi = locator<FirestoreApi>();
+
+  Users _users;
 
   late BannerAd _inlineBannerAd;
   bool _isInlineBannerAdLoaded = false;
@@ -24,9 +27,15 @@ class AgendaViewModel extends FutureViewModel<Users> {
   bool get isAdLoaded => _isInlineBannerAdLoaded;
   BannerAd get bannerAd => _inlineBannerAd;
 
-  @override
-  Future<Users> futureToRun() async {
-    return await _streamerService.getFollowingStreamers();
+  Users get users => _users;
+
+  AgendaViewModel() {
+    _firestoreApi.followingStreamers.listen(_onUsersUpdated);
+  }
+
+  void _onUsersUpdated(Users users) {
+    this._users = users;
+    setBusy(users == null ? true : false);
   }
 
   Future<void> startCreateEvent() async {
