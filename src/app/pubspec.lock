@@ -911,7 +911,7 @@ packages:
   twitch_api:
     dependency: "direct main"
     description:
-      path: "../twitch_api_flutter"
+      path: "../twitch_api"
       relative: true
     source: path
     version: "0.4.0"

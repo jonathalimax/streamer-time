@@ -40,7 +40,7 @@ dependencies:
 
   # Network
   twitch_api:
-    path: ../twitch_api_flutter
+    path: ../twitch_api
 
   # Utils
   intl: ^0.17.0
