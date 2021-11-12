@@ -36,7 +36,7 @@ class ProfileImageView extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             placeholder: (context, url) => Center(
-              child: SpinKitDoubleBounce(
+              child: SpinKitPulse(
                 size: 30,
                 color: kcIceWhite,
               ),

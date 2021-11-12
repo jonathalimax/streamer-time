@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (2.5.4):
+  - cloud_firestore (3.1.0):
     - Firebase/Firestore (= 8.9.0)
     - firebase_core
     - Flutter
@@ -17,7 +17,7 @@ PODS:
   - firebase_core (1.10.0):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_messaging (10.0.9):
+  - firebase_messaging (11.1.0):
     - Firebase/Messaging (= 8.9.0)
     - firebase_core
     - Flutter
@@ -212,10 +212,10 @@ CHECKOUT OPTIONS:
     :tag: 8.9.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 0c744725c0d1544d77db2c8eb35ef919cb19a176
+  cloud_firestore: 2cff0618e560f435fc05da5c94c2d213eb7ba640
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
-  firebase_messaging: 1109f5449638254c47fb5904d24e11a4d7736c77
+  firebase_messaging: 0c8d1a1732487db7f332fb65232053e93201e2fb
   firebase_storage: a3bbe618ef41930ae31da8f4691d37e4ed84f14d
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
@@ -241,8 +241,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
-  webview_flutter_wkwebview: 02b129c6fe415e58e4ab7346512c8c2f79f678db
+  webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
 
 PODFILE CHECKSUM: 22aca64c1b2c2111858a2b679a8ec14c41a15d2d
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

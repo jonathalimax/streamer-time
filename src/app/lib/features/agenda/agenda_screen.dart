@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
+import 'package:app/network/models/user.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,42 +58,40 @@ class AgendaScreen extends StatelessWidget {
 
   ListView _buildAgendaList(AgendaViewModel viewModel) {
     return ListView.builder(
-      itemCount: viewModel.users == null
-          ? 0
-          : viewModel.users!.length + (viewModel.isAdLoaded ? 1 : 0),
+      itemCount: viewModel.items.length,
       itemBuilder: (context, index) {
-        if (viewModel.isAdLoaded && index == viewModel.AdIndex) {
-          return viewModel.isAdLoaded
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Container(
-                    height: viewModel.bannerAd.size.height.toDouble(),
-                    child: AdWidget(
-                      ad: viewModel.bannerAd,
-                    ),
+        var item = viewModel.items[index];
+
+        if (item is User) {
+          return item.events.isNotEmpty
+              ? AgendaView(
+                  title: item.username,
+                  events: item.events,
+                  profileImageUrl: item.profileImageUrl,
+                  onEventTap: () => viewModel.openStreamerWebview(
+                    context,
+                    item.username,
+                  ),
+                  onStreamerTap: () => viewModel.openStreamerScreen(
+                    item.id,
+                    item.username,
                   ),
                 )
-              : Container();
+              : Container(); // TODO: Handle emtpy UI
+
+        } else if (item is BannerAd) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Container(
+              height: viewModel.bannerAd.size.height.toDouble(),
+              child: AdWidget(
+                ad: viewModel.bannerAd,
+              ),
+            ),
+          );
         }
 
-        final currentIndex = index > viewModel.AdIndex ? index - 1 : index;
-        final item = viewModel.users![currentIndex];
-
-        return item.events.isNotEmpty
-            ? AgendaView(
-                title: item.name,
-                events: item.events,
-                profileImageUrl: item.profileImageUrl,
-                onEventTap: () => viewModel.openStreamerWebview(
-                  context,
-                  item.username,
-                ),
-                onStreamerTap: () => viewModel.openStreamerScreen(
-                  item.id,
-                  item.username,
-                ),
-              )
-            : Container(); // TODO: Handle emtpy UI
+        return Container();
       },
     );
   }

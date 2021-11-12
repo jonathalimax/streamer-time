@@ -31,13 +31,13 @@ class CardGameView extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
-                  width: 200,
-                  height: 300,
+                  width: 342,
+                  height: 524,
                   imageUrl: imageUrl,
                   filterQuality: FilterQuality.high,
                   placeholder: (context, url) => Center(
-                    child: SpinKitDoubleBounce(
-                      color: Theme.of(context).colorScheme.secondary,
+                    child: SpinKitPulse(
+                      color: kcIceWhite,
                     ),
                   ),
                   errorWidget: (context, url, error) => Icon(Icons.error),

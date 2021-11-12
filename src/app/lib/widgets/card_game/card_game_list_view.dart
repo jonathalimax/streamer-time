@@ -46,6 +46,7 @@ class CardGameListView extends StatelessWidget {
                     child: GridView.count(
                       crossAxisCount: 2,
                       childAspectRatio: 200 / 326,
+                      mainAxisSpacing: 14,
                       key: PageStorageKey('CardGameList'),
                       scrollDirection: Axis.vertical,
                       children: viewModel.data!
@@ -53,8 +54,8 @@ class CardGameListView extends StatelessWidget {
                             (game) => CardGameView(
                               game: game.name,
                               imageUrl: game.getBoxArtUrl(
-                                width: 200,
-                                height: 300,
+                                width: 342,
+                                height: 524,
                               ),
                               onTap: () => viewModel.showChannelsBy(
                                 game.name,
