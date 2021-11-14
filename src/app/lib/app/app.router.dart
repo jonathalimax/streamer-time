@@ -14,8 +14,8 @@ import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/event/event_data/create_event_data_screen.dart';
-import '../features/event/event_data/create_event_data_viewmodel.dart';
 import '../features/event/event_date/create_event_date_time_screen.dart';
+import '../features/event/event_date/create_event_date_viewmodel.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -149,18 +149,19 @@ class StackedRouter extends RouterBase {
       );
     },
     CreateEventDateTimeScreen: (data) {
+      var args =
+          data.getArgs<CreateEventDateTimeScreenArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const CreateEventDateTimeScreen(),
+        builder: (context) => CreateEventDateTimeScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
         settings: data,
       );
     },
     CreateEventDataScreen: (data) {
-      var args = data.getArgs<CreateEventDataScreenArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateEventDataScreen(
-          key: args.key,
-          viewModel: args.viewModel,
-        ),
+        builder: (context) => CreateEventDataScreen(),
         settings: data,
       );
     },
@@ -193,9 +194,9 @@ class ChannelsScreenArguments {
   ChannelsScreenArguments({required this.game, required this.gameId, this.key});
 }
 
-/// CreateEventDataScreen arguments holder class
-class CreateEventDataScreenArguments {
+/// CreateEventDateTimeScreen arguments holder class
+class CreateEventDateTimeScreenArguments {
   final Key? key;
-  final CreateEventDataViewModel viewModel;
-  CreateEventDataScreenArguments({this.key, required this.viewModel});
+  final CreateEventDateViewModel viewModel;
+  CreateEventDateTimeScreenArguments({this.key, required this.viewModel});
 }

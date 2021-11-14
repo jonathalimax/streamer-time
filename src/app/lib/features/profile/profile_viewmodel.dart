@@ -19,7 +19,6 @@ class ProfileViewModel extends FutureViewModel<User?> {
 
   logout() async {
     locator.resetLazySingleton<FirestoreApi>();
-    locator.resetLazySingleton<AgendaScreen>();
     locator.resetLazySingleton<AgendaViewModel>();
     locator.resetLazySingleton<DiscoverViewmodel>();
     locator.resetLazySingleton<ProfileViewModel>();

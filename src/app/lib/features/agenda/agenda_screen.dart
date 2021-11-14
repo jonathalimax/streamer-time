@@ -81,7 +81,7 @@ class AgendaScreen extends StatelessWidget {
 
         } else if (item is BannerAd) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
             child: Container(
               height: viewModel.bannerAd.size.height.toDouble(),
               child: AdWidget(

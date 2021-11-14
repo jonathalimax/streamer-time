@@ -12,21 +12,17 @@ import 'package:stacked/stacked.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class CreateEventDataScreen extends StatelessWidget {
-  final CreateEventDataViewModel viewModel;
   final TextEditingController _controller;
   final FocusNode _focusNode;
 
-  CreateEventDataScreen({
-    Key? key,
-    required this.viewModel,
-  })  : _controller = TextEditingController(),
-        _focusNode = FocusNode(),
-        super(key: key);
+  CreateEventDataScreen()
+      : _controller = TextEditingController(),
+        _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CreateEventDataViewModel>.reactive(
-      viewModelBuilder: () => viewModel,
+      viewModelBuilder: () => CreateEventDataViewModel(),
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(
           title: Text(
@@ -40,79 +36,69 @@ class CreateEventDataScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               )
-            : SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 8,
+            : _buildBody(viewModel, context),
+      ),
+    );
+  }
+
+  Widget _buildBody(
+    CreateEventDataViewModel viewModel,
+    BuildContext context,
+  ) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 8,
+        ),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Container(
+                    height: 230,
+                    child: CardEventView(
+                      category: viewModel.selectedCategory?.name ?? 'Categoria',
+                      title: viewModel.selectedTitle ?? 'Título do evento',
+                      date: "",
+                      time: "",
+                      width: double.infinity,
+                      fontColor: kcIceWhite,
+                    ),
                   ),
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            SizedBox(height: 20),
-                            AppText.heading4('Pré-visualização'),
-                            SizedBox(height: 12),
-                            Container(
-                              height: 230,
-                              child: CardEventView(
-                                category: viewModel.selectedCategory?.name ??
-                                    'Categoria',
-                                title: viewModel.selectedTitle ??
-                                    'Título do evento',
-                                date: viewModel.selectedDateFormated,
-                                time: viewModel.selectedTimeFormated,
-                                width: double.infinity,
-                                fontColor: kcIceWhite,
-                                imageFile: viewModel.selectedImage,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                            buildCategorySearch(context, viewModel),
-                            SizedBox(height: 12),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: AppTextField(
-                                focusNode: _focusNode,
-                                placeholder: 'Título do evento',
-                                onChanged: viewModel.setTitle,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            SizedBox(
-                              width: 290,
-                              child: AppButton(
-                                title: 'Adicionar imagem de fundo',
-                                action: () => viewModel
-                                    .showImageSourceActionSheet(context),
-                                color: Colors.transparent,
-                                titleColor: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            Spacer(flex: 5),
-                            SizedBox(
-                              width: 290,
-                              child: AppButton(
-                                title: 'Continuar',
-                                action: () => viewModel.createEvent(),
-                                color: Colors.transparent,
-                                titleColor: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                          ],
-                        ),
-                      ),
-                    ],
+                  SizedBox(height: 24),
+                  buildCategorySearch(context, viewModel),
+                  SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: AppTextField(
+                      focusNode: _focusNode,
+                      placeholder: 'Título do evento',
+                      onChanged: viewModel.setTitle,
+                    ),
                   ),
-                ),
+                  Spacer(flex: 5),
+                  SizedBox(
+                    width: 290,
+                    child: AppButton(
+                      title: 'Continuar',
+                      action: () => viewModel.continueCreatingEvent(),
+                      color: Colors.transparent,
+                      titleColor: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                ],
               ),
+            ),
+          ],
+        ),
       ),
     );
   }

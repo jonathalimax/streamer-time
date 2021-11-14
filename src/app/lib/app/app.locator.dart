@@ -13,7 +13,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../core/ads/ad_manager.dart';
 import '../core/authentication/app_authentication.dart';
 import '../core/notifications/push_notification_manager.dart';
-import '../features/agenda/agenda_screen.dart';
 import '../features/agenda/agenda_viewmodel.dart';
 import '../features/discover/discover_viewmodel.dart';
 import '../features/profile/profile_viewmodel.dart';
@@ -38,7 +37,6 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => TwitchService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AppAuthentication());
-  locator.registerLazySingleton(() => AgendaScreen());
   locator.registerLazySingleton(() => AgendaViewModel());
   locator.registerLazySingleton(() => DiscoverViewmodel());
   locator.registerLazySingleton(() => ProfileViewModel());

@@ -1,16 +1,34 @@
+import 'dart:io';
+
 import 'package:app/app/app.locator.dart';
-import 'package:app/app/app.router.dart';
-import 'package:app/features/event/event_data/create_event_data_viewmodel.dart';
-import 'package:design_system/styles/app_colors.dart';
+import 'package:app/network/api/firebase_storage_api.dart';
+import 'package:app/network/api/firestore_api.dart';
+import 'package:app/network/models/event.dart';
+import 'package:design_system/styles/app_text_styles.dart';
+import 'package:design_system/widgets/app_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:twitch_api/twitch_api.dart';
 
 class CreateEventDateViewModel extends BaseViewModel {
-  final _navigation = locator<NavigationService>();
+  final _picker = ImagePicker();
+  final _navigationService = locator<NavigationService>();
+  final _firestoreApi = locator<FirestoreApi>();
+  final _firebaseStorageApi = locator<FirebaseStorageApi>();
 
+  final String _selectedTitle;
+  final TwitchGame _selectedCategory;
+
+  File? selectedImage;
   DateTime _selectedDateTime = DateTime.now();
+
+  String get title => _selectedTitle;
+  TwitchGame get category => _selectedCategory;
 
   String get selectedDateFormated {
     return DateFormat('dd MMM').format(_selectedDateTime);
@@ -20,74 +38,128 @@ class CreateEventDateViewModel extends BaseViewModel {
     return DateFormat('jm').format(_selectedDateTime);
   }
 
-  Future<void> selectDate(BuildContext context) async {
-    final today = DateTime.now();
-    final selected = await showDatePicker(
-      context: context,
-      initialDate: _selectedDateTime,
-      firstDate: today,
-      lastDate: DateTime(DateTime.now().year + 5),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Theme.of(context).colorScheme.secondary,
-            ),
-            dialogBackgroundColor: kcIceWhite,
-          ),
-          child: child!,
-        );
+  CreateEventDateViewModel(
+    this._selectedTitle,
+    this._selectedCategory,
+  );
+
+  Future<void> setDateTime(BuildContext context) async {
+    await DatePicker.showDatePicker(
+      context,
+      theme: DatePickerTheme(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        containerHeight: 250,
+        itemStyle: ktsBodyBoldStyle,
+        cancelStyle: ktsBodyBoldStyle,
+        doneStyle: ktsBodyBoldStyle,
+      ),
+      showTitleActions: true,
+      minTime: DateTime.now(),
+      onChanged: (date) {
+        this._selectedDateTime = date;
+        notifyListeners();
       },
+      onConfirm: (date) {
+        this._selectedDateTime = date;
+        notifyListeners();
+      },
+      currentTime: _selectedDateTime,
+      locale: LocaleType.pt, // TODO: Get user locale
     );
-
-    if (selected == null) return;
-
-    this._selectedDateTime = selected;
-    notifyListeners();
   }
 
-  Future<void> selectTime(BuildContext context) async {
-    final time = TimeOfDay(
-      hour: _selectedDateTime.hour,
-      minute: _selectedDateTime.minute,
-    );
-    final selected = await showTimePicker(
-      context: context,
-      initialTime: time,
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Theme.of(context).colorScheme.secondary,
+  void showImageSourceActionSheet(BuildContext context) {
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              child: Text('Camera'),
+              onPressed: () {
+                Navigator.pop(context);
+                _selectImage(ImageSource.camera);
+              },
             ),
-            dialogBackgroundColor: kcIceWhite,
+            CupertinoActionSheetAction(
+              child: Text('Galeria'),
+              onPressed: () {
+                Navigator.pop(context);
+                _selectImage(ImageSource.gallery);
+              },
+            )
+          ],
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => Wrap(children: [
+          ListTile(
+            leading: Icon(Icons.camera_alt),
+            title: Text('Camera'),
+            onTap: () {
+              Navigator.pop(context);
+              _selectImage(ImageSource.camera);
+            },
           ),
-          child: child!,
-        );
-      },
-    );
-
-    if (selected == null) return;
-
-    this._selectedDateTime = DateTime(
-      _selectedDateTime.year,
-      _selectedDateTime.month,
-      _selectedDateTime.day,
-      selected.hour,
-      selected.minute,
-    );
-    notifyListeners();
+          ListTile(
+            leading: Icon(Icons.photo_album),
+            title: Text('Galeria'),
+            onTap: () {
+              Navigator.pop(context);
+              _selectImage(ImageSource.gallery);
+            },
+          ),
+        ]),
+      );
+    }
   }
 
-  Future<void> startEventTimeScreen() async {
-    final viewModel = CreateEventDataViewModel(
-      _selectedDateTime,
-      selectedDateFormated,
-      selectedTimeFormated,
+  Future<void> _selectImage(ImageSource source) async {
+    try {
+      final image = await _picker.pickImage(source: source);
+      if (image == null) return;
+      selectedImage = File(image.path);
+      notifyListeners();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  Future<String> _buildImageName() async {
+    final user = await _firestoreApi.getUser();
+    final userName = user?.name ?? '';
+    final title = _selectedTitle.toLowerCase().replaceAll(' ', '_');
+    return '${userName}_${title}';
+  }
+
+  Future<String?> _uploadSelectedImage() async {
+    if (selectedImage == null) return null;
+    final imageName = await _buildImageName();
+    final result = await _firebaseStorageApi.uploadImage(
+      selectedImage!,
+      name: imageName,
     );
-    return await _navigation.navigateTo(
-      Routes.createEventDataScreen,
-      arguments: CreateEventDataScreenArguments(viewModel: viewModel),
+    return result;
+  }
+
+  Future<void> createEvent(BuildContext context) async {
+    setBusy(true);
+    final imageUrl = await _uploadSelectedImage();
+    final event = Event(
+      title: _selectedTitle,
+      starTime: _selectedDateTime,
+      categoryId: _selectedCategory.id,
+      categoryName: _selectedCategory.name,
+      imageUrl: imageUrl,
+    );
+    await _firestoreApi.createEvent(event);
+    _navigationService.popRepeated(2);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: AppText.captionBold('O evento foi criado!'),
+      ),
     );
   }
 }
