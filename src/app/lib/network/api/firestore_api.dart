@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.locator.dart';
-import 'package:app/features/authentication/app_authentication.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/network/models/event.dart';
 import 'package:app/network/models/follower.dart';
 import 'package:app/network/models/user.dart';
@@ -18,7 +18,7 @@ class FirestoreApi {
       FirebaseFirestore.instance.collection(UsersFirestoreKey);
 
   final StreamController<Users> _usersController = StreamController<Users>();
-  Stream<Users> get followingStreamers => _usersController.stream;
+  StreamController<Users> get followingStreamers => _usersController;
 
   FirestoreApi() {
     _buildStreams();

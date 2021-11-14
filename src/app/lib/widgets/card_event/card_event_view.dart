@@ -76,7 +76,7 @@ class CardEventView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(6),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 6,
@@ -85,7 +85,7 @@ class CardEventView extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.secondary,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8),
+                            Radius.circular(6),
                           ),
                         ),
                         child: Row(
@@ -93,8 +93,8 @@ class CardEventView extends StatelessWidget {
                             AppText(
                               date,
                               style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
                                 color: fontColor,
                               ),
                             ),
@@ -103,8 +103,8 @@ class CardEventView extends StatelessWidget {
                               AppText(
                                 time!,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
                                   color: fontColor,
                                 ),
                               ),
@@ -127,7 +127,7 @@ class CardEventView extends StatelessWidget {
                       AppText(
                         category,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 17,
                           color: fontColor,
                           fontWeight: FontWeight.w600,
                         ),
@@ -135,11 +135,12 @@ class CardEventView extends StatelessWidget {
                       AppText(
                         title,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 17,
                           color: fontColor,
                         ),
                         maxLines: 2,
                       ),
+                      SizedBox(height: 4),
                     ],
                   ),
                 ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
@@ -43,13 +45,12 @@ class AgendaViewModel extends BaseViewModel {
   }
 
   AgendaViewModel() {
-    setBusy(true);
-    _firestoreApi.followingStreamers.listen(_onUsersUpdated);
+    _firestoreApi.followingStreamers.stream.listen(_onUsersUpdated);
   }
 
   void _onUsersUpdated(Users users) {
     this._users = users;
-    setBusy(false);
+    notifyListeners();
   }
 
   Future<void> startCreateEvent() async {

@@ -1,5 +1,6 @@
 import 'package:app/core/ads/ad_manager.dart';
-import 'package:app/core/Notifications/push_notification_manager.dart';
+import 'package:app/core/notifications/push_notification_manager.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/event/event_data/create_event_data_screen.dart';
 import 'package:app/features/event/event_date/create_event_date_time_screen.dart';
 import 'package:app/features/splash/splash_screen.dart';
@@ -7,7 +8,6 @@ import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
-import 'package:app/features/authentication/app_authentication.dart';
 import 'package:app/features/channels/channels_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';

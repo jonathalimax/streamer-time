@@ -37,16 +37,16 @@ class WebViewScreen extends StatelessWidget {
           child: WebView(
             initialUrl: url,
             javascriptMode: JavascriptMode.unrestricted,
+            zoomEnabled: false,
             navigationDelegate: (NavigationRequest request) async {
-              final shouldNavigate = this.shouldNavigate(request.url);
-              return await shouldNavigate
+              return await shouldNavigate(request.url)
                   ? NavigationDecision.navigate
                   : NavigationDecision.prevent;
             },
             onWebViewCreated: (controller) {
               controller.clearCache();
             },
-            onPageFinished: (_) {
+            onPageFinished: (requestUrl) {
               viewModel.finishLoader();
             },
           ),
