@@ -69,6 +69,7 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
 
             return ListView.builder(
               itemCount: snapshot.data!.data!.length,
+              itemExtent: 60,
               itemBuilder: (context, index) {
                 return _buildSearchList(
                   context,
@@ -89,28 +90,30 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
     BuildContext context,
     TwitchSearchChannel channel,
   ) {
-    return InkWell(
-      onTap: () {
-        _navigationService.navigateTo(
-          Routes.streamerScreen,
-          arguments: StreamerScreenArguments(
-            viewModel: StreamerViewModel(
-              streamerId: channel.id,
-              username: channel.broadcasterLogin,
+    return Center(
+      child: InkWell(
+        onTap: () {
+          _navigationService.navigateTo(
+            Routes.streamerScreen,
+            arguments: StreamerScreenArguments(
+              viewModel: StreamerViewModel(
+                streamerId: channel.id,
+                username: channel.broadcasterLogin,
+              ),
+            ),
+          );
+        },
+        highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(.2),
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            foregroundImage: CachedNetworkImageProvider(
+              channel.thumbnailUrl,
             ),
           ),
-        );
-      },
-      highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(.2),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          foregroundImage: CachedNetworkImageProvider(
-            channel.thumbnailUrl,
+          title: AppText.body(
+            channel.displayName,
           ),
-        ),
-        title: AppText.body(
-          channel.displayName,
         ),
       ),
     );

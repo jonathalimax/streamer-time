@@ -5,7 +5,6 @@ import 'package:app/core/constants/theme_constants.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
-import 'package:design_system/styles/app_text_styles.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

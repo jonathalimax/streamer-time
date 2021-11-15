@@ -1,6 +1,5 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
-import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
@@ -31,5 +30,9 @@ class ProfileViewModel extends FutureViewModel<User?> {
   @override
   Future<User?> futureToRun() async {
     return await _userService.getUserData();
+  }
+
+  Future<void> openFavorites() async {
+    await _navigation.navigateTo(Routes.favoritesScreen);
   }
 }

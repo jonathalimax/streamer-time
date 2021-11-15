@@ -94,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
           onTap: null,
         ),
         InkWell(
-          onTap: () => {},
+          onTap: viewModel.openFavorites,
           highlightColor:
               Theme.of(context).colorScheme.secondary.withOpacity(.2),
           child: ListTile(

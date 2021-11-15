@@ -25,7 +25,6 @@ class AgendaViewModel extends BaseViewModel {
   Users _users;
   late BannerAd _inlineBannerAd;
 
-  Users get users => _users;
   BannerAd get bannerAd => _inlineBannerAd;
 
   List<Object> get items {
@@ -45,7 +44,9 @@ class AgendaViewModel extends BaseViewModel {
   }
 
   AgendaViewModel() {
-    _firestoreApi.followingStreamers.stream.listen(_onUsersUpdated);
+    _firestoreApi.followingStreamers.listen(_onUsersUpdated);
+
+    buildInlineBannerAd();
   }
 
   void _onUsersUpdated(Users users) {

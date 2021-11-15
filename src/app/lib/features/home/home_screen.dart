@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:app/app/app.locator.dart';
 import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/home/home_viewmodel.dart';

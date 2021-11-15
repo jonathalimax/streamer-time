@@ -15,11 +15,11 @@ class AgendaScreen extends StatelessWidget {
       disposeViewModel: false,
       fireOnModelReadyOnce: true,
       initialiseSpecialViewModelsOnce: true,
-      onModelReady: (viewModel) {
-        viewModel.buildInlineBannerAd();
-      },
       viewModelBuilder: () => locator<AgendaViewModel>(),
-      builder: (context, viewModel, child) => _buildScreen(context, viewModel),
+      builder: (context, viewModel, child) => _buildScreen(
+        context,
+        viewModel,
+      ),
     );
   }
 
