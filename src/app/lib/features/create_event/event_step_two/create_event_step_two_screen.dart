@@ -1,4 +1,4 @@
-import 'package:app/features/event/event_date/create_event_date_viewmodel.dart';
+import 'create_event_step_two_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_button.dart';
@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
-class CreateEventDateTimeScreen extends StatelessWidget {
-  final CreateEventDateViewModel viewModel;
+class CreateEventStepTwoScreen extends StatelessWidget {
+  final CreateEventStepTwoViewModel viewModel;
 
-  const CreateEventDateTimeScreen({
+  const CreateEventStepTwoScreen({
     Key? key,
     required this.viewModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CreateEventDateViewModel>.reactive(
+    return ViewModelBuilder<CreateEventStepTwoViewModel>.reactive(
       viewModelBuilder: () => viewModel,
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(

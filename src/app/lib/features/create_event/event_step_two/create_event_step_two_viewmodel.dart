@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/app/app.locator.dart';
+import 'package:app/core/constants/theme_constants.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
@@ -15,7 +16,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-class CreateEventDateViewModel extends BaseViewModel {
+class CreateEventStepTwoViewModel extends BaseViewModel {
   final _picker = ImagePicker();
   final _navigationService = locator<NavigationService>();
   final _firestoreApi = locator<FirestoreApi>();
@@ -38,7 +39,7 @@ class CreateEventDateViewModel extends BaseViewModel {
     return DateFormat('jm').format(_selectedDateTime);
   }
 
-  CreateEventDateViewModel(
+  CreateEventStepTwoViewModel(
     this._selectedTitle,
     this._selectedCategory,
   );
@@ -46,13 +47,7 @@ class CreateEventDateViewModel extends BaseViewModel {
   Future<void> setDateTime(BuildContext context) async {
     await DatePicker.showDatePicker(
       context,
-      theme: DatePickerTheme(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        containerHeight: 250,
-        itemStyle: ktsBodyBoldStyle,
-        cancelStyle: ktsBodyBoldStyle,
-        doneStyle: ktsBodyBoldStyle,
-      ),
+      theme: ThemeConstants.datePickerTheme,
       showTitleActions: true,
       minTime: DateTime.now(),
       onChanged: (date) {

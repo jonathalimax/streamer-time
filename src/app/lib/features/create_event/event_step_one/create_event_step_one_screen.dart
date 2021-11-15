@@ -1,4 +1,3 @@
-import 'package:app/features/event/event_data/create_event_data_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/widgets/app_button.dart';
@@ -11,18 +10,20 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:stacked/stacked.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-class CreateEventDataScreen extends StatelessWidget {
-  final TextEditingController _controller;
-  final FocusNode _focusNode;
+import 'create_event_step_one_viewmodel.dart';
 
-  CreateEventDataScreen()
+class CreateEventStepOneScreen extends StatelessWidget {
+  final FocusNode _focusNode;
+  final TextEditingController _controller;
+
+  CreateEventStepOneScreen()
       : _controller = TextEditingController(),
         _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CreateEventDataViewModel>.reactive(
-      viewModelBuilder: () => CreateEventDataViewModel(),
+    return ViewModelBuilder<CreateEventStepOneViewModel>.reactive(
+      viewModelBuilder: () => CreateEventStepOneViewModel(),
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(
           title: Text(
@@ -42,7 +43,7 @@ class CreateEventDataScreen extends StatelessWidget {
   }
 
   Widget _buildBody(
-    CreateEventDataViewModel viewModel,
+    CreateEventStepOneViewModel viewModel,
     BuildContext context,
   ) {
     return SafeArea(
@@ -104,7 +105,7 @@ class CreateEventDataScreen extends StatelessWidget {
   }
 
   Padding buildCategorySearch(
-      BuildContext context, CreateEventDataViewModel viewModel) {
+      BuildContext context, CreateEventStepOneViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: TypeAheadField<TwitchGame?>(

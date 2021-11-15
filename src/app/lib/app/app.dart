@@ -1,8 +1,8 @@
 import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/core/authentication/app_authentication.dart';
-import 'package:app/features/event/event_data/create_event_data_screen.dart';
-import 'package:app/features/event/event_date/create_event_date_time_screen.dart';
+import 'package:app/features/create_event/event_step_one/create_event_step_one_screen.dart';
+import 'package:app/features/create_event/event_step_two/create_event_step_two_screen.dart';
 import 'package:app/features/splash/splash_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
@@ -40,8 +40,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: ProfileScreen),
     MaterialRoute(page: StreamerScreen),
     MaterialRoute(page: ChannelsScreen),
-    MaterialRoute(page: CreateEventDateTimeScreen),
-    MaterialRoute(page: CreateEventDataScreen),
+    MaterialRoute(page: CreateEventStepOneScreen),
+    MaterialRoute(page: CreateEventStepTwoScreen),
   ],
   dependencies: [
     LazySingleton(classType: TwitchService),

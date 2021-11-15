@@ -54,7 +54,7 @@ class AgendaViewModel extends BaseViewModel {
   }
 
   Future<void> startCreateEvent() async {
-    return await _navigation.navigateTo(Routes.createEventDataScreen);
+    return await _navigation.navigateTo(Routes.createEventStepOneScreen);
   }
 
   Future<void> openStreamerWebview(

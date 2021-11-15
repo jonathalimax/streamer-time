@@ -1,6 +1,7 @@
 import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class ThemeConstants {
   static final lightTheme = ThemeData(
@@ -53,5 +54,13 @@ class ThemeConstants {
       ),
       behavior: SnackBarBehavior.fixed,
     ),
+  );
+
+  static final datePickerTheme = DatePickerTheme(
+    backgroundColor: kcPurple,
+    containerHeight: 250,
+    itemStyle: ktsBodyStyle.copyWith(color: kcIceWhite, fontSize: 17),
+    cancelStyle: ktsBodyStyle.copyWith(color: kcIceWhite),
+    doneStyle: ktsBodyBoldStyle.copyWith(color: kcIceWhite),
   );
 }

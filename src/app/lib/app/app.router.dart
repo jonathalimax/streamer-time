@@ -12,10 +12,10 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
+import '../features/create_event/event_step_one/create_event_step_one_screen.dart';
+import '../features/create_event/event_step_two/create_event_step_two_screen.dart';
+import '../features/create_event/event_step_two/create_event_step_two_viewmodel.dart';
 import '../features/discover/discover_screen.dart';
-import '../features/event/event_data/create_event_data_screen.dart';
-import '../features/event/event_date/create_event_date_time_screen.dart';
-import '../features/event/event_date/create_event_date_viewmodel.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -36,9 +36,10 @@ class Routes {
   static const String profileScreen = '/profile-screen';
   static const String streamerScreen = '/streamer-screen';
   static const String channelsScreen = '/channels-screen';
-  static const String createEventDateTimeScreen =
-      '/create-event-date-time-screen';
-  static const String createEventDataScreen = '/create-event-data-screen';
+  static const String createEventStepOneScreen =
+      '/create-event-step-one-screen';
+  static const String createEventStepTwoScreen =
+      '/create-event-step-two-screen';
   static const all = <String>{
     splashScreen,
     startupScreen,
@@ -50,8 +51,8 @@ class Routes {
     profileScreen,
     streamerScreen,
     channelsScreen,
-    createEventDateTimeScreen,
-    createEventDataScreen,
+    createEventStepOneScreen,
+    createEventStepTwoScreen,
   };
 }
 
@@ -69,8 +70,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.profileScreen, page: ProfileScreen),
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
     RouteDef(Routes.channelsScreen, page: ChannelsScreen),
-    RouteDef(Routes.createEventDateTimeScreen, page: CreateEventDateTimeScreen),
-    RouteDef(Routes.createEventDataScreen, page: CreateEventDataScreen),
+    RouteDef(Routes.createEventStepOneScreen, page: CreateEventStepOneScreen),
+    RouteDef(Routes.createEventStepTwoScreen, page: CreateEventStepTwoScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -148,20 +149,19 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CreateEventDateTimeScreen: (data) {
-      var args =
-          data.getArgs<CreateEventDateTimeScreenArguments>(nullOk: false);
+    CreateEventStepOneScreen: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateEventDateTimeScreen(
-          key: args.key,
-          viewModel: args.viewModel,
-        ),
+        builder: (context) => CreateEventStepOneScreen(),
         settings: data,
       );
     },
-    CreateEventDataScreen: (data) {
+    CreateEventStepTwoScreen: (data) {
+      var args = data.getArgs<CreateEventStepTwoScreenArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateEventDataScreen(),
+        builder: (context) => CreateEventStepTwoScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
         settings: data,
       );
     },
@@ -194,9 +194,9 @@ class ChannelsScreenArguments {
   ChannelsScreenArguments({required this.game, required this.gameId, this.key});
 }
 
-/// CreateEventDateTimeScreen arguments holder class
-class CreateEventDateTimeScreenArguments {
+/// CreateEventStepTwoScreen arguments holder class
+class CreateEventStepTwoScreenArguments {
   final Key? key;
-  final CreateEventDateViewModel viewModel;
-  CreateEventDateTimeScreenArguments({this.key, required this.viewModel});
+  final CreateEventStepTwoViewModel viewModel;
+  CreateEventStepTwoScreenArguments({this.key, required this.viewModel});
 }

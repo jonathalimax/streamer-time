@@ -1,12 +1,12 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
-import 'package:app/features/event/event_date/create_event_date_viewmodel.dart';
+import 'package:app/features/create_event/event_step_two/create_event_step_two_viewmodel.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-class CreateEventDataViewModel extends BaseViewModel {
+class CreateEventStepOneViewModel extends BaseViewModel {
   final _twitchService = locator<TwitchService>();
   final _navigationService = locator<NavigationService>();
 
@@ -41,10 +41,10 @@ class CreateEventDataViewModel extends BaseViewModel {
   Future<void> continueCreatingEvent() async {
     if (selectedTitle == null || selectedCategory == null) return;
     final viewModel =
-        CreateEventDateViewModel(selectedTitle!, selectedCategory!);
+        CreateEventStepTwoViewModel(selectedTitle!, selectedCategory!);
     return await _navigationService.navigateTo(
-      Routes.createEventDateTimeScreen,
-      arguments: CreateEventDateTimeScreenArguments(viewModel: viewModel),
+      Routes.createEventStepTwoScreen,
+      arguments: CreateEventStepTwoScreenArguments(viewModel: viewModel),
     );
   }
 }
