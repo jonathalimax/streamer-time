@@ -240,33 +240,6 @@ class FirestoreApi {
     }
   }
 
-  Future<List<User>> getFollowingStreamers() async {
-    Users users = [];
-    final userId = await _getUserId();
-    if (userId == null) return users;
-
-    final usersResult = await usersCollection
-        .doc(userId)
-        .collection(FollowingFirestoreKey)
-        .get();
-
-    try {
-      await Future.forEach(usersResult.docs,
-          (QueryDocumentSnapshot<Map<String, dynamic>> element) async {
-        final follower = Follower.fromJson(element.data());
-        final user = await getUserById(follower.userId);
-        if (user != null) users.add(user);
-      });
-
-      return users;
-    } catch (error) {
-      throw FirestoreApiException(
-        message: 'Failed to get following streamers',
-        devDetails: '$error',
-      );
-    }
-  }
-
   Future<void> _buildStreams() async {
     final userId = await _getUserId();
     if (userId == null) return;
