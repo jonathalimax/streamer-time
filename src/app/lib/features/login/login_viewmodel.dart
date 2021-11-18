@@ -20,7 +20,7 @@ class LoginViewModel extends BaseViewModel {
       final token =
           await _twitchService.client.twitchHttpClient.validateToken();
       if (token != null) {
-        await _appAuthentication.persisteToken(token);
+        await _appAuthentication.persistToken(token);
         await _registerUser(token.userId);
         _navigation.clearStackAndShow(Routes.homeScreen);
       }

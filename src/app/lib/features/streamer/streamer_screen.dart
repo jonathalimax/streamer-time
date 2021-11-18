@@ -89,19 +89,23 @@ class StreamerScreen extends StatelessWidget {
   AppBar _buildAppBar(BuildContext context, StreamerViewModel viewModel) {
     return AppBar(
       actions: [
-        IconButton(
-          onPressed: () {
-            if (viewModel.fetchedStreamer == null) return;
-            viewModel.fetchedStreamer!.following
-                ? viewModel.unfollowStreamer()
-                : viewModel.followStreamer();
-          },
-          icon: Icon(
-            viewModel.fetchedStreamer?.following ?? false
-                ? Icons.favorite
-                : Icons.favorite_outline,
-          ),
-        )
+        viewModel.isBusy
+            ? SpinKitPulse(
+                color: kcIceWhite,
+              )
+            : IconButton(
+                onPressed: () {
+                  if (viewModel.fetchedStreamer == null) return;
+                  viewModel.fetchedStreamer!.following
+                      ? viewModel.unfollowStreamer()
+                      : viewModel.followStreamer();
+                },
+                icon: Icon(
+                  viewModel.fetchedStreamer?.following ?? false
+                      ? Icons.favorite
+                      : Icons.favorite_outline,
+                ),
+              )
       ],
     );
   }

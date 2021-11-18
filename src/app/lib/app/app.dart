@@ -1,4 +1,5 @@
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/create_event/event_step_one/create_event_step_one_screen.dart';
@@ -62,6 +63,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: StreamerService),
     LazySingleton(classType: PushNotificationManager),
     LazySingleton(classType: AdManager),
+    LazySingleton(classType: CachingManager),
   ],
 )
 class AppSetup {}

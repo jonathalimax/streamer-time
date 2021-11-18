@@ -1,17 +1,21 @@
+import 'package:app/app/app.locator.dart';
+import 'package:app/core/caching/caching_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationManager {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final _cachingManager = locator<CachingManager>();
 
   Future<void> configure() async {
-    await _messaging.requestPermission(
+    final permission = await _messaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
 
-    String? token = await _messaging.getToken();
-    print(token);
+    await _setupNotificationAuthorizationCache(
+      permission.authorizationStatus == AuthorizationStatus.authorized,
+    );
 
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) => _onForegroundMessage(message),
@@ -20,6 +24,14 @@ class PushNotificationManager {
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) => _onMessageOpenedApp(message),
     );
+  }
+
+  Future<void> _setupNotificationAuthorizationCache(bool authorized) async {
+    final isNotificationAuthorizedLocally =
+        await _cachingManager.hasPersistedNotificationAuthoziation();
+
+    if (!isNotificationAuthorizedLocally)
+      await _cachingManager.persistNotificationPermission(authorized);
   }
 
   Future<void> _onForegroundMessage(RemoteMessage message) async {

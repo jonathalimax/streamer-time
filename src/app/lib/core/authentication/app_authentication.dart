@@ -1,3 +1,4 @@
+import 'package:app/app/app.locator.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/caching/caching_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,10 +6,10 @@ import 'package:hive/hive.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class AppAuthentication {
-  final _cachingManager = CachingManager();
+  final _cachingManager = locator<CachingManager>();
   final firebaseAuth = FirebaseAuth.instance;
 
-  Future<void> persisteToken(TwitchToken token) async {
+  Future<void> persistToken(TwitchToken token) async {
     final authToken = AuthenticationModel.fromToken(token);
     final encryptionKey = await _cachingManager.getEncryptionKey();
 
@@ -53,7 +54,7 @@ class AppAuthentication {
     );
 
     await encryptedBox.delete(AUTH_TOKEN_KEY);
-    encryptedBox.close();
+    await encryptedBox.close();
 
     await firebaseAuth.signOut();
   }
@@ -69,7 +70,7 @@ class AppAuthentication {
     );
 
     final authToken = encryptedBox.get(AUTH_TOKEN_KEY) as AuthenticationModel?;
-    encryptedBox.close();
+    await encryptedBox.close();
 
     if (authToken == null) return null;
 

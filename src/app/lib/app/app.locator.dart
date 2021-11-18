@@ -12,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../core/ads/ad_manager.dart';
 import '../core/authentication/app_authentication.dart';
+import '../core/caching/caching_manager.dart';
 import '../core/notifications/push_notification_manager.dart';
 import '../features/agenda/agenda_viewmodel.dart';
 import '../features/discover/discover_viewmodel.dart';
@@ -50,4 +51,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => StreamerService());
   locator.registerLazySingleton(() => PushNotificationManager());
   locator.registerLazySingleton(() => AdManager());
+  locator.registerLazySingleton(() => CachingManager());
 }

@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
@@ -15,6 +16,10 @@ class ProfileViewModel extends FutureViewModel<User?> {
   final _navigation = locator<NavigationService>();
   final _userService = locator<UserService>();
   final _authentication = locator<AppAuthentication>();
+  final _cachingManager = CachingManager();
+
+  bool _isNotificationAuthorized = false;
+  bool get isNotificationAuthorized => _isNotificationAuthorized;
 
   logout() async {
     locator.resetLazySingleton<FirestoreApi>();
@@ -23,16 +28,25 @@ class ProfileViewModel extends FutureViewModel<User?> {
     locator.resetLazySingleton<ProfileViewModel>();
     locator.resetLazySingleton<CardStreamListViewModel>();
     locator.resetLazySingleton<CardGameListViewModel>();
+    locator.resetLazySingleton<CachingManager>();
     await _authentication.logout();
     await _navigation.clearStackAndShow(Routes.startupScreen);
   }
 
   @override
   Future<User?> futureToRun() async {
+    _isNotificationAuthorized =
+        await _cachingManager.isNotificationAuthorized();
     return await _userService.getUserData();
   }
 
   Future<void> openFavorites() async {
     await _navigation.navigateTo(Routes.favoritesScreen);
+  }
+
+  Future<void> setNotificationEnable(bool isEnabled) async {
+    _isNotificationAuthorized = isEnabled;
+    await _cachingManager.persistNotificationPermission(isEnabled);
+    notifyListeners();
   }
 }

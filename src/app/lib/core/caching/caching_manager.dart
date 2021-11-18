@@ -8,7 +8,7 @@ const String SECURE_TOKEN_KEY = 'SecureToken';
 const String AUTH_BOX_KEY = 'AuthenticationBox';
 const String AUTH_TOKEN_KEY = 'authToken';
 const String SETTINGS_BOX_KEY = 'SettingsBox';
-const String SETTINGS_DARK_MODE_KEY = 'settingsDarkMode';
+const String NOTIFICATION_AUTHORIZED_KEY = 'NotificationAuthorizedKey';
 
 class CachingManager {
   Future<Uint8List?> getEncryptionKey() async {
@@ -31,5 +31,49 @@ class CachingManager {
     if (secureToken == null) return null;
 
     return base64Url.decode(secureToken);
+  }
+
+  Future<void> persistNotificationPermission(bool isAuthorized) async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return;
+
+    final encryptedBox = await Hive.openBox(
+      SETTINGS_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    await encryptedBox.put(NOTIFICATION_AUTHORIZED_KEY, isAuthorized);
+    await encryptedBox.close();
+  }
+
+  Future<bool> isNotificationAuthorized() async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return false;
+
+    final encryptedBox = await Hive.openBox(
+      SETTINGS_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    final isAuthorized = encryptedBox.get(NOTIFICATION_AUTHORIZED_KEY) as bool?;
+    await encryptedBox.close();
+
+    if (isAuthorized == null) return false;
+    return isAuthorized;
+  }
+
+  Future<bool> hasPersistedNotificationAuthoziation() async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return false;
+
+    final encryptedBox = await Hive.openBox(
+      SETTINGS_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    final isAuthorized = encryptedBox.get(NOTIFICATION_AUTHORIZED_KEY) as bool?;
+    await encryptedBox.close();
+
+    return isAuthorized != null;
   }
 }

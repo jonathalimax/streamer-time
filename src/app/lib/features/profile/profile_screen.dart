@@ -80,19 +80,6 @@ class ProfileScreen extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Divider(),
-        ListTile(
-          title: Align(
-            alignment: Alignment(-1.2, 0),
-            child: AppText.heading4('Notificacões'),
-          ),
-          leading: Icon(Icons.notifications),
-          trailing: Switch.adaptive(
-            activeColor: Theme.of(context).colorScheme.secondary,
-            value: false,
-            onChanged: (value) => {},
-          ),
-          onTap: null,
-        ),
         InkWell(
           onTap: viewModel.openFavorites,
           highlightColor:

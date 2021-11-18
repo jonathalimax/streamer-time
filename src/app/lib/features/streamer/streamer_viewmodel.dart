@@ -49,16 +49,18 @@ class StreamerViewModel extends MultipleFutureViewModel {
   }
 
   Future<void> followStreamer() async {
-    await runBusyFuture(_streamerService.followStreamer(streamerId));
+    setBusy(true);
+    await _streamerService.followStreamer(streamerId);
     await _pushNotificationManager.subscribeToTopic(username);
     (dataMap![_streamerFuture] as User).following = true;
-    notifyListeners();
+    setBusy(false);
   }
 
   Future<void> unfollowStreamer() async {
-    await runBusyFuture(_streamerService.unfollowStreamer(streamerId));
+    setBusy(true);
+    await _streamerService.unfollowStreamer(streamerId);
     await _pushNotificationManager.unsubscribeFromTopic(username);
     (dataMap![_streamerFuture] as User).following = false;
-    notifyListeners();
+    setBusy(false);
   }
 }
