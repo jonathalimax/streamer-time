@@ -15,6 +15,12 @@ class Event {
   String get dateDisplay => DateFormat('dd MMM').format(starTime);
   String get timeDisplay => DateFormat('jm').format(starTime);
 
+  bool get isLive {
+    final now = DateTime.now();
+    return starTime.isBefore(now) &&
+        starTime.difference(now) <= Duration(hours: 4);
+  }
+
   Event({
     this.id,
     required this.title,

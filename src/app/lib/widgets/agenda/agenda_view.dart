@@ -66,6 +66,7 @@ class AgendaView extends StatelessWidget {
                     title: events[index].title,
                     imageUrl: events[index].imageUrl,
                     fontColor: kcIceWhite,
+                    isLive: events[index].isLive,
                   ),
                 );
               },

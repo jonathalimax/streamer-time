@@ -15,6 +15,7 @@ class CardEventView extends StatelessWidget {
   final File? imageFile;
   final String? imageUrl;
   final Color? fontColor;
+  final bool isLive;
 
   const CardEventView({
     Key? key,
@@ -27,6 +28,7 @@ class CardEventView extends StatelessWidget {
     this.imageFile,
     this.imageUrl,
     this.fontColor = Colors.white,
+    this.isLive = false,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,8 @@ class CardEventView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
+                    if (isLive) _buildLive(),
+                    Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(6),
                       child: Container(
@@ -147,6 +151,29 @@ class CardEventView extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLive() {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.all(
+            Radius.circular(6),
+          ),
+        ),
+        padding: const EdgeInsets.all(4),
+        child: AppText(
+          'AO VIVO',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w800,
+            color: fontColor,
+          ),
         ),
       ),
     );

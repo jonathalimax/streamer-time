@@ -75,7 +75,9 @@ class FirestoreApi {
           .orderBy('starTime')
           .where(
             'starTime',
-            isGreaterThanOrEqualTo: DateTime.now(),
+            isGreaterThanOrEqualTo: DateTime.now().subtract(
+              Duration(hours: 4), // TODO: Use duration on database instead
+            ),
           )
           .get();
 
@@ -264,6 +266,7 @@ class FirestoreApi {
         if (user != null) users.add(user);
       });
 
+      users.sort((a, b) => b.viewCount.compareTo(a.viewCount));
       _usersController.add(users);
     } catch (error) {
       throw FirestoreApiException(
