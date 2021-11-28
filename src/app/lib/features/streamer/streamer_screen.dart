@@ -5,6 +5,7 @@ import 'package:design_system/design_system.dart';
 import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 
 class StreamerScreen extends StatelessWidget {
@@ -33,42 +34,7 @@ class StreamerScreen extends StatelessWidget {
               )
             : Column(
                 children: <Widget>[
-                  Flexible(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              if (viewModel.fetchedStreamer != null)
-                                ProfileImageView(
-                                  context: context,
-                                  imageUrl: viewModel
-                                      .fetchedStreamer!.profileImageUrl,
-                                ),
-                              SizedBox(width: 10),
-                              viewModel.fetchingStreamer
-                                  ? Container()
-                                  : AppText.heading3(
-                                      viewModel.fetchedStreamer?.name ?? '',
-                                    ),
-                            ],
-                          ),
-                          SizedBox(height: 12),
-                          Flexible(
-                            child: AppText.body(
-                              viewModel.fetchedStreamer?.description ?? '',
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          Divider(),
-                        ],
-                      ),
-                    ),
-                  ),
+                  StreamerBioWidget(viewModel: viewModel),
                   if (viewModel.fetchedStreamer != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -79,7 +45,13 @@ class StreamerScreen extends StatelessWidget {
                             )
                           : Container(),
                     ),
-                  // Spacer(),
+                  Spacer(),
+                  Container(
+                    height: viewModel.bannerAd.size.height.toDouble(),
+                    child: AdWidget(
+                      ad: viewModel.bannerAd,
+                    ),
+                  ),
                 ],
               ),
       ),
@@ -107,6 +79,52 @@ class StreamerScreen extends StatelessWidget {
                 ),
               )
       ],
+    );
+  }
+}
+
+class StreamerBioWidget extends StatelessWidget {
+  final StreamerViewModel viewModel;
+
+  const StreamerBioWidget({
+    Key? key,
+    required this.viewModel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              if (viewModel.fetchedStreamer != null)
+                ProfileImageView(
+                  context: context,
+                  imageUrl: viewModel.fetchedStreamer!.profileImageUrl,
+                ),
+              SizedBox(width: 10),
+              viewModel.fetchingStreamer
+                  ? Container()
+                  : AppText.heading3(
+                      viewModel.fetchedStreamer?.name ?? '',
+                    ),
+            ],
+          ),
+          SizedBox(height: 12),
+          Flexible(
+            fit: FlexFit.loose,
+            child: AppText.body(
+              viewModel.fetchedStreamer?.description ?? '',
+              textAlign: TextAlign.left,
+            ),
+          ),
+          Divider(),
+        ],
+      ),
     );
   }
 }

@@ -1,9 +1,11 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 
 const String _agendaFuture = 'agendaFuture';
@@ -13,6 +15,11 @@ class StreamerViewModel extends MultipleFutureViewModel {
   final String streamerId;
   final String username;
 
+  bool _isBannerAdLoaded = false;
+
+  late BannerAd _bannerAd;
+  BannerAd get bannerAd => _bannerAd;
+
   final _twitchService = locator<TwitchService>();
   final _eventsService = locator<EventService>();
   final _streamerService = locator<StreamerService>();
@@ -21,7 +28,9 @@ class StreamerViewModel extends MultipleFutureViewModel {
   StreamerViewModel({
     required this.streamerId,
     required this.username,
-  });
+  }) {
+    _buildBannerAd();
+  }
 
   String get fetchedAgenda => dataMap![_agendaFuture];
   User? get fetchedStreamer => dataMap![_streamerFuture];
@@ -62,5 +71,25 @@ class StreamerViewModel extends MultipleFutureViewModel {
     await _pushNotificationManager.unsubscribeFromTopic(username);
     (dataMap![_streamerFuture] as User).following = false;
     setBusy(false);
+  }
+
+  Future<void> _buildBannerAd() async {
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdManager.streamerBannerUnitId,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          if (!_isBannerAdLoaded) {
+            _isBannerAdLoaded = true;
+            notifyListeners();
+          }
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        },
+      ),
+    );
+    await _bannerAd.load();
   }
 }

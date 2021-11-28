@@ -1,6 +1,8 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/authentication/app_authentication.dart';
+import 'package:app/features/agenda/agenda_viewmodel.dart';
+import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:app/network/services/user_service.dart';
@@ -19,14 +21,17 @@ class LoginViewModel extends BaseViewModel {
       _twitchService.client.initializeToken(TwitchToken.fromUrl(url));
       final token =
           await _twitchService.client.twitchHttpClient.validateToken();
-      if (token != null) {
-        await _appAuthentication.persistToken(token);
-        await _registerUser(token.userId);
-        _navigation.clearStackAndShow(Routes.homeScreen);
-      }
+      if (token != null) _makeLogin(token);
       return false;
     }
     return true;
+  }
+
+  Future<void> _makeLogin(TwitchToken token) async {
+    locator.resetLazySingleton<FirestoreApi>();
+    await _appAuthentication.persistToken(token);
+    await _registerUser(token.userId);
+    await _navigation.clearStackAndShow(Routes.homeScreen);
   }
 
   void startAuthentication() {

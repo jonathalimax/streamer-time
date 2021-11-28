@@ -46,11 +46,13 @@ class AgendaViewModel extends BaseViewModel {
   AgendaViewModel() {
     _firestoreApi.followingStreamers.listen(_onUsersUpdated);
     buildInlineBannerAd();
+    setBusy(true);
+    print('debug AgendaViewModel');
   }
 
   void _onUsersUpdated(Users users) {
     this._users = users;
-    notifyListeners();
+    setBusy(false);
   }
 
   Future<void> startCreateEvent() async {

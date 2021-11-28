@@ -21,7 +21,9 @@ class FirestoreApi {
   final StreamController<Users> _usersController = BehaviorSubject();
   Stream<Users> get followingStreamers =>
       _usersController.stream.asBroadcastStream(
-        onCancel: (sub) => sub.cancel(),
+        onCancel: (sub) {
+          sub.cancel();
+        },
       );
 
   FirestoreApi() {
