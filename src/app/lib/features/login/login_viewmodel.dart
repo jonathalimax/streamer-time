@@ -1,7 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/authentication/app_authentication.dart';
-import 'package:app/features/agenda/agenda_viewmodel.dart';
+import 'package:app/features/webview/webview_screen.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/twitch_service.dart';
@@ -34,19 +34,20 @@ class LoginViewModel extends BaseViewModel {
     await _navigation.clearStackAndShow(Routes.homeScreen);
   }
 
-  void startAuthentication() {
+  Future<void> startAuthentication() async {
     final List<TwitchApiScope> scopes = [
       TwitchApiScope.userReadFollow,
       TwitchApiScope.userReadEmail,
     ];
 
     final url = _twitchService.client.authorizeUri(scopes);
-    _navigation.navigateTo(
-      Routes.webViewScreen,
-      arguments: WebViewScreenArguments(
-        url: url.toString(),
-        shouldNavigate: _handleUrl,
-      ),
+    final webViewScreen = WebViewScreen(
+      url.toString(),
+      _handleUrl,
+    );
+    await _navigation.navigateToView(
+      webViewScreen,
+      fullscreenDialog: true,
     );
   }
 

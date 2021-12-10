@@ -30,7 +30,7 @@ dependencies:
   # Caching
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^5.0.2
 
   # Google
   firebase_auth: ^3.2.0
@@ -38,7 +38,7 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_messaging: ^11.1.0
   cloud_firestore: ^3.1.0
-  google_mobile_ads: ^0.13.5
+  google_mobile_ads: ^1.0.1
 
   # Network
   twitch_api:
@@ -48,8 +48,8 @@ dependencies:
   intl: ^0.17.0
   rxdart: ^0.27.2
   injectable: ^1.5.0
-  url_launcher: ^6.0.12
-  webview_flutter: ^2.0.14
+  url_launcher: ^6.0.17
+  webview_flutter: ^3.0.0
 
   # Media
   image_picker: ^0.8.4+2

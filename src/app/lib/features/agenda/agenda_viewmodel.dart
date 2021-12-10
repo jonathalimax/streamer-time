@@ -47,7 +47,6 @@ class AgendaViewModel extends BaseViewModel {
     _firestoreApi.followingStreamers.listen(_onUsersUpdated);
     buildInlineBannerAd();
     setBusy(true);
-    print('debug AgendaViewModel');
   }
 
   void _onUsersUpdated(Users users) {

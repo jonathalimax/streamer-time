@@ -23,9 +23,6 @@ class WebViewScreen extends StatelessWidget {
       disposeViewModel: false,
       initialiseSpecialViewModelsOnce: true,
       viewModelBuilder: () => locator<WebviewViewModel>(),
-      onModelReady: (viewModel) {
-        viewModel.startLoader();
-      },
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBar(),
         body: LoadingOverlay(
@@ -38,6 +35,10 @@ class WebViewScreen extends StatelessWidget {
             initialUrl: url,
             javascriptMode: JavascriptMode.unrestricted,
             zoomEnabled: false,
+            gestureNavigationEnabled: true,
+            onProgress: (value) => value != 100
+                ? viewModel.setBusy(true)
+                : viewModel.setBusy(false),
             navigationDelegate: (NavigationRequest request) async {
               return await shouldNavigate(request.url)
                   ? NavigationDecision.navigate
@@ -45,9 +46,6 @@ class WebViewScreen extends StatelessWidget {
             },
             onWebViewCreated: (controller) {
               controller.clearCache();
-            },
-            onPageFinished: (requestUrl) {
-              viewModel.finishLoader();
             },
           ),
         ),
