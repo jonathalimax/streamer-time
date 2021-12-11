@@ -33,11 +33,9 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Spacer(flex: 1),
-                  Container(
-                    alignment: Alignment.center,
+                  Center(
                     child: Image(
                       image: AssetImage('resources/icons/sup-icon.png'),
-                      // color: kcIceWhite,
                       width: 250,
                     ),
                   ),
