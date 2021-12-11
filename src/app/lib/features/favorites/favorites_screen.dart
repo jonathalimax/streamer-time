@@ -62,7 +62,7 @@ class FavoritesScreen extends StatelessWidget {
                                 user.profileImageUrl,
                               ),
                             ),
-                            title: AppText.body(
+                            title: AppText.heading4(
                               user.username,
                             ),
                           ),

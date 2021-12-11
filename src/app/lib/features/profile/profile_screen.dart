@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';
+import 'package:app/features/profile/widget/profile_item_widget.dart';
 import 'package:app/widgets/profile_image_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/widgets/app_text.dart';
@@ -60,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                 imageUrl: viewModel.data!.profileImageUrl,
                 size: 75,
               ),
-              SizedBox(width: 20),
+              SizedBox(width: 30),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,34 +81,26 @@ class ProfileScreen extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Divider(),
-        InkWell(
-          onTap: viewModel.openFavorites,
-          highlightColor:
-              Theme.of(context).colorScheme.secondary.withOpacity(.2),
-          child: ListTile(
-            title: Align(
-              alignment: Alignment(-1.2, 0),
-              child: AppText.heading4('Meus favoritos'),
-            ),
-            leading: Icon(Icons.favorite),
-          ),
+        ProfileItemWidget(
+          title: 'Seguindo',
+          leading: Icon(Icons.favorite),
+          onTap: viewModel.showFavorites,
         ),
-        InkWell(
+        ProfileItemWidget(
+          title: 'Meus eventos',
+          leading: Icon(Icons.event_note),
+          onTap: viewModel.showEvents,
+        ),
+        ProfileItemWidget(
+          title: 'Sair da conta',
+          leading: Icon(Icons.logout),
           onTap: viewModel.logout,
-          highlightColor:
-              Theme.of(context).colorScheme.secondary.withOpacity(.2),
-          child: ListTile(
-            title: Align(
-              alignment: Alignment(-1.2, 0),
-              child: AppText.heading4('Sair da conta'),
-            ),
-            leading: Icon(Icons.logout),
-          ),
         ),
       ],
     );
   }
 
+  // TODO: Populate stats
   Widget _buildStats() {
     return Row(
       children: <Widget>[
