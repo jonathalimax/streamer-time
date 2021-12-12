@@ -1,6 +1,5 @@
 import 'create_event_step_two_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
-import 'package:design_system/styles/app_colors.dart';
 import 'package:design_system/widgets/app_button.dart';
 
 import 'package:flutter/material.dart';
@@ -56,7 +55,6 @@ class CreateEventStepTwoScreen extends StatelessWidget {
                                 date: viewModel.selectedDateFormated,
                                 time: viewModel.selectedTimeFormated,
                                 width: double.infinity,
-                                fontColor: kcIceWhite,
                                 imageFile: viewModel.selectedImage,
                               ),
                             ),

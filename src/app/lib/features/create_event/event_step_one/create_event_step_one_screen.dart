@@ -70,7 +70,6 @@ class CreateEventStepOneScreen extends StatelessWidget {
                       date: "",
                       time: "",
                       width: double.infinity,
-                      fontColor: kcIceWhite,
                     ),
                   ),
                   SizedBox(height: 24),

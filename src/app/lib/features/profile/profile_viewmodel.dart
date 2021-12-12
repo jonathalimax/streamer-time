@@ -44,7 +44,9 @@ class ProfileViewModel extends FutureViewModel<User?> {
     _navigation.navigateTo(Routes.favoritesScreen);
   }
 
-  void showEvents() {}
+  void showEvents() {
+    _navigation.navigateTo(Routes.ownEventsScreen);
+  }
 
   Future<void> setNotificationEnable(bool isEnabled) async {
     _isNotificationAuthorized = isEnabled;

@@ -5,6 +5,7 @@ import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/create_event/event_step_one/create_event_step_one_screen.dart';
 import 'package:app/features/create_event/event_step_two/create_event_step_two_screen.dart';
 import 'package:app/features/favorites/favorites_screen.dart';
+import 'package:app/features/own_events/own_events_screen.dart';
 import 'package:app/features/splash/splash_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
@@ -45,6 +46,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: CreateEventStepOneScreen),
     MaterialRoute(page: CreateEventStepTwoScreen),
     MaterialRoute(page: FavoritesScreen),
+    MaterialRoute(page: OwnEventsScreen),
   ],
   dependencies: [
     LazySingleton(classType: TwitchService),

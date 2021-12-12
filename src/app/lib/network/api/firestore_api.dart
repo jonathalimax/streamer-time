@@ -131,10 +131,18 @@ class FirestoreApi {
       final document = await usersCollection
           .doc(userId)
           .collection(EventsFirestoreKey)
+          .orderBy('starTime')
+          .where(
+            'starTime',
+            isGreaterThanOrEqualTo: DateTime.now().subtract(
+              Duration(hours: 4), // TODO: Use duration on database instead
+            ),
+          )
           .get();
 
-      document.docs.forEach(
-        (document) {
+      await Future.forEach(
+        document.docs,
+        (QueryDocumentSnapshot<Map<String, dynamic>> document) {
           events.add(Event.fromJson(document.data()));
         },
       );

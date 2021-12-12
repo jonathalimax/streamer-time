@@ -19,6 +19,7 @@ import '../features/discover/discover_screen.dart';
 import '../features/favorites/favorites_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
+import '../features/own_events/own_events_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/splash/splash_screen.dart';
 import '../features/startup/startup_screen.dart';
@@ -42,6 +43,7 @@ class Routes {
   static const String createEventStepTwoScreen =
       '/create-event-step-two-screen';
   static const String favoritesScreen = '/favorites-screen';
+  static const String ownEventsScreen = '/own-events-screen';
   static const all = <String>{
     splashScreen,
     startupScreen,
@@ -56,6 +58,7 @@ class Routes {
     createEventStepOneScreen,
     createEventStepTwoScreen,
     favoritesScreen,
+    ownEventsScreen,
   };
 }
 
@@ -76,6 +79,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.createEventStepOneScreen, page: CreateEventStepOneScreen),
     RouteDef(Routes.createEventStepTwoScreen, page: CreateEventStepTwoScreen),
     RouteDef(Routes.favoritesScreen, page: FavoritesScreen),
+    RouteDef(Routes.ownEventsScreen, page: OwnEventsScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -172,6 +176,12 @@ class StackedRouter extends RouterBase {
     FavoritesScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const FavoritesScreen(),
+        settings: data,
+      );
+    },
+    OwnEventsScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const OwnEventsScreen(),
         settings: data,
       );
     },

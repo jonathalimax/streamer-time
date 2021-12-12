@@ -27,7 +27,7 @@ class CardEventView extends StatelessWidget {
     this.width,
     this.imageFile,
     this.imageUrl,
-    this.fontColor = Colors.white,
+    this.fontColor = kcIceWhite,
     this.isLive = false,
   }) : super(key: key);
 
