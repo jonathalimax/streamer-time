@@ -35,14 +35,23 @@ class OwnEventsScreen extends StatelessWidget {
                           return Container(
                             padding: const EdgeInsets.only(top: 12),
                             height: 230,
-                            child: CardEventView(
-                              category: item.categoryName,
-                              title: item.title,
-                              date: item.dateDisplay,
-                              time: item.timeDisplay,
-                              imageUrl: item.imageUrl,
-                              isLive: item.isLive,
-                              width: double.infinity,
+                            child: InkWell(
+                              onTap: () => viewModel.manageEvent(item),
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(.2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(3)),
+                              child: CardEventView(
+                                category: item.categoryName,
+                                title: item.title,
+                                date: item.dateDisplay,
+                                time: item.timeDisplay,
+                                imageUrl: item.imageUrl,
+                                isLive: item.isLive,
+                                width: double.infinity,
+                              ),
                             ),
                           );
                         },

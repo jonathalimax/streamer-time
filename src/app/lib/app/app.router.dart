@@ -12,10 +12,12 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';
-import '../features/create_event/event_step_one/create_event_step_one_screen.dart';
-import '../features/create_event/event_step_two/create_event_step_two_screen.dart';
-import '../features/create_event/event_step_two/create_event_step_two_viewmodel.dart';
 import '../features/discover/discover_screen.dart';
+import '../features/event/create/event_step_one/create_event_step_one_screen.dart';
+import '../features/event/create/event_step_two/create_event_step_two_screen.dart';
+import '../features/event/create/event_step_two/create_event_step_two_viewmodel.dart';
+import '../features/event/edit/step_one/event_step_one_edit_screen.dart';
+import '../features/event/edit/step_one/event_step_one_edit_viewmodel.dart';
 import '../features/favorites/favorites_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
@@ -42,6 +44,7 @@ class Routes {
       '/create-event-step-one-screen';
   static const String createEventStepTwoScreen =
       '/create-event-step-two-screen';
+  static const String eventStepOneEditScreen = '/event-step-one-edit-screen';
   static const String favoritesScreen = '/favorites-screen';
   static const String ownEventsScreen = '/own-events-screen';
   static const all = <String>{
@@ -57,6 +60,7 @@ class Routes {
     channelsScreen,
     createEventStepOneScreen,
     createEventStepTwoScreen,
+    eventStepOneEditScreen,
     favoritesScreen,
     ownEventsScreen,
   };
@@ -78,6 +82,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.channelsScreen, page: ChannelsScreen),
     RouteDef(Routes.createEventStepOneScreen, page: CreateEventStepOneScreen),
     RouteDef(Routes.createEventStepTwoScreen, page: CreateEventStepTwoScreen),
+    RouteDef(Routes.eventStepOneEditScreen, page: EventStepOneEditScreen),
     RouteDef(Routes.favoritesScreen, page: FavoritesScreen),
     RouteDef(Routes.ownEventsScreen, page: OwnEventsScreen),
   ];
@@ -173,6 +178,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    EventStepOneEditScreen: (data) {
+      var args = data.getArgs<EventStepOneEditScreenArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EventStepOneEditScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
+        settings: data,
+      );
+    },
     FavoritesScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const FavoritesScreen(),
@@ -219,4 +234,11 @@ class CreateEventStepTwoScreenArguments {
   final Key? key;
   final CreateEventStepTwoViewModel viewModel;
   CreateEventStepTwoScreenArguments({this.key, required this.viewModel});
+}
+
+/// EventStepOneEditScreen arguments holder class
+class EventStepOneEditScreenArguments {
+  final Key? key;
+  final EventStepOneEditViewModel viewModel;
+  EventStepOneEditScreenArguments({this.key, required this.viewModel});
 }
