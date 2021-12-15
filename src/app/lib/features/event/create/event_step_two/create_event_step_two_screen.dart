@@ -1,3 +1,6 @@
+import 'package:app/features/event/widget/event_step_two_widget.dart';
+import 'package:app/features/event/widget/event_step_two_widget_viewmodel.dart';
+
 import 'create_event_step_two_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
 import 'package:design_system/widgets/app_button.dart';
@@ -31,71 +34,16 @@ class CreateEventStepTwoScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               )
-            : SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 8,
-                  ),
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            SizedBox(height: 20),
-                            Container(
-                              height: 230,
-                              child: CardEventView(
-                                category: viewModel.category.name,
-                                title: viewModel.title,
-                                date: viewModel.selectedDateFormated,
-                                time: viewModel.selectedTimeFormated,
-                                width: double.infinity,
-                                imageFile: viewModel.selectedImage,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                            SizedBox(
-                              width: 290,
-                              child: AppButton(
-                                title: 'Adicionar data e hora',
-                                action: () => viewModel.setDateTime(context),
-                                color: Colors.transparent,
-                                titleColor: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            SizedBox(
-                              width: 290,
-                              child: AppButton(
-                                title: 'Adicionar imagem de fundo',
-                                action: () => viewModel
-                                    .showImageSourceActionSheet(context),
-                                color: Colors.transparent,
-                                titleColor: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            Spacer(flex: 5),
-                            SizedBox(
-                              width: 290,
-                              child: AppButton(
-                                title: 'Continuar',
-                                action: () => viewModel.createEvent(context),
-                                color: Colors.transparent,
-                                titleColor: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+            : EventStepTwoWidget(
+                viewModel: EventStepTwoWidgetViewModel(
+                  null,
+                  viewModel.title,
+                  viewModel.category,
                 ),
+                callToActionTitle: 'Continuar',
+                callToAction: (image, date) {
+                  viewModel.createEvent(context, image, date);
+                },
               ),
       ),
     );

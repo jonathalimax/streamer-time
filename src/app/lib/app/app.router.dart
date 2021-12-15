@@ -18,6 +18,8 @@ import '../features/event/create/event_step_two/create_event_step_two_screen.dar
 import '../features/event/create/event_step_two/create_event_step_two_viewmodel.dart';
 import '../features/event/edit/step_one/event_step_one_edit_screen.dart';
 import '../features/event/edit/step_one/event_step_one_edit_viewmodel.dart';
+import '../features/event/edit/step_two/event_step_two_edit_screen.dart';
+import '../features/event/edit/step_two/event_step_two_edit_viewmodel.dart';
 import '../features/favorites/favorites_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/login/login_screen.dart';
@@ -45,6 +47,7 @@ class Routes {
   static const String createEventStepTwoScreen =
       '/create-event-step-two-screen';
   static const String eventStepOneEditScreen = '/event-step-one-edit-screen';
+  static const String eventStepTwoEditScreen = '/event-step-two-edit-screen';
   static const String favoritesScreen = '/favorites-screen';
   static const String ownEventsScreen = '/own-events-screen';
   static const all = <String>{
@@ -61,6 +64,7 @@ class Routes {
     createEventStepOneScreen,
     createEventStepTwoScreen,
     eventStepOneEditScreen,
+    eventStepTwoEditScreen,
     favoritesScreen,
     ownEventsScreen,
   };
@@ -83,6 +87,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.createEventStepOneScreen, page: CreateEventStepOneScreen),
     RouteDef(Routes.createEventStepTwoScreen, page: CreateEventStepTwoScreen),
     RouteDef(Routes.eventStepOneEditScreen, page: EventStepOneEditScreen),
+    RouteDef(Routes.eventStepTwoEditScreen, page: EventStepTwoEditScreen),
     RouteDef(Routes.favoritesScreen, page: FavoritesScreen),
     RouteDef(Routes.ownEventsScreen, page: OwnEventsScreen),
   ];
@@ -188,6 +193,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    EventStepTwoEditScreen: (data) {
+      var args = data.getArgs<EventStepTwoEditScreenArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EventStepTwoEditScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
+        settings: data,
+      );
+    },
     FavoritesScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const FavoritesScreen(),
@@ -241,4 +256,11 @@ class EventStepOneEditScreenArguments {
   final Key? key;
   final EventStepOneEditViewModel viewModel;
   EventStepOneEditScreenArguments({this.key, required this.viewModel});
+}
+
+/// EventStepTwoEditScreen arguments holder class
+class EventStepTwoEditScreenArguments {
+  final Key? key;
+  final EventStepTwoEditViewModel viewModel;
+  EventStepTwoEditScreenArguments({this.key, required this.viewModel});
 }

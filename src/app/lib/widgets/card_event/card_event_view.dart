@@ -52,8 +52,8 @@ class CardEventView extends StatelessWidget {
                     image: Image.file(imageFile!).image,
                   ),
                 ),
-              ),
-            if (imageUrl != null)
+              )
+            else if (imageUrl != null)
               CachedNetworkImage(
                 imageUrl: imageUrl!,
                 imageBuilder: (context, imageProvider) => Container(

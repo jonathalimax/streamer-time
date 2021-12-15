@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class Event {
-  final String? id;
-  final String title;
-  final DateTime starTime;
-  final String categoryId;
-  final String categoryName;
-  final String? imageUrl;
-  final String? duration;
-  final String timezone;
-  final bool isRecurring;
+  String? id;
+  String title;
+  DateTime starTime;
+  String categoryId;
+  String categoryName;
+  String? imageUrl;
+  String? duration;
+  String timezone;
+  bool isRecurring;
 
   String get dateDisplay => DateFormat('dd MMM').format(starTime);
   String get timeDisplay => DateFormat('jm').format(starTime);

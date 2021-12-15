@@ -5,6 +5,7 @@ import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/event/create/event_step_one/create_event_step_one_screen.dart';
 import 'package:app/features/event/create/event_step_two/create_event_step_two_screen.dart';
 import 'package:app/features/event/edit/step_one/event_step_one_edit_screen.dart';
+import 'package:app/features/event/edit/step_two/event_step_two_edit_screen.dart';
 import 'package:app/features/favorites/favorites_screen.dart';
 import 'package:app/features/own_events/own_events_screen.dart';
 import 'package:app/features/splash/splash_screen.dart';
@@ -47,6 +48,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: CreateEventStepOneScreen),
     MaterialRoute(page: CreateEventStepTwoScreen),
     MaterialRoute(page: EventStepOneEditScreen),
+    MaterialRoute(page: EventStepTwoEditScreen),
     MaterialRoute(page: FavoritesScreen),
     MaterialRoute(page: OwnEventsScreen),
   ],

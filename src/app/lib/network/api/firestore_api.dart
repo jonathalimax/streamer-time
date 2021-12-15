@@ -122,6 +122,24 @@ class FirestoreApi {
     }
   }
 
+  Future<void> editEvent(Event event) async {
+    final userId = await _getUserId();
+    if (userId == null) return null;
+
+    try {
+      await usersCollection
+          .doc(userId)
+          .collection(EventsFirestoreKey)
+          .doc(event.id)
+          .update(event.toJson());
+    } catch (error) {
+      throw FirestoreApiException(
+        message: 'Failed to edit event',
+        devDetails: '$error',
+      );
+    }
+  }
+
   Future<List<Event>> getOwnEvents() async {
     try {
       List<Event> events = [];
@@ -143,7 +161,9 @@ class FirestoreApi {
       await Future.forEach(
         document.docs,
         (QueryDocumentSnapshot<Map<String, dynamic>> document) {
-          events.add(Event.fromJson(document.data()));
+          final event = Event.fromJson(document.data());
+          event.id = document.id;
+          events.add(event);
         },
       );
 

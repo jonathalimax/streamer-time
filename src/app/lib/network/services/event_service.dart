@@ -9,6 +9,10 @@ class EventService {
     return await _firestoreApi.createEvent(event);
   }
 
+  Future<void> editEvent(Event event) async {
+    return await _firestoreApi.editEvent(event);
+  }
+
   Future<List<Event>> getEvents() async {
     return await _firestoreApi.getOwnEvents();
   }
