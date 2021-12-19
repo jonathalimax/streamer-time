@@ -2,26 +2,12 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:twitch_api/src/exceptions/twitch_api_exception.dart';
-import 'package:twitch_api/src/models/twitch_bits_leaderboard.dart';
-import 'package:twitch_api/src/models/twitch_broadcaster_subscription.dart';
 import 'package:twitch_api/src/models/twitch_channel_editor.dart';
-import 'package:twitch_api/src/models/twitch_channel_info.dart';
-import 'package:twitch_api/src/models/twitch_cheermote.dart';
-import 'package:twitch_api/src/models/twitch_custom_reward_redemption.dart';
-import 'package:twitch_api/src/models/twitch_extension_transaction.dart';
-import 'package:twitch_api/src/models/twitch_game.dart';
 import 'package:twitch_api/src/models/twitch_game_analytic.dart';
-import 'package:twitch_api/src/models/twitch_response.dart';
 import 'package:twitch_api/src/models/twitch_start_commercial.dart';
-import 'package:twitch_api/src/models/twitch_time_period.dart';
-import 'package:twitch_api/src/models/twitch_token.dart';
-import 'package:twitch_api/src/models/twitch_user.dart';
 import 'package:twitch_api/src/providers/twitch_dio_provider.dart';
-import 'package:twitch_api/src/providers/twitch_http_client.dart';
 import 'package:twitch_api/twitch_api.dart';
 import 'extensions/enum_extensions.dart';
-
-import 'models/twitch_api_scopes.dart';
 
 class TwitchClient {
   static const basePath = 'helix';

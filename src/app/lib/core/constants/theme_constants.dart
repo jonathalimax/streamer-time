@@ -22,11 +22,12 @@ class ThemeConstants {
       ),
     ),
     snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      elevation: 2.0,
       backgroundColor: kcPurple,
       contentTextStyle: TextStyle(
         color: kcIceWhite,
       ),
-      behavior: SnackBarBehavior.fixed,
     ),
   );
 
@@ -48,11 +49,12 @@ class ThemeConstants {
       ),
     ),
     snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      elevation: 2.0,
       backgroundColor: kcLightPurple,
       contentTextStyle: TextStyle(
         color: kcIceWhite,
       ),
-      behavior: SnackBarBehavior.fixed,
     ),
   );
 

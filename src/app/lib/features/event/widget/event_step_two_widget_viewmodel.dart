@@ -1,9 +1,6 @@
 import 'dart:io';
 
-import 'package:app/app/app.locator.dart';
 import 'package:app/core/constants/theme_constants.dart';
-import 'package:app/network/api/firebase_storage_api.dart';
-import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +8,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class EventStepTwoWidgetViewModel extends BaseViewModel {
   final _picker = ImagePicker();
-  final _firestoreApi = locator<FirestoreApi>();
-  final _firebaseStorageApi = locator<FirebaseStorageApi>();
-  final _navigationService = locator<NavigationService>();
 
   final Event? _event;
   final String _title;
@@ -31,7 +24,10 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
     this._event,
     this._title,
     this._category,
-  ) : _selectedDateTime = _event?.starTime ?? DateTime.now();
+  ) : _selectedDateTime = _event?.starTime ??
+            DateTime.now().add(
+              Duration(hours: 1),
+            );
 
   Event? get event => _event;
   String get title => _event?.title ?? _title;
@@ -48,21 +44,19 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
   }
 
   Future<void> setDateTime(BuildContext context) async {
-    await DatePicker.showDatePicker(
+    await DatePicker.showDateTimePicker(
       context,
       theme: ThemeConstants.datePickerTheme,
       showTitleActions: true,
-      minTime: DateTime.now(),
-      onChanged: (date) {
-        this._selectedDateTime = date;
-        notifyListeners();
-      },
+      locale: LocaleType.pt, // TODO: Get user locale
+      minTime: DateTime.now().add(
+        Duration(hours: 1),
+      ),
+      currentTime: _selectedDateTime,
       onConfirm: (date) {
         this._selectedDateTime = date;
         notifyListeners();
       },
-      currentTime: _selectedDateTime,
-      locale: LocaleType.pt, // TODO: Get user locale
     );
   }
 

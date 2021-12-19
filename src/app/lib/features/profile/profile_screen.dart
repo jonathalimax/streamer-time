@@ -3,7 +3,6 @@ import 'package:app/features/profile/profile_viewmodel.dart';
 import 'package:app/features/profile/widget/profile_item_widget.dart';
 import 'package:app/widgets/profile_image_view.dart';
 import 'package:design_system/design_system.dart';
-import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';

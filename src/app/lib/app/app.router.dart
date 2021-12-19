@@ -8,7 +8,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
 import '../features/agenda/agenda_screen.dart';
 import '../features/channels/channels_screen.dart';

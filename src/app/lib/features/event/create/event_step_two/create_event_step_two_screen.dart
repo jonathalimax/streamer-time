@@ -2,8 +2,6 @@ import 'package:app/features/event/widget/event_step_two_widget.dart';
 import 'package:app/features/event/widget/event_step_two_widget_viewmodel.dart';
 
 import 'create_event_step_two_viewmodel.dart';
-import 'package:app/widgets/card_event/card_event_view.dart';
-import 'package:design_system/widgets/app_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

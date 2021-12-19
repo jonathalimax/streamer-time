@@ -59,7 +59,7 @@ class EventStepTwoEditViewModel extends BaseViewModel {
 
     await _eventService.editEvent(event);
 
-    _navigationService.popRepeated(2);
+    await _navigationService.back();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: AppText.captionBold('O evento foi salvo!'),

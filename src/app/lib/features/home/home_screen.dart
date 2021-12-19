@@ -25,8 +25,6 @@ class HomeScreen extends StatelessWidget {
   ) {
     return Scaffold(
       body: PageTransitionSwitcher(
-        reverse: viewModel.reverse,
-        duration: Duration(milliseconds: 300),
         transitionBuilder: (child, animation, secondaryAnimation) {
           return SharedAxisTransition(
             child: child,

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:test/test.dart';
-import 'package:twitch_api/src/models/twitch_token.dart';
 import 'package:twitch_api/src/providers/twitch_dio_provider.dart';
 import 'package:twitch_api/twitch_api.dart';
 

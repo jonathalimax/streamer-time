@@ -1,6 +1,5 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
-import 'package:app/features/event/create/event_step_two/create_event_step_two_viewmodel.dart';
 import 'package:app/features/event/edit/step_two/event_step_two_edit_viewmodel.dart';
 import 'package:app/network/models/event.dart';
 import 'package:stacked/stacked.dart';

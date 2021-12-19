@@ -1,5 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:design_system/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
 void main() {
