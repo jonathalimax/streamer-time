@@ -80,12 +80,13 @@ class EventStepOneWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: TypeAheadField<TwitchGame?>(
-                          debounceDuration: Duration(milliseconds: 500),
+                          debounceDuration: Duration(milliseconds: 300),
                           textFieldConfiguration: TextFieldConfiguration(
+                            autocorrect: false,
                             textInputAction: TextInputAction.next,
                             onSubmitted: (_) => _focusNode.requestFocus(),
                             controller: _categoryController,
-                            scrollPadding: EdgeInsets.only(bottom: 150),
+                            scrollPadding: EdgeInsets.only(bottom: 250),
                             decoration: appInputTextDecoration(
                               context,
                               'Categoria',

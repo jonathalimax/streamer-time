@@ -62,7 +62,12 @@ class AgendaViewModel extends BaseViewModel {
       BuildContext context, String username) async {
     var url = 'https://twitch.tv/$username';
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(
+        url,
+        forceWebView: false,
+        forceSafariVC: false,
+        universalLinksOnly: false,
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

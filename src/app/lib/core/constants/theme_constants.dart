@@ -32,7 +32,7 @@ class ThemeConstants {
   );
 
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.grey.shade900,
+    scaffoldBackgroundColor: kcDarkGrey,
     primaryColor: kcLightPurple,
     colorScheme: ColorScheme.dark(
       secondary: kcPurple,

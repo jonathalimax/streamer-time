@@ -57,17 +57,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
-      themeMode: ThemeMode.system,
       theme: ThemeConstants.lightTheme,
       darkTheme: ThemeConstants.darkTheme,
+      themeMode: ThemeMode.system,
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      supportedLocales: [const Locale('pt', 'BR')],
     );
   }
 }
