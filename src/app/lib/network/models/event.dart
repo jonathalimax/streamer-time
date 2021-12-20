@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:twitch_api/twitch_api.dart';
 
 class Event {
   String? id;
@@ -20,6 +21,12 @@ class Event {
     return starTime.isBefore(now) &&
         starTime.difference(now) <= Duration(hours: 4);
   }
+
+  TwitchGame get category => TwitchGame(
+        boxArtUrl: '',
+        id: this.categoryId,
+        name: this.categoryName,
+      );
 
   Event({
     this.id,

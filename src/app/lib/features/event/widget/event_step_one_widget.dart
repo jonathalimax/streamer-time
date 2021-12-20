@@ -12,7 +12,7 @@ import 'package:twitch_api/twitch_api.dart';
 
 class EventStepOneWidget extends StatelessWidget {
   final String? title;
-  final String? category;
+  final TwitchGame? category;
   final String date;
   final String time;
   final String? imageUrl;
@@ -44,7 +44,10 @@ class EventStepOneWidget extends StatelessWidget {
       onModelReady: (viewModel) {
         viewModel.selectedTitle = this.title;
         if (title != null) _titleController.text = title!;
-        if (category != null) _categoryController.text = category!;
+        if (category != null) {
+          viewModel.selectedCategory = category;
+          _categoryController.text = category!.name;
+        }
       },
       builder: (context, viewModel, child) {
         return SafeArea(
@@ -67,7 +70,7 @@ class EventStepOneWidget extends StatelessWidget {
                         height: 230,
                         child: CardEventView(
                           title: viewModel.selectedTitle ?? 'Título do evento',
-                          category: category ??
+                          category: category?.name ??
                               viewModel.selectedCategory?.name ??
                               'Categoria',
                           date: date,

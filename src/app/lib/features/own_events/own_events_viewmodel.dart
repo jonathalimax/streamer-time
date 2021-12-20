@@ -14,15 +14,24 @@ class OwnEventsViewModel extends FutureViewModel<Events> {
 
   @override
   Future<Events> futureToRun() async {
+    print('OwnEventsViewModel eventService.getEvents()');
     return await eventService.getEvents();
   }
 
   void manageEvent(Event event) {
-    _navigation.navigateTo(
+    _navigation
+        .navigateTo(
       Routes.eventStepOneEditScreen,
       arguments: EventStepOneEditScreenArguments(
         viewModel: EventStepOneEditViewModel(event),
       ),
+    )
+        ?.then(
+      (_) async {
+        print('OwnEventsViewModel eventStepOneEditScreen popped');
+        await futureToRun();
+        notifyListeners();
+      },
     );
   }
 }

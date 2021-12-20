@@ -33,7 +33,7 @@ class EventStepOneEditScreen extends StatelessWidget {
                 )
               : EventStepOneWidget(
                   title: viewModel.event.title,
-                  category: viewModel.event.categoryName,
+                  category: viewModel.event.category,
                   date: viewModel.event.dateDisplay,
                   time: viewModel.event.timeDisplay,
                   imageUrl: viewModel.event.imageUrl,
