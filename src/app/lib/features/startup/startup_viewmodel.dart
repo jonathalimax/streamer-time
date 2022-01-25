@@ -1,6 +1,7 @@
 import 'package:app/app/app.locator.dart';
-import 'package:app/app/app.router.dart';
 import 'package:app/core/authentication/app_authentication.dart';
+import 'package:app/features/home/home_screen.dart';
+import 'package:app/features/login/login_screen.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -16,9 +17,17 @@ class StartupViewModel extends BaseViewModel {
 
     if (isAuthenticated && token != null) {
       _twithService.client.initializeToken(token);
-      _navigation.clearStackAndShow(Routes.homeScreen);
+      _navigation.navigateWithTransition(
+        HomeScreen(),
+        transition: 'fade',
+        duration: Duration(milliseconds: 1000),
+      );
     } else {
-      _navigation.clearStackAndShow(Routes.loginScreen);
+      _navigation.navigateWithTransition(
+        LoginScreen(),
+        transition: 'fade',
+        duration: Duration(milliseconds: 1000),
+      );
     }
   }
 }

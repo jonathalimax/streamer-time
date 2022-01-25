@@ -9,8 +9,8 @@ class SplashViewModel extends BaseViewModel {
   void runAnimation() {
     Future.delayed(
       Duration(milliseconds: 1500),
-      () async {
-        await _navigationService.navigateToView(
+      () {
+        _navigationService.navigateToView(
           StartupScreen(),
           transition: Transition.fade,
         );

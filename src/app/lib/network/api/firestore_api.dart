@@ -15,10 +15,12 @@ typedef FirestoreQueryDocument = QueryDocumentSnapshot<Map<String, dynamic>>;
 
 class FirestoreApi {
   final _appAuthentication = locator<AppAuthentication>();
+
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection(UsersFirestoreKey);
 
   final StreamController<Users> _usersController = BehaviorSubject();
+
   Stream<Users> get followingStreamers =>
       _usersController.stream.asBroadcastStream(
         onCancel: (sub) {
@@ -250,7 +252,7 @@ class FirestoreApi {
     }
   }
 
-  // Followers Collection
+  // Following Collection
   Future<bool> isFollowingStreamer(String streamerId) async {
     final userId = await _getUserId();
     if (userId == null) return false;
