@@ -4,7 +4,7 @@ description: A wrapper in pure Dart to connect to Twitch.tv using OAuth implicit
 version: 0.4.0
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.15.1 <3.0.0'
 
 dependencies:
   dio: ^4.0.0
