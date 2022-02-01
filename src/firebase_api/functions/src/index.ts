@@ -1,114 +1,162 @@
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
+import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
+import { Workers } from './workers/workers' 
 
 admin.initializeApp();
 const db = admin.firestore();
 
 export const taskRunner = functions
-    .runWith({ memory: '2GB' })
-    .pubsub
-    .schedule('0 0 * * *') // Once a day
-    // .schedule('* * * * *') // Every minute
-    .onRun(async context => {
-        console.log('Starting taskRunner');
+  .runWith({ memory: "2GB" })
+  // .pubsub.schedule('* * * * *') // Every minute
+  .pubsub.schedule("0 0 * * *") // Once a day
+  .onRun(async (context) => {
+    console.log("Starting taskRunner");
 
-        const now = admin.firestore.Timestamp.now();
-        const query = db
-            .collection('tasks')
-            .where('performAt', '<=', now)
-            .where('status', '==', 'scheduled');
+    const now = admin.firestore.Timestamp.now();
+    const query = db
+      .collection("tasks")
+      .where("performAt", "<=", now)
+      .where("status", "==", "scheduled");
 
-        const tasks = await query.get();
-        const jobs: Promise<any>[] = [];
+    const tasks = await query.get();
+    const jobs: Promise<any>[] = [];
 
-        tasks.forEach(snapshot => {
-            const { worker, options } = snapshot.data();
-            const job = workers[worker](options)
-                .then(() => {
-                    console.log('Setting complete state at database');
-                    snapshot.ref.update({
-                        status: 'complete',
-                    })
-                })
-                .catch(_ => {
-                    console.log('Setting error state at database');
-                    snapshot.ref.update({
-                        status: 'error',
-                    })
-                });
-
-            jobs.push(job);
+    tasks.forEach((snapshot) => {
+      const { worker, options } = snapshot.data();
+      const job = workers[worker](options)
+        .then(() => {
+          console.log("Setting complete state at database");
+          snapshot.ref.update({
+            status: "complete",
+          });
+        })
+        .catch((_) => {
+          console.log("Setting error state at database");
+          snapshot.ref.update({
+            status: "error",
+          });
         });
 
-        return await Promise.all(jobs);
+      jobs.push(job);
     });
 
-export const onEventCreate = functions
-    .firestore
-    .document('users/{userId}/{eventCollectionId}/{eventId}')
-    .onCreate(async (snapshot, context) => {
-        console.log('Starting onEventCreate function');
+    return await Promise.all(jobs);
+  });
 
-        const ref = snapshot.ref;
-        const userRef = ref.parent.parent;
-        if (userRef == null) {
-            console.log('userRref is null, stopping process');
-            return
-        }
+export const onEventCreate = functions.firestore
+  .document("users/{userId}/{eventCollectionId}/{eventId}")
+  .onCreate(async (snapshot, context) => {
+    console.log("Starting onEventCreate function");
 
-        const userQuery = await userRef.get();
-        const user = userQuery.data();
-        const event = snapshot.data();
-        if (user == null) {
-            console.log('user is null, stopping process');
-            return
-        }
+    const ref = snapshot.ref;
+    const userRef = ref.parent.parent;
+    if (userRef == null) {
+      console.log("userRref is null, stopping process");
+      return;
+    }
 
-        await db
-            .collection('tasks')
-            .doc()
-            .set({
-                worker: 'sendPushNotification',
-                status: 'scheduled',
-                performAt: event.starTime,
-                options: {
-                    eventId: context.params.eventId,
-                    userId: context.params.userId,
-                    username: user.username,
-                }
-            });
+    const userQuery = await userRef.get();
+    const user = userQuery.data();
+    const event = snapshot.data();
+    if (user == null) {
+      console.log("user is null, stopping process");
+      return;
+    }
 
-        console.log('Finishing onEventCreate function');
+    await db
+      .collection("tasks")
+      .doc()
+      .set({
+        worker: "sendPushNotification",
+        status: "scheduled",
+        performAt: event.starTime,
+        options: {
+          eventId: context.params.eventId,
+          userId: context.params.userId,
+          username: user.username,
+        },
+      });
+
+    console.log("Finishing onEventCreate function");
+  });
+
+export const onEventUpdate = functions.firestore
+  .document("users/{userId}/{eventCollectionId}/{eventId}")
+  .onUpdate(async (change, context) => {
+    console.log("Starting onEventUpdate function");
+
+    const eventId = context.params.eventId;
+
+    const taskRef = db.collection("tasks");
+    const snapshot = await taskRef
+      .where("options.eventId", "==", eventId)
+      .get();
+
+    if (snapshot.docs.length == 0) {
+      console.log("Finishing onEventUpdate withou task updates");
+      return;
+    }
+
+    await db.collection("tasks").doc(snapshot.docs[0].id).update({
+      performAt: change.after.data().starTime,
+      status: "scheduled",
     });
 
-interface Workers {
-    [key: string]: (options: any) => Promise<any>;
-}
+    console.log("Finishing onEventUpdate function");
+  });
+
+export const onEventDelete = functions.firestore
+  .document("users/{userId}/{eventCollectionId}/{eventId}")
+  .onDelete(async (_, context) => {
+    console.log("Starting onEventDelete function");
+    const eventId = context.params.eventId;
+
+    const taskRef = db.collection("tasks");
+    const snapshot = await taskRef
+      .where("options.eventId", "==", eventId)
+      .get();
+
+    if (snapshot.docs.length == 0) {
+      console.log("Finishing onEventDelete withou task deletion");
+      return;
+    }
+
+    await db.collection("tasks").doc(snapshot.docs[0].id).delete()
+  });
 
 const workers: Workers = {
-    sendPushNotification: async ({ userId, eventId, username }) => {
-        const query = db.collection('users')
-            .doc(userId)
-            .collection('events')
-            .doc(eventId);
+  sendPushNotification: async ({ userId, eventId, username }) => {
+    const query = db
+      .collection("users")
+      .doc(userId)
+      .collection("events")
+      .doc(eventId);
 
-        const snapshot = await query.get();
-        const data = snapshot.data();
+    const snapshot = await query.get();
+    const data = snapshot.data();
 
-        if (data == null) return;
+    if (data == null) return;
 
-        const { title, categoryName } = data;
-        console.log('Starting notification sending with title: ' + title + ' and category name: ' + categoryName);
+    const { title, categoryName } = data;
+    console.log(
+      "Starting notification sending with title: " +
+      title +
+      " and category name: " +
+      categoryName
+    );
 
-        return admin.messaging().sendToTopic(username, {
-            notification: {
-                title: title,
-                body: username + ' está transmitindo ' + categoryName,
-                sound: 'default',
-            },
+    return admin.messaging().sendToTopic(
+      username,
+      {
+        notification: {
+          title: title,
+          body: username + " está transmitindo " + categoryName,
+          sound: "default",
         },
-            {
-                timeToLive: 14400,
-            });
-    }
+      },
+      {
+        timeToLive: 14400,
+      }
+    );
+  },
 };
