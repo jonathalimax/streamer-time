@@ -22,14 +22,15 @@ class AppEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: <Widget>[
             Expanded(child: Container()),
             if (type != null)
               Image(
                 image: AssetImage(type!.path, package: 'design_system'),
-                height: 200,
-                width: 200,
+                height: 190,
+                width: 190,
                 fit: BoxFit.cover,
               ),
             Container(
@@ -42,7 +43,7 @@ class AppEmptyState extends StatelessWidget {
             if (subtitle != null)
               Column(
                 children: <Widget>[
-                  SizedBox(height: 18),
+                  SizedBox(height: 14),
                   Container(
                     width: 350,
                     child: Text(
@@ -60,10 +61,11 @@ class AppEmptyState extends StatelessWidget {
             if (buttonTitle != null && buttonAction != null)
               Column(
                 children: <Widget>[
-                  SizedBox(height: 30),
+                  SizedBox(height: 16),
                   AppButton(
                     title: buttonTitle!,
                     action: () => buttonAction!(),
+                    color: Theme.of(context).primaryColor,
                   ),
                 ],
               ),

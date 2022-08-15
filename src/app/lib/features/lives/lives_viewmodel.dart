@@ -4,8 +4,8 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
-import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
+import 'package:app/network/services/streamer_service.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -15,43 +15,36 @@ import 'package:url_launcher/url_launcher.dart';
 
 typedef Users = List<User>?;
 
-class AgendaViewModel extends BaseViewModel {
+class LivesViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
-  final _firestoreApi = locator<FirestoreApi>();
+  final _streamerService = locator<StreamerService>();
 
   int _adIndex = 1;
   bool _isBannerAdLoaded = false;
 
-  Users _users;
+  late Users streamers = _streamerService.streamers;
   late BannerAd _inlineBannerAd;
 
   BannerAd get bannerAd => _inlineBannerAd;
 
   List<Object> get items {
-    var users = _users;
-    if (users == null) return [];
+    if (streamers == null) return [];
+    var filteredUsers = streamers!;
 
-    users.removeWhere((user) => user.events.isEmpty);
+    filteredUsers.removeWhere((user) => user.events.isEmpty);
 
-    if (users.isNotEmpty && _isBannerAdLoaded) {
+    if (filteredUsers.isNotEmpty && _isBannerAdLoaded) {
       List<Object> usersWithAds = [];
-      usersWithAds.insertAll(0, _users!);
+      usersWithAds.insertAll(0, streamers!);
       usersWithAds.insert(_adIndex, _inlineBannerAd);
       return usersWithAds;
     }
 
-    return _users!;
+    return streamers!;
   }
 
-  AgendaViewModel() {
+  LivesViewModel() {
     buildInlineBannerAd();
-    _firestoreApi.followingStreamers.listen(_onUsersUpdated);
-    setBusy(true);
-  }
-
-  void _onUsersUpdated(Users users) {
-    this._users = users;
-    setBusy(false);
   }
 
   Future<void> startCreateEvent() async {

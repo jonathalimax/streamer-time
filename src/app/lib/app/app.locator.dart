@@ -6,7 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:stacked/stacked.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -14,7 +14,6 @@ import '../core/ads/ad_manager.dart';
 import '../core/authentication/app_authentication.dart';
 import '../core/caching/caching_manager.dart';
 import '../core/notifications/push_notification_manager.dart';
-import '../features/agenda/agenda_viewmodel.dart';
 import '../features/discover/discover_viewmodel.dart';
 import '../features/profile/profile_viewmodel.dart';
 import '../features/webview/webview_viewmodel.dart';
@@ -38,7 +37,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => TwitchService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AppAuthentication());
-  locator.registerLazySingleton(() => AgendaViewModel());
+  locator.registerLazySingleton(() => LivesViewModel());
   locator.registerLazySingleton(() => DiscoverViewmodel());
   locator.registerLazySingleton(() => ProfileViewModel());
   locator.registerLazySingleton(() => CardGameListViewModel());

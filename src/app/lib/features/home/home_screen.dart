@@ -1,11 +1,43 @@
 import 'package:animations/animations.dart';
-import 'package:app/features/agenda/agenda_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/home/home_viewmodel.dart';
+import 'package:app/features/lives/lives_screen.dart';
 import 'package:app/features/profile/profile_screen.dart';
 import 'package:design_system/widgets/app_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../network/api/firestore_api.dart';
+
+enum TabItem { lives, discover, profile }
+
+extension TabItemExtension on TabItem {
+  int get index {
+    switch (this) {
+      case TabItem.lives:
+        return 0;
+      case TabItem.discover:
+        return 1;
+      case TabItem.profile:
+        return 2;
+      default:
+        return 0;
+    }
+  }
+
+  String get title {
+    switch (this) {
+      case TabItem.lives:
+        return 'Lives';
+      case TabItem.discover:
+        return 'Descobrir';
+      case TabItem.profile:
+        return 'Perfil';
+      default:
+        return '';
+    }
+  }
+}
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -33,7 +65,7 @@ class HomeScreen extends StatelessWidget {
             transitionType: SharedAxisTransitionType.horizontal,
           );
         },
-        child: _getScreenForIndex(viewModel.currentIndex),
+        child: _getScreenForIndex(viewModel),
       ),
       bottomNavigationBar: AppBottomBar(
         currentIndex: viewModel.currentIndex,
@@ -41,15 +73,15 @@ class HomeScreen extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(15, 5, 15, 25),
         items: [
           BottomNavigationBarItem(
-            label: 'Eventos',
+            label: TabItem.lives.title,
             icon: Icon(Icons.event_note),
           ),
           BottomNavigationBarItem(
-            label: 'Descobrir',
+            label: TabItem.discover.title,
             icon: Icon(Icons.search),
           ),
           BottomNavigationBarItem(
-            label: 'Perfil',
+            label: TabItem.profile.title,
             icon: Icon(Icons.person),
           ),
         ],
@@ -57,16 +89,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _getScreenForIndex(int index) {
-    switch (index) {
+  Widget _getScreenForIndex(HomeViewModel viewModel) {
+    switch (viewModel.currentIndex) {
       case 0:
-        return AgendaScreen();
+        return LivesScreen(
+            changePage: (tabItem) => viewModel.setIndex(tabItem.index));
       case 1:
         return DiscoverScreen();
       case 2:
         return ProfileScreen();
       default:
-        return AgendaScreen();
+        return LivesScreen(
+            changePage: (tabItem) => viewModel.setIndex(tabItem.index));
     }
   }
 }

@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../features/agenda/agenda_screen.dart';
+import '../features/lives/lives_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/event/create/event_step_one/create_event_step_one_screen.dart';
@@ -78,7 +78,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.loginScreen, page: LoginScreen),
     RouteDef(Routes.homeScreen, page: HomeScreen),
     RouteDef(Routes.webViewScreen, page: WebViewScreen),
-    RouteDef(Routes.agendaScreen, page: AgendaScreen),
+    RouteDef(Routes.agendaScreen, page: LivesScreen),
     RouteDef(Routes.discoverScreen, page: DiscoverScreen),
     RouteDef(Routes.profileScreen, page: ProfileScreen),
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
@@ -127,9 +127,11 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    AgendaScreen: (data) {
+    LivesScreen: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => AgendaScreen(),
+        builder: (context) => LivesScreen(
+          changePage: (TabItem) {},
+        ),
         settings: data,
       );
     },

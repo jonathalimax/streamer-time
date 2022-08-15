@@ -7,14 +7,12 @@ class AppButton extends StatelessWidget {
   final Color color;
   final bool outlined;
   final VoidCallback action;
-  final Icon? trailing;
 
   const AppButton.outlined({
     required this.title,
     required this.action,
     this.titleColor,
     this.color = kcIceWhite,
-    this.trailing,
   }) : outlined = true;
 
   const AppButton({
@@ -22,7 +20,6 @@ class AppButton extends StatelessWidget {
     required this.action,
     this.titleColor,
     this.color = kcIceWhite,
-    this.trailing,
   }) : outlined = false;
 
   @override
@@ -46,8 +43,6 @@ class AppButton extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          if (trailing != null)
-            Container(alignment: Alignment.centerRight, child: trailing),
           ElevatedButton(
             onPressed: action,
             child: Text(

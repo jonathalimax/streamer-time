@@ -1,9 +1,9 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/caching/caching_manager.dart';
-import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/user_service.dart';
@@ -23,7 +23,7 @@ class ProfileViewModel extends FutureViewModel<User?> {
 
   logout() async {
     locator.resetLazySingleton<FirestoreApi>();
-    locator.resetLazySingleton<AgendaViewModel>();
+    locator.resetLazySingleton<LivesViewModel>();
     locator.resetLazySingleton<DiscoverViewmodel>();
     locator.resetLazySingleton<ProfileViewModel>();
     locator.resetLazySingleton<CardStreamListViewModel>();

@@ -1,21 +1,30 @@
 import 'package:app/app/app.locator.dart';
-import 'package:app/features/agenda/agenda_viewmodel.dart';
+import 'package:app/features/home/home_screen.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 
-class AgendaScreen extends StatelessWidget {
+class LivesScreen extends StatelessWidget {
+  const LivesScreen({
+    Key? key,
+    required this.changePage,
+  }) : super(key: key);
+
+  final void Function(TabItem) changePage;
+
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AgendaViewModel>.reactive(
+    return ViewModelBuilder<LivesViewModel>.reactive(
       disposeViewModel: false,
       fireOnModelReadyOnce: true,
       initialiseSpecialViewModelsOnce: true,
-      viewModelBuilder: () => locator<AgendaViewModel>(),
+      viewModelBuilder: () => locator<LivesViewModel>(),
       builder: (context, viewModel, child) => _buildScreen(
         context,
         viewModel,
@@ -25,12 +34,12 @@ class AgendaScreen extends StatelessWidget {
 
   Scaffold _buildScreen(
     BuildContext context,
-    AgendaViewModel viewModel,
+    LivesViewModel viewModel,
   ) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Eventos',
+          'Lives',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -49,14 +58,21 @@ class AgendaScreen extends StatelessWidget {
                 ? SpinKitDoubleBounce(
                     color: Theme.of(context).colorScheme.secondary,
                   )
-                : _buildAgendaList(viewModel),
+                : viewModel.items.isNotEmpty
+                    ? _buildAgendaList(viewModel)
+                    : AppEmptyState(
+                        title: 'Não há lives disponíveis!',
+                        type: AppEmptyStateType.noDocument,
+                        buttonTitle: 'Buscar streamers',
+                        buttonAction: () => changePage(TabItem.discover),
+                      ),
           ),
         ),
       ),
     );
   }
 
-  ListView _buildAgendaList(AgendaViewModel viewModel) {
+  ListView _buildAgendaList(LivesViewModel viewModel) {
     return ListView.builder(
       itemCount: viewModel.items.length,
       itemBuilder: (context, index) {
@@ -77,8 +93,7 @@ class AgendaScreen extends StatelessWidget {
                     item.username,
                   ),
                 )
-              : Container(); // TODO: Handle emtpy UI
-
+              : Container();
         } else if (item is BannerAd) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),

@@ -7,12 +7,12 @@ import 'package:app/features/event/create/event_step_two/create_event_step_two_s
 import 'package:app/features/event/edit/step_one/event_step_one_edit_screen.dart';
 import 'package:app/features/event/edit/step_two/event_step_two_edit_screen.dart';
 import 'package:app/features/favorites/favorites_screen.dart';
+import 'package:app/features/lives/lives_screen.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/features/own_events/own_events_screen.dart';
 import 'package:app/features/splash/splash_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
-import 'package:app/features/agenda/agenda_screen.dart';
-import 'package:app/features/agenda/agenda_viewmodel.dart';
 import 'package:app/features/channels/channels_screen.dart';
 import 'package:app/features/discover/discover_screen.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
@@ -40,7 +40,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: LoginScreen),
     MaterialRoute(page: HomeScreen),
     MaterialRoute(page: WebViewScreen),
-    MaterialRoute(page: AgendaScreen),
+    MaterialRoute(page: LivesScreen),
     MaterialRoute(page: DiscoverScreen),
     MaterialRoute(page: ProfileScreen),
     MaterialRoute(page: StreamerScreen),
@@ -56,7 +56,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: TwitchService),
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: AppAuthentication),
-    LazySingleton(classType: AgendaViewModel),
+    LazySingleton(classType: LivesViewModel),
     LazySingleton(classType: DiscoverViewmodel),
     LazySingleton(classType: ProfileViewModel),
     LazySingleton(classType: CardGameListViewModel),

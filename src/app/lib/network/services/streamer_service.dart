@@ -3,6 +3,7 @@ import 'package:app/app/app.locator.dart';
 
 class StreamerService {
   final _firestoreApi = locator<FirestoreApi>();
+  Users? streamers;
 
   Future<void> followStreamer(String streamerId) async {
     return await _firestoreApi.followStreamer(streamerId);
