@@ -60,13 +60,15 @@ class AgendaViewModel extends BaseViewModel {
 
   Future<void> openStreamerWebview(
       BuildContext context, String username) async {
-    var url = 'https://twitch.tv/$username';
-    if (await canLaunch(url)) {
-      await launch(
+    var url = Uri(
+      scheme: 'https',
+      host: 'twitch.tv',
+      path: '$username',
+    );
+    if (await canLaunchUrl(url)) {
+      await launchUrl(
         url,
-        forceWebView: false,
-        forceSafariVC: false,
-        universalLinksOnly: false,
+        mode: LaunchMode.externalApplication,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

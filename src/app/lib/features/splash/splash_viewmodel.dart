@@ -12,7 +12,7 @@ class SplashViewModel extends BaseViewModel {
       () {
         _navigationService.navigateToView(
           StartupScreen(),
-          transition: Transition.fade,
+          transitionStyle: Transition.fade,
         );
       },
     );

@@ -10,7 +10,7 @@ class StartupScreen extends StatelessWidget {
       viewModelBuilder: () => StartupViewModel(),
       builder: (context, viewModel, child) => _buildScreen(context),
       onModelReady: (viewModel) =>
-          SchedulerBinding.instance?.addPostFrameCallback(
+          SchedulerBinding.instance.addPostFrameCallback(
         (timeStamp) {
           viewModel.runStartupLogic();
         },

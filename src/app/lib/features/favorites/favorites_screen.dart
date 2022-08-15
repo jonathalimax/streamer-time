@@ -37,7 +37,7 @@ class FavoritesScreen extends StatelessWidget {
         : SafeArea(
             child: viewModel.users.isEmpty
                 ? AppEmptyState(
-                    title: 'Você ainda não possui streamers favoritos!',
+                    title: 'Você não possui favoritos!',
                     type: AppEmptyStateType.noDocument,
                   )
                 : ListView.builder(

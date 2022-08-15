@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-const String SECURE_TOKEN_KEY = 'SecureToken';
+const String SECURE_TOKEN_KEY = 'SecureKey';
 const String AUTH_BOX_KEY = 'AuthenticationBox';
 const String AUTH_TOKEN_KEY = 'authToken';
 const String SETTINGS_BOX_KEY = 'SettingsBox';

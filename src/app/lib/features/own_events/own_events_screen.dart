@@ -1,5 +1,7 @@
 import 'package:app/features/own_events/own_events_viewmodel.dart';
 import 'package:app/widgets/card_event/card_event_view.dart';
+import 'package:design_system/widgets/empty_state/app_empty_state.dart';
+import 'package:design_system/widgets/empty_state/app_empty_state_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
@@ -25,7 +27,7 @@ class OwnEventsScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 )
-              : viewModel.data != null
+              : viewModel.data!.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       child: ListView.builder(
@@ -57,7 +59,12 @@ class OwnEventsScreen extends StatelessWidget {
                         },
                       ),
                     )
-                  : Container(), // TODO: Handle empty state
+                  : Center(
+                      child: AppEmptyState(
+                        title: 'Nenhum evento disponível!',
+                        type: AppEmptyStateType.noDocument,
+                      ),
+                    ),
         );
       },
     );

@@ -3,11 +3,11 @@ import 'package:app/app/app.router.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/constants/theme_constants.dart';
+import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -38,7 +38,9 @@ Future<void> _setupPushNotification() async {
 }
 
 Future<void> _setupFirebase() async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 Future<void> _setupHive() async {

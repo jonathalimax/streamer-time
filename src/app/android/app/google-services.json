@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "832640888153-rgrp7a76an892enqhgbthqggb4nekgr4.apps.googleusercontent.com",
+              "client_id": "832640888153-2t7jofi7e52tvklp912nj2elpa52kpj3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.limx.streamertime"
+                "bundle_id": "com.jlima.streamup"
               }
             }
           ]

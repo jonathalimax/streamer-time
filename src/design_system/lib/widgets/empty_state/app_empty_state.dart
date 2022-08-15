@@ -24,26 +24,19 @@ class AppEmptyState extends StatelessWidget {
       child: Container(
         child: Column(
           children: <Widget>[
-            Spacer(flex: 2),
+            Expanded(child: Container()),
             if (type != null)
-              Container(
-                height: 150,
-                width: 300,
-                child: Image(
-                  image: AssetImage(type!.path, package: 'design_system'),
-                  fit: BoxFit.fitWidth,
-                ),
+              Image(
+                image: AssetImage(type!.path, package: 'design_system'),
+                height: 200,
+                width: 200,
+                fit: BoxFit.cover,
               ),
-            if (type != null) SizedBox(height: 30),
-            Expanded(
-              flex: 0,
-              child: Container(
-                alignment: Alignment.topCenter,
-                width: 350,
-                child: AppText.heading4(
-                  title,
-                  textAlign: TextAlign.center,
-                ),
+            Container(
+              width: 350,
+              child: AppText.heading4(
+                title,
+                textAlign: TextAlign.center,
               ),
             ),
             if (subtitle != null)
@@ -74,7 +67,10 @@ class AppEmptyState extends StatelessWidget {
                   ),
                 ],
               ),
-            Spacer(flex: 3),
+            Expanded(
+              child: Container(),
+              flex: 2,
+            ),
           ],
         ),
       ),

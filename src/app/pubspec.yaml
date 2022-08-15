@@ -14,19 +14,19 @@ dependencies:
     sdk: flutter
 
   # UI
-  lottie: ^1.2.1
-  animations: 2.0.1
-  cupertino_icons: ^1.0.2
-  flutter_spinkit: ^5.0.0
-  loading_overlay: ^0.3.0
-  flutter_typeahead: ^3.2.1
-  flutter_datetime_picker: ^1.5.1
+  lottie: ">=1.2.1"
+  animations: ">=2.0.1"
+  cupertino_icons: ^1.0.5
+  flutter_spinkit: ">=5.0.0"
+  loading_overlay: ">=0.3.0"
+  flutter_typeahead: ">=3.2.1"
+  flutter_datetime_picker: ">=1.5.1"
   design_system:
     path: ../design_system
 
   # FilledStacks
-  stacked: ^2.2.5
-  stacked_services: ^0.8.13
+  stacked: ">=2.2.5"
+  stacked_services: ">=0.8.13"
 
   # Caching
   hive: ^2.0.4
@@ -34,28 +34,28 @@ dependencies:
   flutter_secure_storage: ^5.0.2
 
   # Google
-  firebase_auth: ^3.2.0
-  firebase_core: ^1.6.0
-  firebase_storage: ^10.0.5
-  firebase_messaging: ^11.1.0
-  cloud_firestore: ^3.1.0
-  google_mobile_ads: ^1.0.1
+  firebase_auth: ">=3.2.0"
+  firebase_core: ">=1.6.0"
+  firebase_storage: ">=10.0.5"
+  firebase_messaging: ">=11.1.0"
+  cloud_firestore: ">=3.1.0"
+  google_mobile_ads: ">=1.0.1"
 
   # Network
   twitch_api:
     path: ../twitch_api
 
   # Utils
-  intl: ^0.17.0
-  rxdart: ^0.27.2
-  injectable: ^1.5.0
-  url_launcher: ^6.0.17
-  webview_flutter: ^3.0.0
+  intl: ">=0.17.0"
+  rxdart: ">=0.27.2"
+  injectable: ">=1.5.0"
+  url_launcher: ">=6.0.17"
+  webview_flutter: ">=3.0.0"
 
   # Media
-  image_picker: ^0.8.4+2
-  cached_network_image: ^3.1.0
-  flutter_native_image: ^0.0.6+1
+  image_picker: ">=0.8.4+2"
+  cached_network_image: ">=3.1.0"
+  flutter_native_image: ">=0.0.6+1"
 
   # Localization
   flutter_localizations:
@@ -65,12 +65,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   
-  build: ^2.1.0
-  build_runner: ^2.1.2
-  hive_generator: ^1.1.0
-  stacked_generator: ^0.5.2
-  flutter_native_splash: ^1.3.1
-  flutter_launcher_icons: ^0.9.2  
+  build: ">=2.1.0"
+  build_runner: ">=2.1.2"
+  hive_generator: ">=1.1.0"
+  stacked_generator: ">=0.5.2"
+  flutter_native_splash: ">=1.3.1"
+  flutter_launcher_icons: ">=0.9.2  "
 
 flutter:
   uses-material-design: true

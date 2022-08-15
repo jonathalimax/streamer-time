@@ -19,13 +19,13 @@ class StartupViewModel extends BaseViewModel {
       _twithService.client.initializeToken(token);
       _navigation.navigateWithTransition(
         HomeScreen(),
-        transition: 'fade',
+        transitionStyle: Transition.fade,
         duration: Duration(milliseconds: 1000),
       );
     } else {
       _navigation.navigateWithTransition(
         LoginScreen(),
-        transition: 'fade',
+        transitionStyle: Transition.fade,
         duration: Duration(milliseconds: 1000),
       );
     }

@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     return ViewModelBuilder<SplashViewModel>.nonReactive(
       viewModelBuilder: () => SplashViewModel(),
       onModelReady: (viewModel) {
-        SchedulerBinding.instance?.addPostFrameCallback(
+        SchedulerBinding.instance.addPostFrameCallback(
           (_) => viewModel.runAnimation(),
         );
       },
