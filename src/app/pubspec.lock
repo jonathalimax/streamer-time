@@ -444,7 +444,7 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.2"
   flutter_secure_storage_linux:
     dependency: transitive
     description:
@@ -977,7 +977,7 @@ packages:
       name: stacked_services
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4"
+    version: "0.9.5"
   stream_channel:
     dependency: transitive
     description:

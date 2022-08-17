@@ -17,16 +17,17 @@ class StartupViewModel extends BaseViewModel {
 
     if (isAuthenticated && token != null) {
       _twithService.client.initializeToken(token);
+
       _navigation.replaceWithTransition(
         HomeScreen(),
         transitionStyle: Transition.fade,
-        duration: Duration(milliseconds: 1000),
+        duration: Duration(milliseconds: 300),
       );
     } else {
       _navigation.navigateWithTransition(
         LoginScreen(),
         transitionStyle: Transition.fade,
-        duration: Duration(milliseconds: 1000),
+        duration: Duration(milliseconds: 300),
       );
     }
   }

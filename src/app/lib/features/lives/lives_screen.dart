@@ -58,8 +58,21 @@ class LivesScreen extends StatelessWidget {
                 ? SpinKitDoubleBounce(
                     color: Theme.of(context).colorScheme.secondary,
                   )
-                : viewModel.items.isNotEmpty
-                    ? _buildAgendaList(viewModel)
+                : viewModel.streamers.isNotEmpty
+                    ? Column(
+                        children: <Widget>[
+                          _buildAgendaList(viewModel),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
+                            child: Container(
+                              height: viewModel.bannerAd.size.height.toDouble(),
+                              child: AdWidget(
+                                ad: viewModel.bannerAd,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
                     : AppEmptyState(
                         title: 'Não há lives disponíveis!',
                         type: AppEmptyStateType.noDocument,
@@ -72,13 +85,13 @@ class LivesScreen extends StatelessWidget {
     );
   }
 
-  ListView _buildAgendaList(LivesViewModel viewModel) {
-    return ListView.builder(
-      itemCount: viewModel.items.length,
-      itemBuilder: (context, index) {
-        var item = viewModel.items[index];
+  Widget _buildAgendaList(LivesViewModel viewModel) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: viewModel.streamers.length,
+        itemBuilder: (context, index) {
+          var item = viewModel.streamers[index];
 
-        if (item is User) {
           return item.events.isNotEmpty
               ? AgendaView(
                   title: item.username,
@@ -94,20 +107,8 @@ class LivesScreen extends StatelessWidget {
                   ),
                 )
               : Container();
-        } else if (item is BannerAd) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
-            child: Container(
-              height: viewModel.bannerAd.size.height.toDouble(),
-              child: AdWidget(
-                ad: viewModel.bannerAd,
-              ),
-            ),
-          );
-        }
-
-        return Container();
-      },
+        },
+      ),
     );
   }
 }

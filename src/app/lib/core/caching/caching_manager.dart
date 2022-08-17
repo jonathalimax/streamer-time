@@ -13,24 +13,22 @@ const String NOTIFICATION_AUTHORIZED_KEY = 'NotificationAuthorizedKey';
 class CachingManager {
   Future<Uint8List?> getEncryptionKey() async {
     final secureStorage = const FlutterSecureStorage();
-    final containsEncryptionKey =
-        await secureStorage.containsKey(key: SECURE_TOKEN_KEY);
-
-    if (!containsEncryptionKey) {
-      final key = Hive.generateSecureKey();
-      await secureStorage.write(
-        key: SECURE_TOKEN_KEY,
-        value: base64UrlEncode(key),
-      );
-    }
 
     final secureToken = await secureStorage.read(
       key: SECURE_TOKEN_KEY,
     );
 
-    if (secureToken == null) return null;
+    if (secureToken == null) {
+      final key = Hive.generateSecureKey();
+      await secureStorage.write(
+        key: SECURE_TOKEN_KEY,
+        value: base64UrlEncode(key),
+      );
 
-    return base64Url.decode(secureToken);
+      return base64Url.decode(base64UrlEncode(key));
+    } else {
+      return base64Url.decode(secureToken);
+    }
   }
 
   Future<void> persistNotificationPermission(bool isAuthorized) async {

@@ -4,8 +4,7 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
-import 'package:app/network/models/user.dart';
-import 'package:app/network/services/streamer_service.dart';
+import 'package:app/network/api/firestore_api.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -13,38 +12,25 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef Users = List<User>?;
-
 class LivesViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
-  final _streamerService = locator<StreamerService>();
+  final _firestoreApi = locator<FirestoreApi>();
 
-  int _adIndex = 1;
   bool _isBannerAdLoaded = false;
 
-  late Users streamers = _streamerService.streamers;
+  late Users streamers = [];
   late BannerAd _inlineBannerAd;
 
   BannerAd get bannerAd => _inlineBannerAd;
 
-  List<Object> get items {
-    if (streamers == null) return [];
-    var filteredUsers = streamers!;
-
-    filteredUsers.removeWhere((user) => user.events.isEmpty);
-
-    if (filteredUsers.isNotEmpty && _isBannerAdLoaded) {
-      List<Object> usersWithAds = [];
-      usersWithAds.insertAll(0, streamers!);
-      usersWithAds.insert(_adIndex, _inlineBannerAd);
-      return usersWithAds;
-    }
-
-    return streamers!;
+  LivesViewModel() {
+    buildBannerAd();
+    _firestoreApi.followingStreamers.listen(_onStreamersUpdated);
   }
 
-  LivesViewModel() {
-    buildInlineBannerAd();
+  void _onStreamersUpdated(Users users) {
+    this.streamers = users;
+    notifyListeners();
   }
 
   Future<void> startCreateEvent() async {
@@ -86,16 +72,15 @@ class LivesViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> buildInlineBannerAd() async {
+  Future<void> buildBannerAd() async {
     _inlineBannerAd = BannerAd(
-      size: AdSize.largeBanner,
+      size: AdSize.banner,
       adUnitId: AdManager.bannerHomeUnitId,
       request: AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (_) {
           if (!_isBannerAdLoaded) {
             _isBannerAdLoaded = true;
-            notifyListeners();
           }
         },
         onAdFailedToLoad: (ad, error) {

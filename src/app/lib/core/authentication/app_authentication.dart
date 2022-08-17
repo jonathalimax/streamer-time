@@ -21,7 +21,7 @@ class AppAuthentication {
     );
 
     await encryptedBox.put(AUTH_TOKEN_KEY, authToken);
-    encryptedBox.close();
+    await encryptedBox.close();
 
     await firebaseAuth.signInAnonymously();
   }
@@ -37,7 +37,7 @@ class AppAuthentication {
     );
 
     final authToken = encryptedBox.get(AUTH_TOKEN_KEY) as AuthenticationModel?;
-    encryptedBox.close();
+    await encryptedBox.close();
 
     if (authToken == null) return false;
     return authToken.expiresIn != 0;
@@ -69,7 +69,8 @@ class AppAuthentication {
       encryptionCipher: HiveAesCipher(encryptionKey),
     );
 
-    final authToken = encryptedBox.get(AUTH_TOKEN_KEY) as AuthenticationModel?;
+    final authToken =
+        await encryptedBox.get(AUTH_TOKEN_KEY) as AuthenticationModel?;
     await encryptedBox.close();
 
     if (authToken == null) return null;

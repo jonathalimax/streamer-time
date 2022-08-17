@@ -14,7 +14,6 @@ class OwnEventsViewModel extends FutureViewModel<Events> {
 
   @override
   Future<Events> futureToRun() async {
-    print('OwnEventsViewModel eventService.getEvents()');
     return await eventService.getEvents();
   }
 
@@ -28,7 +27,6 @@ class OwnEventsViewModel extends FutureViewModel<Events> {
     )
         ?.then(
       (_) async {
-        print('OwnEventsViewModel eventStepOneEditScreen popped');
         await futureToRun();
         notifyListeners();
       },

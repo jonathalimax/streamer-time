@@ -4,12 +4,12 @@
 // StackedRouterGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, unused_import, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-import '../features/lives/lives_screen.dart';
 import '../features/channels/channels_screen.dart';
 import '../features/discover/discover_screen.dart';
 import '../features/event/create/event_step_one/create_event_step_one_screen.dart';
@@ -21,6 +21,7 @@ import '../features/event/edit/step_two/event_step_two_edit_screen.dart';
 import '../features/event/edit/step_two/event_step_two_edit_viewmodel.dart';
 import '../features/favorites/favorites_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/lives/lives_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/own_events/own_events_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -36,7 +37,7 @@ class Routes {
   static const String loginScreen = '/login-screen';
   static const String homeScreen = '/home-screen';
   static const String webViewScreen = '/web-view-screen';
-  static const String agendaScreen = '/agenda-screen';
+  static const String livesScreen = '/lives-screen';
   static const String discoverScreen = '/discover-screen';
   static const String profileScreen = '/profile-screen';
   static const String streamerScreen = '/streamer-screen';
@@ -55,7 +56,7 @@ class Routes {
     loginScreen,
     homeScreen,
     webViewScreen,
-    agendaScreen,
+    livesScreen,
     discoverScreen,
     profileScreen,
     streamerScreen,
@@ -78,7 +79,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.loginScreen, page: LoginScreen),
     RouteDef(Routes.homeScreen, page: HomeScreen),
     RouteDef(Routes.webViewScreen, page: WebViewScreen),
-    RouteDef(Routes.agendaScreen, page: LivesScreen),
+    RouteDef(Routes.livesScreen, page: LivesScreen),
     RouteDef(Routes.discoverScreen, page: DiscoverScreen),
     RouteDef(Routes.profileScreen, page: ProfileScreen),
     RouteDef(Routes.streamerScreen, page: StreamerScreen),
@@ -128,9 +129,11 @@ class StackedRouter extends RouterBase {
       );
     },
     LivesScreen: (data) {
+      var args = data.getArgs<LivesScreenArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => LivesScreen(
-          changePage: (TabItem) {},
+          key: args.key,
+          changePage: args.changePage,
         ),
         settings: data,
       );
@@ -230,6 +233,13 @@ class WebViewScreenArguments {
   WebViewScreenArguments({required this.url, required this.shouldNavigate});
 }
 
+/// LivesScreen arguments holder class
+class LivesScreenArguments {
+  final Key? key;
+  final void Function(TabItem) changePage;
+  LivesScreenArguments({this.key, required this.changePage});
+}
+
 /// StreamerScreen arguments holder class
 class StreamerScreenArguments {
   final Key? key;
@@ -264,4 +274,292 @@ class EventStepTwoEditScreenArguments {
   final Key? key;
   final EventStepTwoEditViewModel viewModel;
   EventStepTwoEditScreenArguments({this.key, required this.viewModel});
+}
+
+/// ************************************************************************
+/// Extension for strongly typed navigation
+/// *************************************************************************
+
+extension NavigatorStateExtension on NavigationService {
+  Future<dynamic> navigateToSplashScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.splashScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToStartupScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.startupScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToLoginScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.loginScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToHomeScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.homeScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToWebViewScreen({
+    required String url,
+    required Future<bool> Function(String) shouldNavigate,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.webViewScreen,
+      arguments:
+          WebViewScreenArguments(url: url, shouldNavigate: shouldNavigate),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToLivesScreen({
+    Key? key,
+    required void Function(TabItem) changePage,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.livesScreen,
+      arguments: LivesScreenArguments(key: key, changePage: changePage),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToDiscoverScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.discoverScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToProfileScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.profileScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToStreamerScreen({
+    Key? key,
+    required StreamerViewModel viewModel,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.streamerScreen,
+      arguments: StreamerScreenArguments(key: key, viewModel: viewModel),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToChannelsScreen({
+    required String game,
+    required String gameId,
+    Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.channelsScreen,
+      arguments: ChannelsScreenArguments(game: game, gameId: gameId, key: key),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCreateEventStepOneScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.createEventStepOneScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCreateEventStepTwoScreen({
+    Key? key,
+    required CreateEventStepTwoViewModel viewModel,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.createEventStepTwoScreen,
+      arguments:
+          CreateEventStepTwoScreenArguments(key: key, viewModel: viewModel),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToEventStepOneEditScreen({
+    Key? key,
+    required EventStepOneEditViewModel viewModel,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.eventStepOneEditScreen,
+      arguments:
+          EventStepOneEditScreenArguments(key: key, viewModel: viewModel),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToEventStepTwoEditScreen({
+    Key? key,
+    required EventStepTwoEditViewModel viewModel,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.eventStepTwoEditScreen,
+      arguments:
+          EventStepTwoEditScreenArguments(key: key, viewModel: viewModel),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToFavoritesScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.favoritesScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToOwnEventsScreen({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.ownEventsScreen,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
 }
