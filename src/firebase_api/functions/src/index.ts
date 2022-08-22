@@ -1,6 +1,5 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { Workers } from './workers/workers' 
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -8,6 +7,7 @@ const db = admin.firestore();
 export const taskRunner = functions
   .runWith({ memory: "2GB" })
   // .pubsub.schedule('* * * * *') // Every minute
+  // .pubsub.schedule('*/15 * * * *') // Every 15 minutes
   .pubsub.schedule("0 0 * * *") // Once a day
   .onRun(async (context) => {
     console.log("Starting taskRunner");
@@ -117,7 +117,7 @@ export const onEventDelete = functions.firestore
       .get();
 
     if (snapshot.docs.length == 0) {
-      console.log("Finishing onEventDelete withou task deletion");
+      console.log("Finishing onEventDelete without task deletion");
       return;
     }
 
@@ -139,10 +139,9 @@ const workers: Workers = {
 
     const { title, categoryName } = data;
     console.log(
-      "Starting notification sending with title: " +
-      title +
-      " and category name: " +
-      categoryName
+      "Starting notification sending with title: " + title +
+      " and category name: " + categoryName +
+      "to topic: " + username
     );
 
     return admin.messaging().sendToTopic(
@@ -160,3 +159,7 @@ const workers: Workers = {
     );
   },
 };
+
+interface Workers {
+  [key: string]: (options: any) => Promise<any>;
+}

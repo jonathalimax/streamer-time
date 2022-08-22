@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import AdSupport
+import GoogleMobileAds
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,7 +10,7 @@ import AdSupport
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
-	  print(ASIdentifierManager.shared().advertisingIdentifier)
+	GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["8965c112c3a098ac06c29461572bd4a1"]
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

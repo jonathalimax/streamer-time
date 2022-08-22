@@ -6,13 +6,14 @@ class StreamerService {
   Users? streamers;
 
   Future<Users?> fetchMyStreamers() async {
-    streamers = await _firestoreApi.fetchMyStreamers();
-    return streamers;
+    final fetchedStreamers = await _firestoreApi.fetchMyStreamers();
+    streamers = fetchedStreamers;
+    return fetchedStreamers;
   }
 
   Future<void> followStreamer(String streamerId) async {
-    await _firestoreApi.followStreamer(streamerId);
-    await fetchMyStreamers();
+    final followedStreamer = await _firestoreApi.followStreamer(streamerId);
+    if (followedStreamer != null) streamers?.add(followedStreamer);
   }
 
   Future<void> unfollowStreamer(String streamerId) async {

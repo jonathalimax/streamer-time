@@ -87,27 +87,30 @@ class LivesScreen extends StatelessWidget {
 
   Widget _buildAgendaList(LivesViewModel viewModel) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: viewModel.streamers.length,
-        itemBuilder: (context, index) {
-          var item = viewModel.streamers[index];
+      child: RefreshIndicator(
+        onRefresh: () => viewModel.fetchStreamers(),
+        child: ListView.builder(
+          itemCount: viewModel.streamers.length,
+          itemBuilder: (context, index) {
+            var item = viewModel.streamers[index];
 
-          return item.events.isNotEmpty
-              ? AgendaView(
-                  title: item.username,
-                  events: item.events,
-                  profileImageUrl: item.profileImageUrl,
-                  onEventTap: () => viewModel.openStreamerWebview(
-                    context,
-                    item.username,
-                  ),
-                  onStreamerTap: () => viewModel.openStreamerScreen(
-                    item.id,
-                    item.username,
-                  ),
-                )
-              : Container();
-        },
+            return item.events.isNotEmpty
+                ? AgendaView(
+                    title: item.username,
+                    events: item.events,
+                    profileImageUrl: item.profileImageUrl,
+                    onEventTap: () => viewModel.openStreamerWebview(
+                      context,
+                      item.username,
+                    ),
+                    onStreamerTap: () => viewModel.openStreamerScreen(
+                      item.id,
+                      item.username,
+                    ),
+                  )
+                : Container();
+          },
+        ),
       ),
     );
   }

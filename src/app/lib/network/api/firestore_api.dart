@@ -8,7 +8,6 @@ import 'package:app/network/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firestore_api_constants.dart';
 import 'firestore_api_exceptions.dart';
-import 'package:rxdart/subjects.dart';
 
 typedef Users = List<User>;
 typedef FirestoreQueryDocument = QueryDocumentSnapshot<Map<String, dynamic>>;
@@ -18,19 +17,6 @@ class FirestoreApi {
 
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection(UsersFirestoreKey);
-
-  final StreamController<Users> _usersController = BehaviorSubject();
-
-  Stream<Users> get followingStreamers =>
-      _usersController.stream.asBroadcastStream(
-        onCancel: (sub) {
-          sub.cancel();
-        },
-      );
-
-  FirestoreApi() {
-    _buildStreams();
-  }
 
   Future<String?> _getUserId() async {
     final token = await _appAuthentication.getTwitchToken();
@@ -208,9 +194,9 @@ class FirestoreApi {
   }
 
   // Followers Collection
-  Future<void> followStreamer(String streamerId) async {
+  Future<User?> followStreamer(String streamerId) async {
     final userId = await _getUserId();
-    if (userId == null) return;
+    if (userId == null) return null;
 
     try {
       final streamer = Follower(userId: streamerId);
@@ -219,6 +205,8 @@ class FirestoreApi {
           .collection(FollowingFirestoreKey)
           .doc()
           .set(streamer.toJson());
+
+      return await getUserById(streamerId);
     } catch (error) {
       throw FirestoreApiException(
         message: 'Failed to follow streamer with id $streamerId',
@@ -294,42 +282,7 @@ class FirestoreApi {
       });
 
       users.sort((a, b) => b.viewCount.compareTo(a.viewCount));
-      _usersController.add(users);
       return users;
-    } catch (error) {
-      throw FirestoreApiException(
-        message: 'Failed to get following streamers',
-        devDetails: '$error',
-      );
-    }
-  }
-
-  Future<void> _buildStreams() async {
-    final userId = await _getUserId();
-    if (userId == null) return;
-
-    usersCollection
-        .doc(userId)
-        .collection(FollowingFirestoreKey)
-        .snapshots()
-        .listen(_followingStreamersUpdated);
-  }
-
-  Future<void> _followingStreamersUpdated(
-    QuerySnapshot<Map<String, dynamic>> snapshot,
-  ) async {
-    Users users = [];
-
-    try {
-      await Future.forEach(snapshot.docs,
-          (QueryDocumentSnapshot<Map<String, dynamic>> element) async {
-        final follower = Follower.fromJson(element.data());
-        final user = await getUserById(follower.userId);
-        if (user != null) users.add(user);
-      });
-
-      users.sort((a, b) => b.viewCount.compareTo(a.viewCount));
-      _usersController.add(users);
     } catch (error) {
       throw FirestoreApiException(
         message: 'Failed to get following streamers',

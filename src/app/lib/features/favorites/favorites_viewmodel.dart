@@ -1,27 +1,16 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
-import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
+import 'package:app/network/services/streamer_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class FavoritesViewModel extends BaseViewModel {
-  final _firestoreApi = locator<FirestoreApi>();
   final _navigationService = locator<NavigationService>();
+  final _streamerService = locator<StreamerService>();
 
-  List<User>? _users;
-  List<User> get users => _users ?? [];
-
-  FavoritesViewModel() {
-    setBusy(true);
-    _firestoreApi.followingStreamers.listen(_onUsersUpdated);
-  }
-
-  void _onUsersUpdated(Users users) {
-    this._users = users;
-    setBusy(false);
-  }
+  List<User> get users => _streamerService.streamers ?? [];
 
   Future<void> openStreamerDetails(
     String streamerId,
@@ -31,11 +20,13 @@ class FavoritesViewModel extends BaseViewModel {
       streamerId: streamerId,
       username: username,
     );
-    await _navigationService.navigateTo(
-      Routes.streamerScreen,
-      arguments: StreamerScreenArguments(
-        viewModel: viewModel,
-      ),
-    );
+    _navigationService
+        .navigateTo(
+          Routes.streamerScreen,
+          arguments: StreamerScreenArguments(
+            viewModel: viewModel,
+          ),
+        )
+        ?.whenComplete(() => notifyListeners());
   }
 }

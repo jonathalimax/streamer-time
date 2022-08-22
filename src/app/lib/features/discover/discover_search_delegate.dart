@@ -13,7 +13,11 @@ class DiscoverSearchDelegate extends SearchDelegate<String> {
   final _twitchService = locator<TwitchService>();
   final _navigationService = locator<NavigationService>();
 
-  DiscoverSearchDelegate() : super(searchFieldLabel: 'Buscar streamer');
+  DiscoverSearchDelegate()
+      : super(
+          searchFieldLabel: 'Buscar streamer',
+          keyboardType: TextInputType.none,
+        );
 
   @override
   List<Widget> buildActions(BuildContext context) {

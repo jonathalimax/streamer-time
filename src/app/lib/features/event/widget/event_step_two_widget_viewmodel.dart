@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:twitch_api/twitch_api.dart';
+import 'package:app/core/extensions/user_locale.dart';
 
 class EventStepTwoWidgetViewModel extends BaseViewModel {
   final _picker = ImagePicker();
@@ -48,7 +49,7 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
       context,
       theme: ThemeConstants.datePickerTheme,
       showTitleActions: true,
-      locale: LocaleType.pt, // TODO: Get user locale
+      locale: UserLocale.locale(),
       minTime: DateTime.now().add(
         Duration(hours: 1),
       ),

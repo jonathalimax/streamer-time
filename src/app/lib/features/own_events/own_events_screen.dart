@@ -29,13 +29,12 @@ class OwnEventsScreen extends StatelessWidget {
                 )
               : viewModel.data!.isNotEmpty
                   ? Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
                       child: ListView.builder(
                         itemCount: viewModel.data!.length,
                         itemBuilder: (context, index) {
                           final item = viewModel.data![index];
                           return Container(
-                            padding: const EdgeInsets.only(top: 12),
                             height: 230,
                             child: InkWell(
                               onTap: () => viewModel.manageEvent(item),

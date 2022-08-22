@@ -17,9 +17,9 @@ class Event {
   String get timeDisplay => DateFormat('jm').format(starTime);
 
   bool get isLive {
-    final now = DateTime.now();
-    return starTime.isBefore(now) &&
-        starTime.difference(now) <= Duration(hours: 4);
+    final now = DateTime.now().toUtc();
+    return starTime.toUtc().isBefore(now) &&
+        now.difference(starTime.toUtc()) <= Duration(hours: 1);
   }
 
   TwitchGame get category => TwitchGame(

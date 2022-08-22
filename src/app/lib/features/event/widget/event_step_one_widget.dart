@@ -65,7 +65,7 @@ class EventStepOneWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      SizedBox(height: 20),
+                      SizedBox(height: 4),
                       Container(
                         height: 230,
                         child: CardEventView(

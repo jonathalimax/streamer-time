@@ -34,7 +34,7 @@ class EventStepTwoWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 4),
                 Container(
                   height: 230,
                   child: CardEventView(
@@ -51,7 +51,8 @@ class EventStepTwoWidget extends StatelessWidget {
                 SizedBox(
                   width: 290,
                   child: AppButton(
-                    title: 'Adicionar data e hora',
+                    title:
+                        '${viewModel.event == null ? 'Adicionar' : 'Atualizar'} data e hora',
                     action: () => viewModel.setDateTime(context),
                     color: Colors.transparent,
                     titleColor: Theme.of(context).primaryColor,
@@ -61,7 +62,8 @@ class EventStepTwoWidget extends StatelessWidget {
                 SizedBox(
                   width: 290,
                   child: AppButton(
-                    title: 'Adicionar imagem de fundo',
+                    title:
+                        '${viewModel.event == null ? 'Adicionar' : 'Atualizar'} imagem de fundo',
                     action: () => viewModel.showImageSourceActionSheet(context),
                     color: Colors.transparent,
                     titleColor: Theme.of(context).primaryColor,
