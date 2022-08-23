@@ -50,6 +50,7 @@ Future<void> _setupHive() async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
+  await _setupFirebase();
 }
 
 class MyApp extends StatelessWidget {
