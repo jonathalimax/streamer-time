@@ -1,6 +1,8 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/event/create/event_step_two/create_event_step_two_viewmodel.dart';
+import 'package:design_system/widgets/app_text.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
@@ -9,10 +11,21 @@ class CreateEventStepOneViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   void continueCreatingEvent(
+    BuildContext context,
     String? title,
     TwitchGame? category,
   ) {
-    if (title == null || category == null) return;
+    if (title == null || category == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AppText.captionBold(
+            'A categoria e título são obrigatórios!',
+          ),
+        ),
+      );
+      return;
+    }
+
     _navigationService.navigateTo(
       Routes.createEventStepTwoScreen,
       arguments: CreateEventStepTwoScreenArguments(

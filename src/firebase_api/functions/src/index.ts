@@ -13,6 +13,9 @@ export const taskRunner = functions
     console.log("Starting taskRunner");
 
     const now = admin.firestore.Timestamp.now();
+
+    console.log("Fetching notifications to be sent based on this time" + now);
+
     const query = db
       .collection("tasks")
       .where("performAt", "<=", now)
@@ -140,7 +143,7 @@ const workers: Workers = {
     const { title, categoryName } = data;
     console.log(
       "Starting notification sending with title: " + title +
-      " and category name: " + categoryName +
+      "and category name: " + categoryName +
       "to topic: " + username
     );
 

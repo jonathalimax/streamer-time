@@ -50,6 +50,8 @@ dependencies:
   injectable: ">=1.5.0"
   url_launcher: ">=6.0.17"
   webview_flutter: ">=3.0.0"
+  mobx: ^2.0.7+5
+  flutter_mobx: ^2.0.6+1
 
   # Media
   image_picker: ">=0.8.4+2"
@@ -66,6 +68,7 @@ dev_dependencies:
   
   build: ">=2.1.0"
   build_runner: ">=2.1.2"
+  mobx_codegen: ^2.0.7
   hive_generator: ">=1.1.0"
   stacked_generator: ">=0.7.15"
   flutter_native_splash: ">=2.2.8"

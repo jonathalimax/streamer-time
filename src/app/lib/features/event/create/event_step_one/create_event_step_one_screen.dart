@@ -24,7 +24,10 @@ class CreateEventStepOneScreen extends StatelessWidget {
               )
             : EventStepOneWidget(
                 callToActionTitle: 'Continuar',
-                callToAction: viewModel.continueCreatingEvent,
+                callToAction: (title, category) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  viewModel.continueCreatingEvent(context, title, category);
+                },
               ),
       ),
     );

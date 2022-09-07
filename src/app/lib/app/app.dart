@@ -28,6 +28,7 @@ import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:app/network/services/user_service.dart';
+import 'package:app/stores/streamer_store.dart';
 import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -70,6 +71,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: PushNotificationManager),
     LazySingleton(classType: AdManager),
     LazySingleton(classType: CachingManager),
+    LazySingleton(classType: StreamerStore)
   ],
 )
 class AppSetup {}

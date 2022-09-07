@@ -4,8 +4,8 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
-import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/services/streamer_service.dart';
+import 'package:app/stores/streamer_store.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -16,24 +16,23 @@ import 'package:url_launcher/url_launcher.dart';
 class LivesViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
   final _streamerService = locator<StreamerService>();
+  final _streamerStore = locator<StreamerStore>();
 
   bool _isBannerAdLoaded = false;
 
-  late Users streamers = _streamerService.streamers ?? [];
+  late final store = _streamerStore;
   late BannerAd _inlineBannerAd;
 
   BannerAd get bannerAd => _inlineBannerAd;
 
   LivesViewModel() {
     buildBannerAd();
-    if (streamers.isEmpty) {
-      setBusy(true);
-      fetchStreamers();
-    }
+    if (store.streamers.isEmpty) fetchStreamers();
   }
 
   Future<void> fetchStreamers() async {
-    streamers = await _streamerService.fetchMyStreamers() ?? [];
+    setBusy(true);
+    await _streamerService.fetchMyStreamers() ?? [];
     setBusy(false);
   }
 

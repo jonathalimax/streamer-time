@@ -38,7 +38,10 @@ class EventStepOneEditScreen extends StatelessWidget {
                   time: viewModel.event.timeDisplay,
                   imageUrl: viewModel.event.imageUrl,
                   callToActionTitle: 'Continuar editando',
-                  callToAction: viewModel.continueEditingEvent,
+                  callToAction: (title, category) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    viewModel.continueEditingEvent(context, title, category);
+                  },
                 ),
         );
       },

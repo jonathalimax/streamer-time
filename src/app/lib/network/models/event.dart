@@ -37,7 +37,7 @@ class Event {
     this.imageUrl,
     this.duration,
     this.isRecurring = false,
-  }) : timezone = DateTime.now().timeZoneName;
+  }) : timezone = DateTime.now().toUtc().timeZoneName;
 
   Event.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -53,7 +53,7 @@ class Event {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
-        'starTime': starTime,
+        'starTime': starTime.toUtc(),
         'categoryId': categoryId,
         'categoryName': categoryName,
         'imageUrl': imageUrl,

@@ -3,6 +3,7 @@ import 'package:design_system/widgets/app_text.dart';
 import 'package:design_system/widgets/empty_state/app_empty_state.dart';
 import 'package:design_system/widgets/empty_state/app_empty_state_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
@@ -35,41 +36,44 @@ class FavoritesScreen extends StatelessWidget {
             ),
           )
         : SafeArea(
-            child: viewModel.users.isEmpty
-                ? AppEmptyState(
-                    title: 'Você não possui favoritos!',
-                    type: AppEmptyStateType.noDocument,
-                  )
-                : ListView.builder(
-                    itemCount: viewModel.users.length,
-                    itemExtent: 60,
-                    itemBuilder: (context, index) {
-                      final user = viewModel.users[index];
-                      return Center(
-                        child: InkWell(
-                          onTap: () => viewModel.openStreamerDetails(
-                            user.id,
-                            user.username,
-                          ),
-                          highlightColor: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(.2),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              foregroundImage: CachedNetworkImageProvider(
-                                user.profileImageUrl,
-                              ),
-                            ),
-                            title: AppText.heading4(
+            child: Observer(
+              warnWhenNoObservables: true,
+              builder: (_) => viewModel.store.streamers.isEmpty
+                  ? AppEmptyState(
+                      title: 'Você não possui favoritos!',
+                      type: AppEmptyStateType.noDocument,
+                    )
+                  : ListView.builder(
+                      itemCount: viewModel.store.streamers.length,
+                      itemExtent: 60,
+                      itemBuilder: (context, index) {
+                        final user = viewModel.store.streamers.elementAt(index);
+                        return Center(
+                          child: InkWell(
+                            onTap: () => viewModel.openStreamerDetails(
+                              user.id,
                               user.username,
                             ),
+                            highlightColor: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(.2),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                foregroundImage: CachedNetworkImageProvider(
+                                  user.profileImageUrl,
+                                ),
+                              ),
+                              title: AppText.heading4(
+                                user.username,
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
+            ),
           );
   }
 }

@@ -6,8 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:app/features/lives/lives_viewmodel.dart';
-import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../core/ads/ad_manager.dart';
@@ -15,6 +14,7 @@ import '../core/authentication/app_authentication.dart';
 import '../core/caching/caching_manager.dart';
 import '../core/notifications/push_notification_manager.dart';
 import '../features/discover/discover_viewmodel.dart';
+import '../features/lives/lives_viewmodel.dart';
 import '../features/profile/profile_viewmodel.dart';
 import '../features/webview/webview_viewmodel.dart';
 import '../network/api/firebase_storage_api.dart';
@@ -23,12 +23,14 @@ import '../network/services/event_service.dart';
 import '../network/services/streamer_service.dart';
 import '../network/services/twitch_service.dart';
 import '../network/services/user_service.dart';
+import '../stores/streamer_store.dart';
 import '../widgets/card_game/card_game_list_viewmodel.dart';
 import '../widgets/card_streams/card_stream_list_viewmodel.dart';
 
 final locator = StackedLocator.instance;
 
-void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
+Future<void> setupLocator(
+    {String? environment, EnvironmentFilter? environmentFilter}) async {
 // Register environments
   locator.registerEnvironment(
       environment: environment, environmentFilter: environmentFilter);
@@ -51,4 +53,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => PushNotificationManager());
   locator.registerLazySingleton(() => AdManager());
   locator.registerLazySingleton(() => CachingManager());
+  locator.registerLazySingleton(() => StreamerStore());
 }

@@ -7,8 +7,6 @@ import 'package:design_system/widgets/app_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../network/api/firestore_api.dart';
-
 enum TabItem { lives, discover, profile }
 
 extension TabItemExtension on TabItem {

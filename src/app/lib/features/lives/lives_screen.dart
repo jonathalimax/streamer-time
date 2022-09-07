@@ -1,11 +1,11 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/home/home_screen.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
-import 'package:app/network/models/user.dart';
 import 'package:app/widgets/agenda/agenda_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
@@ -58,7 +58,7 @@ class LivesScreen extends StatelessWidget {
                 ? SpinKitDoubleBounce(
                     color: Theme.of(context).colorScheme.secondary,
                   )
-                : viewModel.streamers.isNotEmpty
+                : viewModel.store.streamers.isNotEmpty
                     ? Column(
                         children: <Widget>[
                           _buildAgendaList(viewModel),
@@ -89,27 +89,29 @@ class LivesScreen extends StatelessWidget {
     return Expanded(
       child: RefreshIndicator(
         onRefresh: () => viewModel.fetchStreamers(),
-        child: ListView.builder(
-          itemCount: viewModel.streamers.length,
-          itemBuilder: (context, index) {
-            var item = viewModel.streamers[index];
+        child: Observer(
+          builder: (_) => ListView.builder(
+            itemCount: viewModel.store.streamers.length,
+            itemBuilder: (context, index) {
+              var item = viewModel.store.streamers.elementAt(index);
 
-            return item.events.isNotEmpty
-                ? AgendaView(
-                    title: item.username,
-                    events: item.events,
-                    profileImageUrl: item.profileImageUrl,
-                    onEventTap: () => viewModel.openStreamerWebview(
-                      context,
-                      item.username,
-                    ),
-                    onStreamerTap: () => viewModel.openStreamerScreen(
-                      item.id,
-                      item.username,
-                    ),
-                  )
-                : Container();
-          },
+              return item.events.isNotEmpty
+                  ? AgendaView(
+                      title: item.username,
+                      events: item.events,
+                      profileImageUrl: item.profileImageUrl,
+                      onEventTap: () => viewModel.openStreamerWebview(
+                        context,
+                        item.username,
+                      ),
+                      onStreamerTap: () => viewModel.openStreamerScreen(
+                        item.id,
+                        item.username,
+                      ),
+                    )
+                  : Container();
+            },
+          ),
         ),
       ),
     );

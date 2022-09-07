@@ -1,16 +1,15 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
-import 'package:app/network/models/user.dart';
-import 'package:app/network/services/streamer_service.dart';
+import 'package:app/stores/streamer_store.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class FavoritesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _streamerService = locator<StreamerService>();
+  final _streamerStore = locator<StreamerStore>();
 
-  List<User> get users => _streamerService.streamers ?? [];
+  late final store = _streamerStore;
 
   Future<void> openStreamerDetails(
     String streamerId,

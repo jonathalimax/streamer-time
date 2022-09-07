@@ -25,10 +25,8 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
     this._event,
     this._title,
     this._category,
-  ) : _selectedDateTime = _event?.starTime ??
-            DateTime.now().add(
-              Duration(hours: 1),
-            );
+  ) : _selectedDateTime =
+            _event?.starTime ?? DateTime.now().add(Duration(hours: 1));
 
   Event? get event => _event;
   String get title => _event?.title ?? _title;
@@ -50,9 +48,7 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
       theme: ThemeConstants.datePickerTheme,
       showTitleActions: true,
       locale: UserLocale.locale(),
-      minTime: DateTime.now().add(
-        Duration(hours: 1),
-      ),
+      minTime: DateTime.now().add(Duration(hours: 1)),
       currentTime: _selectedDateTime,
       onConfirm: (date) {
         this._selectedDateTime = date;
