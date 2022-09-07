@@ -65,7 +65,7 @@ class AppEmptyState extends StatelessWidget {
                   AppButton(
                     title: buttonTitle!,
                     action: () => buttonAction!(),
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ),
