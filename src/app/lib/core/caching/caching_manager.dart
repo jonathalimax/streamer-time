@@ -9,6 +9,7 @@ const String AUTH_BOX_KEY = 'AuthenticationBox';
 const String AUTH_TOKEN_KEY = 'authToken';
 const String SETTINGS_BOX_KEY = 'SettingsBox';
 const String NOTIFICATION_AUTHORIZED_KEY = 'NotificationAuthorizedKey';
+const String OPENED_LIVES_AMOUNT = 'OpenedLivesAmount';
 
 class CachingManager {
   Future<Uint8List?> getEncryptionKey() async {
@@ -73,5 +74,37 @@ class CachingManager {
     await encryptedBox.close();
 
     return isAuthorized != null;
+  }
+
+  Future<bool> shouldAppearFullAd() async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return false;
+
+    final encryptedBox = await Hive.openBox(
+      OPENED_LIVES_AMOUNT,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    final openedLivesAmount = encryptedBox.get(OPENED_LIVES_AMOUNT) as int?;
+    await encryptedBox.close();
+
+    return openedLivesAmount != null && openedLivesAmount >= 3;
+  }
+
+  Future incrementLivesOpened() async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return false;
+
+    final encryptedBox = await Hive.openBox(
+      OPENED_LIVES_AMOUNT,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    int openedLivesAmount = encryptedBox.get(OPENED_LIVES_AMOUNT) ?? 0;
+    await encryptedBox.put(
+      OPENED_LIVES_AMOUNT,
+      openedLivesAmount >= 3 ? 0 : ++openedLivesAmount,
+    );
+    await encryptedBox.close();
   }
 }

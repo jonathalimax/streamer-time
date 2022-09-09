@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:app/stores/streamer_store.dart';
@@ -17,16 +16,18 @@ class LivesViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
   final _streamerService = locator<StreamerService>();
   final _streamerStore = locator<StreamerStore>();
-
-  bool _isBannerAdLoaded = false;
+  final _cachingManager = locator<CachingManager>();
 
   late final store = _streamerStore;
+
   late BannerAd _inlineBannerAd;
+  InterstitialAd? _interstitialAd;
 
   BannerAd get bannerAd => _inlineBannerAd;
 
   LivesViewModel() {
     buildBannerAd();
+    buildInterstitialAd();
     if (store.streamers.isEmpty) fetchStreamers();
   }
 
@@ -41,23 +42,36 @@ class LivesViewModel extends BaseViewModel {
   }
 
   Future<void> openStreamerWebview(
-      BuildContext context, String username) async {
+    BuildContext context,
+    String username,
+  ) async {
     var url = Uri(
       scheme: 'https',
       host: 'twitch.tv',
       path: '$username',
     );
-    if (await canLaunchUrl(url)) {
-      await launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
-    } else {
+
+    if (!await canLaunchUrl(url)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: AppText.captionBold('Ocorreu um erro ao abrir o evento!'),
+          content: AppText.captionBold('Ocorreu um erro ao abrir a stream!'),
         ),
       );
+    }
+
+    if (await _cachingManager.shouldAppearFullAd()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AppText.captionBold(
+            'Assistindo o anúncio a seguir, você estará nos dando suporte total! 🫡',
+          ),
+          duration: Duration(seconds: 4),
+        ),
+      );
+      await Future.delayed(Duration(seconds: 4));
+      await showInterstitialAdWithCallback(url);
+    } else {
+      await launchStreamerUrl(url);
     }
   }
 
@@ -83,16 +97,42 @@ class LivesViewModel extends BaseViewModel {
       adUnitId: AdManager.bannerHomeUnitId,
       request: AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (_) {
-          if (!_isBannerAdLoaded) {
-            _isBannerAdLoaded = true;
-          }
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-        },
+        onAdFailedToLoad: (ad, _) => ad.dispose(),
       ),
     );
     await _inlineBannerAd.load();
+  }
+
+  Future buildInterstitialAd() async {
+    await InterstitialAd.load(
+      adUnitId: AdManager.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) => _interstitialAd = ad,
+        onAdFailedToLoad: (_) {
+          _interstitialAd?.dispose();
+        },
+      ),
+    );
+  }
+
+  Future showInterstitialAdWithCallback(Uri callbackUrl) async {
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+      onAdWillDismissFullScreenContent: (_) async {
+        await launchStreamerUrl(callbackUrl);
+        await buildInterstitialAd();
+      },
+      onAdDismissedFullScreenContent: (ad) => ad.dispose(),
+      onAdFailedToShowFullScreenContent: (ad, _) => ad.dispose(),
+    );
+    await _interstitialAd?.show();
+  }
+
+  Future launchStreamerUrl(Uri url) async {
+    await _cachingManager.incrementLivesOpened();
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
   }
 }

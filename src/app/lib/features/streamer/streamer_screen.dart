@@ -47,9 +47,7 @@ class StreamerScreen extends StatelessWidget {
                   Spacer(),
                   Container(
                     height: viewModel.bannerAd.size.height.toDouble(),
-                    child: AdWidget(
-                      ad: viewModel.bannerAd,
-                    ),
+                    child: AdWidget(ad: viewModel.bannerAd),
                   ),
                 ],
               ),

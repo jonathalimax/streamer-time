@@ -15,8 +15,6 @@ class StreamerViewModel extends MultipleFutureViewModel {
   final String streamerId;
   final String username;
 
-  bool _isBannerAdLoaded = false;
-
   late BannerAd _bannerAd;
   BannerAd get bannerAd => _bannerAd;
 
@@ -79,15 +77,7 @@ class StreamerViewModel extends MultipleFutureViewModel {
       adUnitId: AdManager.streamerBannerUnitId,
       request: AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (_) {
-          if (!_isBannerAdLoaded) {
-            _isBannerAdLoaded = true;
-            notifyListeners();
-          }
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-        },
+        onAdFailedToLoad: (ad, _) => ad.dispose(),
       ),
     );
     await _bannerAd.load();
