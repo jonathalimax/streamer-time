@@ -63,12 +63,6 @@ class FirestoreApi {
           .doc(userId)
           .collection(EventsFirestoreKey)
           .orderBy('starTime')
-          .where(
-            'starTime',
-            isGreaterThanOrEqualTo: DateTime.now().subtract(
-              Duration(hours: 4), // TODO: Use duration on database instead
-            ),
-          )
           .get();
 
       await Future.forEach(
@@ -78,7 +72,8 @@ class FirestoreApi {
           if (data == null) return;
 
           final event = Event.fromJson(data);
-          user.events.add(event);
+          if (event.finishTime.toUtc().isAfter(DateTime.now().toUtc()))
+            user.events.add(event);
         },
       );
 
@@ -172,10 +167,6 @@ class FirestoreApi {
           .doc(streamerId)
           .collection(EventsFirestoreKey)
           .orderBy('starTime')
-          .where(
-            'starTime',
-            isGreaterThanOrEqualTo: DateTime.now(),
-          )
           .get();
 
       document.docs.forEach(
@@ -184,7 +175,10 @@ class FirestoreApi {
         },
       );
 
-      return events;
+      return events
+          .where((element) =>
+              element.finishTime.toUtc().isAfter(DateTime.now().toUtc()))
+          .toList();
     } catch (error) {
       throw FirestoreApiException(
         message: 'Failed to get streamer events for streamerid: $streamerId',

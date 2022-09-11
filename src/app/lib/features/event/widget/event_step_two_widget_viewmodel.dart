@@ -36,7 +36,7 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
   TwitchGame get category => _category;
   File? get selectedImage => _selectedImage;
   DateTime get selectedDate => _selectedDateTime;
-  Duration get duration => _selectedDateTime.difference(_selectedFinalDateTime);
+  Duration get duration => _selectedFinalDateTime.difference(_selectedDateTime);
 
   String get selectedDateFormated {
     return DateFormat('dd MMM').format(_selectedDateTime);

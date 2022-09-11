@@ -13,7 +13,9 @@ class FirebaseStorageApi {
   }) async {
     try {
       final path = directory ?? EventImageDirectory;
-      final compressedImage = await _compressFile(image);
+      final compressedImage = await FlutterNativeImage.compressImage(
+        image.path,
+      );
       final storageReference = FirebaseStorage.instance
           .ref()
           .child(path)
@@ -24,14 +26,5 @@ class FirebaseStorageApi {
     } on FirebaseException {
       return null;
     }
-  }
-
-  Future<File> _compressFile(File file) async {
-    File compressedFile = await FlutterNativeImage.compressImage(
-      file.path,
-      percentage: 50,
-      quality: 50,
-    );
-    return compressedFile;
   }
 }
