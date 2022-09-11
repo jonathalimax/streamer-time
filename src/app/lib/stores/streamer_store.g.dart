@@ -13,13 +13,13 @@ mixin _$StreamerStore on _StreamerStore, Store {
       Atom(name: '_StreamerStore.streamers', context: context);
 
   @override
-  ObserverList<User> get streamers {
+  ObservableList<User> get streamers {
     _$streamersAtom.reportRead();
     return super.streamers;
   }
 
   @override
-  set streamers(ObserverList<User> value) {
+  set streamers(ObservableList<User> value) {
     _$streamersAtom.reportWrite(value, super.streamers, () {
       super.streamers = value;
     });

@@ -37,8 +37,8 @@ class EventStepTwoEditScreen extends StatelessWidget {
                     viewModel.category,
                   ),
                   callToActionTitle: 'Salvar alterações',
-                  callToAction: (image, date) {
-                    viewModel.saveEvent(context, image, date);
+                  callToAction: (image, date, duration) {
+                    viewModel.saveEvent(context, image, date, duration);
                   },
                 ),
         );

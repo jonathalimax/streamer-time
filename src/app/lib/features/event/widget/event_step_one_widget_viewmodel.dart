@@ -5,6 +5,7 @@ import 'package:twitch_api/twitch_api.dart';
 
 class EventStepOneWidgetViewModel extends BaseViewModel {
   final _twitchService = locator<TwitchService>();
+  TwitchResponse<TwitchGame>? topCategories;
 
   String? selectedTitle;
   TwitchGame? selectedCategory;
@@ -12,9 +13,14 @@ class EventStepOneWidgetViewModel extends BaseViewModel {
   Future<List<TwitchGame>> getCategorySuggestion(String query) async {
     TwitchResponse<TwitchGame> response;
 
-    response = query.isEmpty
-        ? await _twitchService.client.getTopGames()
-        : await _twitchService.client.searchCategories(query: query);
+    if (query.isNotEmpty) {
+      response = await _twitchService.client.searchCategories(query: query);
+    } else if (topCategories != null) {
+      response = topCategories!;
+    } else {
+      response = await _twitchService.client.getTopGames();
+      topCategories = response;
+    }
 
     if (response.data == null) [];
     return response.data!
@@ -24,7 +30,7 @@ class EventStepOneWidgetViewModel extends BaseViewModel {
         .toList();
   }
 
-  Future<void> setCategory(TwitchGame category) async {
+  Future<void> setCategory(TwitchGame? category) async {
     this.selectedCategory = category;
     notifyListeners();
   }

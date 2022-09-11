@@ -20,19 +20,23 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
 
   File? _selectedImage;
   DateTime _selectedDateTime;
+  DateTime _selectedFinalDateTime;
 
   EventStepTwoWidgetViewModel(
     this._event,
     this._title,
     this._category,
-  ) : _selectedDateTime =
-            _event?.starTime ?? DateTime.now().add(Duration(hours: 1));
+  )   : _selectedDateTime =
+            _event?.starTime ?? DateTime.now().add(Duration(minutes: 1)),
+        _selectedFinalDateTime =
+            _event?.finishTime ?? DateTime.now().add(Duration(minutes: 30));
 
   Event? get event => _event;
   String get title => _event?.title ?? _title;
   TwitchGame get category => _category;
   File? get selectedImage => _selectedImage;
   DateTime get selectedDate => _selectedDateTime;
+  Duration get duration => _selectedDateTime.difference(_selectedFinalDateTime);
 
   String get selectedDateFormated {
     return DateFormat('dd MMM').format(_selectedDateTime);
@@ -48,10 +52,25 @@ class EventStepTwoWidgetViewModel extends BaseViewModel {
       theme: ThemeConstants.datePickerTheme,
       showTitleActions: true,
       locale: UserLocale.locale(),
-      minTime: DateTime.now().add(Duration(hours: 1)),
+      minTime: DateTime.now(),
       currentTime: _selectedDateTime,
       onConfirm: (date) {
         this._selectedDateTime = date;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> setFinalDateTime(BuildContext context) async {
+    await DatePicker.showDateTimePicker(
+      context,
+      theme: ThemeConstants.datePickerTheme,
+      showTitleActions: true,
+      locale: UserLocale.locale(),
+      minTime: DateTime.now().add(Duration(minutes: 15)),
+      currentTime: _selectedFinalDateTime,
+      onConfirm: (date) {
+        this._selectedFinalDateTime = date;
         notifyListeners();
       },
     );

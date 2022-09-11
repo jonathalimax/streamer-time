@@ -41,6 +41,10 @@ class StreamerScreen extends StatelessWidget {
                           ? AgendaView(
                               title: 'Agenda',
                               events: viewModel.fetchedStreamer!.events,
+                              onEventTap: () => viewModel.onEventTap(
+                                context,
+                                viewModel.fetchedStreamer!.username,
+                              ),
                             )
                           : Container(),
                     ),

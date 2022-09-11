@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -9,11 +10,17 @@ typedef TwitchGameList = List<TwitchGame>;
 
 class CardGameListViewModel extends FutureViewModel<TwitchGameList> {
   final _navigation = locator<NavigationService>();
+  final _authentication = locator<AppAuthentication>();
   final _twitchService = locator<TwitchService>();
 
   Future<TwitchGameList> _getTopGames() async {
-    final games = await _twitchService.client.getTopGames();
-    return games.data?.toList() ?? [];
+    try {
+      final games = await _twitchService.client.getTopGames();
+      return games.data?.toList() ?? [];
+    } on TwitchNotConnectedException {
+      await _authentication.logout();
+      return [];
+    }
   }
 
   @override

@@ -15,11 +15,15 @@ class CreateEventStepOneViewModel extends BaseViewModel {
     String? title,
     TwitchGame? category,
   ) {
-    if (title == null || category == null) {
+    final hasTitle = title != null && title.isNotEmpty;
+
+    if (category == null || !hasTitle) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: AppText.captionBold(
-            'A categoria e título são obrigatórios!',
+            category == null
+                ? 'Selecione uma categoria válida!'
+                : 'Esqueceu do título da live?',
           ),
         ),
       );

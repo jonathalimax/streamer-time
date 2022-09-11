@@ -39,8 +39,8 @@ class CreateEventStepTwoScreen extends StatelessWidget {
                   viewModel.category,
                 ),
                 callToActionTitle: 'Continuar',
-                callToAction: (image, date) {
-                  viewModel.createEvent(context, image, date);
+                callToAction: (image, date, duration) {
+                  viewModel.createEvent(context, image, date, duration);
                 },
               ),
       ),

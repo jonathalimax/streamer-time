@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../network/models/user.dart';
@@ -8,7 +7,7 @@ class StreamerStore = _StreamerStore with _$StreamerStore;
 
 abstract class _StreamerStore with Store {
   @observable
-  var streamers = ObserverList<User>();
+  var streamers = ObservableList<User>();
 
   @action
   void add(User streamer) {

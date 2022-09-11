@@ -9,17 +9,17 @@ class Event {
   String categoryId;
   String categoryName;
   String? imageUrl;
-  String? duration;
+  int? duration;
   String timezone;
   bool isRecurring;
 
   String get dateDisplay => DateFormat('dd MMM').format(starTime);
   String get timeDisplay => DateFormat('jm').format(starTime);
+  DateTime get finishTime => starTime.add(Duration(minutes: duration ?? 0));
 
   bool get isLive {
     final now = DateTime.now().toUtc();
-    return starTime.toUtc().isBefore(now) &&
-        now.difference(starTime.toUtc()) <= Duration(hours: 1);
+    return starTime.toUtc().isBefore(now) && finishTime.toUtc().isAfter(now);
   }
 
   TwitchGame get category => TwitchGame(

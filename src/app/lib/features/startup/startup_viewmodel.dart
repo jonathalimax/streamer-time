@@ -15,6 +15,8 @@ class StartupViewModel extends BaseViewModel {
     final token = await _appAuthentication.getTwitchToken();
     final isAuthenticated = await _appAuthentication.isAuthenticated();
 
+    if (token != null) {}
+
     if (isAuthenticated && token != null) {
       _twithService.client.initializeToken(token);
 

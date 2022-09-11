@@ -49,6 +49,7 @@ class EventStepTwoEditViewModel extends BaseViewModel {
     BuildContext context,
     File? image,
     DateTime startDate,
+    Duration duration,
   ) async {
     setBusy(true);
 
@@ -56,13 +57,14 @@ class EventStepTwoEditViewModel extends BaseViewModel {
 
     if (imageUrl != null) _event.imageUrl = imageUrl;
     _event.starTime = startDate;
+    _event.duration = duration.inMinutes;
 
     await _eventService.editEvent(event);
 
     _navigationService.popRepeated(2);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: AppText.captionBold('O evento foi salvo!'),
+        content: AppText.captionBold('A live foi atualizada!'),
       ),
     );
   }

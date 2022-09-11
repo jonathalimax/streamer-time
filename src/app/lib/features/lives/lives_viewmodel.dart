@@ -54,7 +54,9 @@ class LivesViewModel extends BaseViewModel {
     if (!await canLaunchUrl(url)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: AppText.captionBold('Ocorreu um erro ao abrir a stream!'),
+          content: AppText.captionBold(
+            'Nos desculpe, mas ocorreu um erro inesperado!',
+          ),
         ),
       );
     }
@@ -83,12 +85,10 @@ class LivesViewModel extends BaseViewModel {
       streamerId: streamerId,
       username: username,
     );
-    _navigation
-        .navigateTo(
-          Routes.streamerScreen,
-          arguments: StreamerScreenArguments(viewModel: viewModel),
-        )
-        ?.whenComplete(() => notifyListeners());
+    _navigation.navigateTo(
+      Routes.streamerScreen,
+      arguments: StreamerScreenArguments(viewModel: viewModel),
+    );
   }
 
   Future<void> buildBannerAd() async {

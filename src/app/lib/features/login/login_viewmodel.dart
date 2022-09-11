@@ -17,13 +17,19 @@ class LoginViewModel extends BaseViewModel {
   final _appAuthentication = locator<AppAuthentication>();
 
   Future<bool> _handleUrl(String url) async {
-    if (url.startsWith(redirectUri)) {
-      _twitchService.client.initializeToken(TwitchToken.fromUrl(url));
-      final token =
-          await _twitchService.client.twitchHttpClient.validateToken();
-      if (token != null) _makeLogin(token);
+    try {
+      if (url.startsWith(redirectUri)) {
+        _twitchService.client.initializeToken(TwitchToken.fromUrl(url));
+        final token =
+            await _twitchService.client.twitchHttpClient.validateToken();
+        if (token != null) _makeLogin(token);
+        return false;
+      }
+    } on TwitchNotConnectedException {
+      _appAuthentication.logout();
       return false;
     }
+
     return true;
   }
 

@@ -1,12 +1,16 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/event_service.dart';
 import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
+import 'package:twitch_api/twitch_api.dart';
 
 const String _agendaFuture = 'agendaFuture';
 const String _streamerFuture = 'streamerFuture';
@@ -18,10 +22,12 @@ class StreamerViewModel extends MultipleFutureViewModel {
   late BannerAd _bannerAd;
   BannerAd get bannerAd => _bannerAd;
 
+  final _authService = locator<AppAuthentication>();
   final _twitchService = locator<TwitchService>();
   final _eventsService = locator<EventService>();
   final _streamerService = locator<StreamerService>();
   final _pushNotificationManager = locator<PushNotificationManager>();
+  final _livesViewModel = locator<LivesViewModel>();
 
   StreamerViewModel({
     required this.streamerId,
@@ -43,16 +49,27 @@ class StreamerViewModel extends MultipleFutureViewModel {
       };
 
   Future<User?> getStreamerById() async {
-    final twitchUser = await _twitchService.client.getUsers(ids: [streamerId]);
-    if (twitchUser.data?.first == null) return null;
-    final user = User.fromTwitch(twitchUser: twitchUser.data!.first);
-    user.following = await _streamerService.isFollowingStreamer(streamerId);
-    user.events = await _eventsService.getStreamerEvents(streamerId);
-    return user;
+    try {
+      final twitchUser = await _twitchService.client.getUsers(
+        ids: [streamerId],
+      );
+      if (twitchUser.data?.first == null) return null;
+      final user = User.fromTwitch(twitchUser: twitchUser.data!.first);
+      user.following = await _streamerService.isFollowingStreamer(streamerId);
+      user.events = await _eventsService.getStreamerEvents(streamerId);
+      return user;
+    } on TwitchNotConnectedException {
+      await _authService.logout();
+      return null;
+    }
   }
 
   Future<String> getStreamerAgenda() async {
     return 'String data';
+  }
+
+  Future onEventTap(BuildContext context, String username) async {
+    _livesViewModel.openStreamerWebview(context, username);
   }
 
   Future<void> followStreamer() async {

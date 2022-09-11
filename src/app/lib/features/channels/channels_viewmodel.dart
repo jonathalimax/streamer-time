@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:stacked/stacked.dart';
@@ -13,6 +14,7 @@ class ChannelsViewModel extends FutureViewModel<TwitchStreamInfoList> {
 
   final _navigation = locator<NavigationService>();
   final _twitchService = locator<TwitchService>();
+  final _authService = locator<AppAuthentication>();
 
   ChannelsViewModel(this._gameId);
 
@@ -22,8 +24,15 @@ class ChannelsViewModel extends FutureViewModel<TwitchStreamInfoList> {
   }
 
   Future<List<TwitchStreamInfo>> _getStreams() async {
-    final streams = await _twitchService.client.getStreams(gameIds: [_gameId]);
-    return streams.data?.toList() ?? [];
+    try {
+      final streams = await _twitchService.client.getStreams(
+        gameIds: [_gameId],
+      );
+      return streams.data?.toList() ?? [];
+    } on TwitchNotConnectedException {
+      await _authService.logout();
+      return [];
+    }
   }
 
   startStreamerScreen(

@@ -9,7 +9,11 @@ import 'package:stacked/stacked.dart';
 class EventStepTwoWidget extends StatelessWidget {
   final EventStepTwoWidgetViewModel viewModel;
   final String callToActionTitle;
-  final Function(File? image, DateTime date) callToAction;
+  final Function(
+    File? image,
+    DateTime date,
+    Duration duration,
+  ) callToAction;
 
   const EventStepTwoWidget({
     Key? key,
@@ -51,19 +55,27 @@ class EventStepTwoWidget extends StatelessWidget {
                 SizedBox(
                   width: 290,
                   child: AppButton(
-                    title:
-                        '${viewModel.event == null ? 'Adicionar' : 'Atualizar'} data e hora',
+                    title: 'Horário de início',
                     action: () => viewModel.setDateTime(context),
                     color: Colors.transparent,
                     titleColor: Theme.of(context).primaryColor,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 12),
                 SizedBox(
                   width: 290,
                   child: AppButton(
-                    title:
-                        '${viewModel.event == null ? 'Adicionar' : 'Atualizar'} imagem de fundo',
+                    title: 'Previsão de fim',
+                    action: () => viewModel.setFinalDateTime(context),
+                    color: Colors.transparent,
+                    titleColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+                SizedBox(height: 12),
+                SizedBox(
+                  width: 290,
+                  child: AppButton(
+                    title: 'Imagem de fundo',
                     action: () => viewModel.showImageSourceActionSheet(context),
                     color: Colors.transparent,
                     titleColor: Theme.of(context).primaryColor,
@@ -75,10 +87,8 @@ class EventStepTwoWidget extends StatelessWidget {
                   child: AppButton(
                     title: callToActionTitle,
                     action: () {
-                      callToAction(
-                        viewModel.selectedImage,
-                        viewModel.selectedDate,
-                      );
+                      callToAction(viewModel.selectedImage,
+                          viewModel.selectedDate, viewModel.duration);
                     },
                     color: Colors.transparent,
                     titleColor: Theme.of(context).primaryColor,

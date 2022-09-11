@@ -5,7 +5,6 @@ import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
 import 'package:app/network/services/event_service.dart';
-import 'package:design_system/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -49,6 +48,7 @@ class CreateEventStepTwoViewModel extends BaseViewModel {
     BuildContext context,
     File? image,
     DateTime startDate,
+    Duration duration,
   ) async {
     setBusy(true);
 
@@ -60,14 +60,10 @@ class CreateEventStepTwoViewModel extends BaseViewModel {
       categoryId: _category.id,
       categoryName: _category.name,
       imageUrl: imageUrl,
+      duration: duration.inMinutes,
     );
 
     await _eventService.createEvent(event);
     _navigationService.popRepeated(2);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: AppText.captionBold('O evento foi criado!'),
-      ),
-    );
   }
 }

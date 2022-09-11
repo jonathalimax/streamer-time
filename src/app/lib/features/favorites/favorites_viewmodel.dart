@@ -19,13 +19,11 @@ class FavoritesViewModel extends BaseViewModel {
       streamerId: streamerId,
       username: username,
     );
-    _navigationService
-        .navigateTo(
-          Routes.streamerScreen,
-          arguments: StreamerScreenArguments(
-            viewModel: viewModel,
-          ),
-        )
-        ?.whenComplete(() => notifyListeners());
+    _navigationService.navigateTo(
+      Routes.streamerScreen,
+      arguments: StreamerScreenArguments(
+        viewModel: viewModel,
+      ),
+    );
   }
 }

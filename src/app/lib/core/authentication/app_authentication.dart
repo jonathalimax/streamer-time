@@ -1,11 +1,20 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/app/app.router.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/caching/caching_manager.dart';
+import 'package:app/features/discover/discover_viewmodel.dart';
+import 'package:app/features/lives/lives_viewmodel.dart';
+import 'package:app/features/profile/profile_viewmodel.dart';
+import 'package:app/network/api/firestore_api.dart';
+import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
+import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class AppAuthentication {
+  final _navigation = locator<NavigationService>();
   final _cachingManager = locator<CachingManager>();
   final firebaseAuth = FirebaseAuth.instance;
 
@@ -45,7 +54,6 @@ class AppAuthentication {
 
   Future logout() async {
     final encryptionKey = await _cachingManager.getEncryptionKey();
-
     if (encryptionKey == null) return;
 
     final encryptedBox = await Hive.openBox(
@@ -57,6 +65,15 @@ class AppAuthentication {
     await encryptedBox.close();
 
     await firebaseAuth.signOut();
+
+    locator.resetLazySingleton<FirestoreApi>();
+    locator.resetLazySingleton<LivesViewModel>();
+    locator.resetLazySingleton<DiscoverViewmodel>();
+    locator.resetLazySingleton<ProfileViewModel>();
+    locator.resetLazySingleton<CardStreamListViewModel>();
+    locator.resetLazySingleton<CardGameListViewModel>();
+    locator.resetLazySingleton<CachingManager>();
+    await _navigation.clearStackAndShow(Routes.startupScreen);
   }
 
   Future<TwitchToken?> getTwitchToken() async {

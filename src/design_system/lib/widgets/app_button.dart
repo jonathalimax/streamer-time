@@ -57,7 +57,7 @@ class AppButton extends StatelessWidget {
               elevation: 0.0,
               primary: Colors.transparent,
               shadowColor: Colors.transparent,
-              onPrimary: !outlined ? Colors.white : kcLightPurple,
+              onPrimary: kcLightPurple,
             ),
           ),
         ],

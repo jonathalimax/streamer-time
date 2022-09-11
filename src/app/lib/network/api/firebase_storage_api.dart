@@ -29,6 +29,7 @@ class FirebaseStorageApi {
   Future<File> _compressFile(File file) async {
     File compressedFile = await FlutterNativeImage.compressImage(
       file.path,
+      percentage: 50,
       quality: 50,
     );
     return compressedFile;

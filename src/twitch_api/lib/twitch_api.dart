@@ -1,6 +1,7 @@
 library twitch_api;
 
 export 'src/client.dart';
+export 'src/exceptions/twitch_api_exception.dart';
 export 'src/models/twitch_api_scopes.dart';
 export 'src/models/twitch_bits_leaderboard.dart';
 export 'src/models/twitch_broadcaster_subscription.dart';
