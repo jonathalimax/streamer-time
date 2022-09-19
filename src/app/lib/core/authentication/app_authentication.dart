@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
@@ -16,7 +17,8 @@ import 'package:twitch_api/twitch_api.dart';
 class AppAuthentication {
   final _navigation = locator<NavigationService>();
   final _cachingManager = locator<CachingManager>();
-  final firebaseAuth = FirebaseAuth.instance;
+  final _analytics = locator<Analytics>();
+  final _firebaseAuth = FirebaseAuth.instance;
 
   Future<void> persistToken(TwitchToken token) async {
     final authToken = AuthenticationModel.fromToken(token);
@@ -32,7 +34,7 @@ class AppAuthentication {
     await encryptedBox.put(AUTH_TOKEN_KEY, authToken);
     await encryptedBox.close();
 
-    await firebaseAuth.signInAnonymously();
+    await _firebaseAuth.signInAnonymously();
   }
 
   Future<bool> isAuthenticated() async {
@@ -64,7 +66,8 @@ class AppAuthentication {
     await encryptedBox.delete(AUTH_TOKEN_KEY);
     await encryptedBox.close();
 
-    await firebaseAuth.signOut();
+    await _firebaseAuth.signOut();
+    _analytics.instance.logEvent(name: 'logout');
 
     locator.resetLazySingleton<FirestoreApi>();
     locator.resetLazySingleton<LivesViewModel>();
@@ -73,6 +76,8 @@ class AppAuthentication {
     locator.resetLazySingleton<CardStreamListViewModel>();
     locator.resetLazySingleton<CardGameListViewModel>();
     locator.resetLazySingleton<CachingManager>();
+    locator.resetLazySingleton<Analytics>();
+
     await _navigation.clearStackAndShow(Routes.startupScreen);
   }
 

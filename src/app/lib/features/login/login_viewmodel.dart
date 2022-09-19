@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/features/webview/webview_screen.dart';
 import 'package:app/network/api/firestore_api.dart';
@@ -15,6 +16,7 @@ class LoginViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _twitchService = locator<TwitchService>();
   final _appAuthentication = locator<AppAuthentication>();
+  final _analytics = locator<Analytics>();
 
   Future<bool> _handleUrl(String url) async {
     try {
@@ -38,6 +40,7 @@ class LoginViewModel extends BaseViewModel {
     await _appAuthentication.persistToken(token);
     await _registerUser(token.userId);
     await _navigation.clearStackAndShow(Routes.homeScreen);
+    _analytics.instance.logLogin();
   }
 
   Future<void> startAuthentication() async {

@@ -1,10 +1,12 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/constants/theme_constants.dart';
 import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,17 +16,24 @@ import 'package:stacked_services/stacked_services.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
-  await _setupHive();
+
   await _setupFirebase();
-  await _setupAds();
-  await _setupPushNotification();
+  await Future.wait([
+    setupLocator(),
+    _setupHive(),
+    _setupAds(),
+    _setupAnalytics(),
+    _setupCrashlytics(),
+    _setupPushNotification(),
+  ]);
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light,
     ),
   );
+
   runApp(MyApp());
 }
 
@@ -43,6 +52,14 @@ Future<void> _setupFirebase() async {
   );
 }
 
+Future<void> _setupCrashlytics() async {
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+}
+
+Future<void> _setupAnalytics() async {
+  await locator<Analytics>().configure();
+}
+
 Future<void> _setupHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AuthenticationModelAdapter());
@@ -53,7 +70,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await _setupFirebase();
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -67,5 +89,25 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: StackedRouter().onGenerateRoute,
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed)
+      locator<Analytics>().instance.logAppOpen();
+
+    super.didChangeAppLifecycleState(state);
   }
 }

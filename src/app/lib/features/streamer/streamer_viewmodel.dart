@@ -1,5 +1,6 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
@@ -16,6 +17,8 @@ const String _agendaFuture = 'agendaFuture';
 const String _streamerFuture = 'streamerFuture';
 
 class StreamerViewModel extends MultipleFutureViewModel {
+  final _analytics = locator<Analytics>();
+
   final String streamerId;
   final String username;
 
@@ -94,6 +97,11 @@ class StreamerViewModel extends MultipleFutureViewModel {
       adUnitId: AdManager.streamerBannerUnitId,
       request: AdRequest(),
       listener: BannerAdListener(
+        onAdImpression: (ad) => _analytics.instance.logAdImpression(
+          adPlatform: 'AdMob',
+          adFormat: 'Banner',
+          adUnitName: 'Streamer Banner',
+        ),
         onAdFailedToLoad: (ad, _) => ad.dispose(),
       ),
     );

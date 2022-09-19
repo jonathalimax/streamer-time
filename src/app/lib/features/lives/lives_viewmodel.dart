@@ -1,6 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/features/streamer/streamer_viewmodel.dart';
 import 'package:app/network/services/streamer_service.dart';
@@ -17,6 +18,7 @@ class LivesViewModel extends BaseViewModel {
   final _streamerService = locator<StreamerService>();
   final _streamerStore = locator<StreamerStore>();
   final _cachingManager = locator<CachingManager>();
+  final _analytics = locator<Analytics>();
 
   late final store = _streamerStore;
 
@@ -97,6 +99,11 @@ class LivesViewModel extends BaseViewModel {
       adUnitId: AdManager.bannerHomeUnitId,
       request: AdRequest(),
       listener: BannerAdListener(
+        onAdImpression: (ad) => _analytics.instance.logAdImpression(
+          adPlatform: 'AdMob',
+          adFormat: 'Banner',
+          adUnitName: 'Home Banner',
+        ),
         onAdFailedToLoad: (ad, _) => ad.dispose(),
       ),
     );
@@ -122,6 +129,11 @@ class LivesViewModel extends BaseViewModel {
         await launchStreamerUrl(callbackUrl);
         await buildInterstitialAd();
       },
+      onAdImpression: (ad) => _analytics.instance.logAdImpression(
+        adPlatform: 'AdMob',
+        adFormat: 'Interstitial',
+        adUnitName: 'Livestream Interstitial',
+      ),
       onAdDismissedFullScreenContent: (ad) => ad.dispose(),
       onAdFailedToShowFullScreenContent: (ad, _) => ad.dispose(),
     );

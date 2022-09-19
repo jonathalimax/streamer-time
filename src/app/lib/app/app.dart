@@ -1,4 +1,5 @@
 import 'package:app/core/ads/ad_manager.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/caching/caching_manager.dart';
 import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/core/authentication/app_authentication.dart';
@@ -71,7 +72,8 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: PushNotificationManager),
     LazySingleton(classType: AdManager),
     LazySingleton(classType: CachingManager),
-    LazySingleton(classType: StreamerStore)
+    LazySingleton(classType: StreamerStore),
+    LazySingleton(classType: Analytics),
   ],
 )
 class AppSetup {}

@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
+import { workers } from './workers';
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -7,7 +8,7 @@ const db = admin.firestore();
 export const taskRunner = functions
   .runWith({ memory: "2GB" })
   // .pubsub.schedule('* * * * *') // Every minute
-  // .pubsub.schedule('*/15 * * * *') // Every 15 minutes
+  // .pubsub.schedule('*/30 * * * *') // Every 30 minutes
   .pubsub.schedule("0 0 * * *") // Once a day
   .onRun(async (context) => {
     console.log("Starting taskRunner");
@@ -126,43 +127,3 @@ export const onEventDelete = functions.firestore
 
     await db.collection("tasks").doc(snapshot.docs[0].id).delete()
   });
-
-const workers: Workers = {
-  sendPushNotification: async ({ userId, eventId, username }) => {
-    const query = db
-      .collection("users")
-      .doc(userId)
-      .collection("events")
-      .doc(eventId);
-
-    const snapshot = await query.get();
-    const data = snapshot.data();
-
-    if (data == null) return;
-
-    const { title, categoryName } = data;
-    console.log(
-      "Starting notification sending with title: " + title +
-      "and category name: " + categoryName +
-      "to topic: " + username
-    );
-
-    return admin.messaging().sendToTopic(
-      username,
-      {
-        notification: {
-          title: title,
-          body: username + " está transmitindo " + categoryName,
-          sound: "default",
-        },
-      },
-      {
-        timeToLive: 14400,
-      }
-    );
-  },
-};
-
-interface Workers {
-  [key: string]: (options: any) => Promise<any>;
-}

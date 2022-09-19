@@ -10,6 +10,7 @@ import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../core/ads/ad_manager.dart';
+import '../core/analytics/analytics.dart';
 import '../core/authentication/app_authentication.dart';
 import '../core/caching/caching_manager.dart';
 import '../core/notifications/push_notification_manager.dart';
@@ -54,4 +55,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => AdManager());
   locator.registerLazySingleton(() => CachingManager());
   locator.registerLazySingleton(() => StreamerStore());
+  locator.registerLazySingleton(() => Analytics());
 }
