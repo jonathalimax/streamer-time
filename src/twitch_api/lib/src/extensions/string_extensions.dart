@@ -1,5 +1,3 @@
-import 'package:twitch_api/src/exceptions/twitch_api_exception.dart';
-
 import '../../twitch_api.dart';
 
 extension StringModifier on String {
