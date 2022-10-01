@@ -35,23 +35,25 @@ class LoginScreen extends StatelessWidget {
                   Spacer(flex: 1),
                   Center(
                     child: Image(
-                      image: AssetImage('resources/icons/sup-icon.png'),
-                      width: 250,
+                      image: AssetImage('resources/icons/liveus-icon.png'),
+                      width: 300,
                     ),
                   ),
                   Spacer(flex: 1),
                   Center(
                     child: AppText.heading3(
-                      'Seu streamer está online?',
+                      'Vai ter live hoje?',
                       color: kcIceWhite,
                       textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(height: 40),
-                  AppText.heading4(
-                    'Saiba mais sobre a agenda e \neventos dos seus streamers favoritos!',
-                    color: kcIceWhite,
-                    textAlign: TextAlign.center,
+                  Center(
+                    child: AppText.heading4(
+                      'Fique ligado nos eventos que \nestão por vir!',
+                      color: kcIceWhite,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   Spacer(flex: 5),
                   AppButton(

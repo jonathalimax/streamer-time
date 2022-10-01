@@ -22,8 +22,9 @@ abstract class _StreamerStore with Store {
 
   @action
   void removeById(String streamerId) {
-    final streamer =
-        streamers.firstWhere((element) => element.id == streamerId);
-    streamers.remove(streamer);
+    final filteredStreamers =
+        streamers.where((element) => element.id == streamerId).toList();
+    if (filteredStreamers.isEmpty) return;
+    streamers.remove(filteredStreamers.first);
   }
 }

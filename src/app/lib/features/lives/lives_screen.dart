@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/home/home_screen.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';

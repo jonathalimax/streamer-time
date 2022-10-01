@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:832640888153:android:e06be970849c1e6cd7b048",
+        "mobilesdk_app_id": "1:832640888153:android:96bd4a013cdc3a59d7b048",
         "android_client_info": {
-          "package_name": "com.jlima.streamup"
+          "package_name": "com.jonathalima.liveus"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "832640888153-utk8a23q03pd5rnhcggo63q22ajt7jkq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jonathalima.liveus",
+            "certificate_hash": "8bfa52d70aa36a3fafdc1606ae0d50b8dd4f8438"
+          }
+        },
         {
           "client_id": "832640888153-ijoret4rhh7rtj6mmpocvtuvro68d4ld.apps.googleusercontent.com",
           "client_type": 3

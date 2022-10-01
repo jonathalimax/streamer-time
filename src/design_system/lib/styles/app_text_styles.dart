@@ -42,7 +42,7 @@ const TextStyle ktsBodyBoldStyle = TextStyle(
 
 const TextStyle ktsCaptionStyle = TextStyle(
   fontSize: 14,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w600,
 );
 
 const TextStyle ktsCaptionBoldStyle = TextStyle(

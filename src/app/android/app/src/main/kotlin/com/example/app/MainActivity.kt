@@ -1,4 +1,4 @@
-package com.jlima.streamup
+package com.jonathalima.liveus
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jlima.streamup"
+        applicationId "com.jonathalima.liveus"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()

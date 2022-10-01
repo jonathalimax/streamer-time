@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jlima.streamup">
+    package="com.jonathalima.liveus">
    <application
-        android:label="Streamup"
+        android:label="Liveus"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity

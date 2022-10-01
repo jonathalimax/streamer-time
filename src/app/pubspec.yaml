@@ -37,11 +37,12 @@ dependencies:
   firebase_auth: ^3.9.0
   firebase_core: ^1.22.0
   firebase_storage: ^10.3.8
+  firebase_analytics: ^9.3.5
   firebase_messaging: ^13.0.2
   firebase_crashlytics: ^2.8.10
-  firebase_analytics: ^9.3.5
-  cloud_firestore: ^3.4.8
+  firebase_remote_config: ^2.0.19
   google_mobile_ads: ^2.0.1
+  cloud_firestore: ^3.4.8
 
   # Network
   twitch_api:
@@ -87,41 +88,14 @@ flutter:
   fonts:
     - family: Nunito
       fonts:
-        - asset: packages/design_system/resources/fonts/Nunito-ExtraLight.ttf
-          weight: 200
-        - asset: packages/design_system/resources/fonts/Nunito-ExtraLightItalic.ttf
-          style: italic
-          weight: 200
-        - asset: packages/design_system/resources/fonts/Nunito-Light.ttf
-          weight: 300
-        - asset: packages/design_system/resources/fonts/Nunito-LightItalic.ttf
-          style: italic
-          weight: 300
         - asset: packages/design_system/resources/fonts/Nunito-Regular.ttf
-          weight: 400
-        - asset: packages/design_system/resources/fonts/Nunito-Italic.ttf
-          style: italic
           weight: 400
         - asset: packages/design_system/resources/fonts/Nunito-SemiBold.ttf
           weight: 600
-        - asset: packages/design_system/resources/fonts/Nunito-SemiBoldItalic.ttf
-          style: italic
-          weight: 600
         - asset: packages/design_system/resources/fonts/Nunito-Bold.ttf
-          weight: 700
-        - asset: packages/design_system/resources/fonts/Nunito-BoldItalic.ttf
-          style: italic
           weight: 700
         - asset: packages/design_system/resources/fonts/Nunito-ExtraBold.ttf
           weight: 800
-        - asset: packages/design_system/resources/fonts/Nunito-ExtraBoldItalic.ttf
-          style: italic
-          weight: 800
-        - asset: packages/design_system/resources/fonts/Nunito-Black.ttf
-          weight: 900
-        - asset: packages/design_system/resources/fonts/Nunito-BlackItalic.ttf
-          style: italic
-          weight: 900
 
 flutter_icons:
   android: "launcher_icon"

@@ -30,14 +30,12 @@ class ProfileScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 )
-              : SafeArea(
-                  child: viewModel.data == null
-                      ? AppEmptyState(
-                          title: 'Ocorreu um erro, tente novamente!',
-                          type: AppEmptyStateType.noDocument,
-                        )
-                      : _buildItemList(context, viewModel),
-                ),
+              : viewModel.data == null
+                  ? AppEmptyState(
+                      title: 'Ocorreu um erro, tente novamente!',
+                      type: AppEmptyStateType.noDocument,
+                    )
+                  : _buildItemList(context, viewModel),
         );
       },
     );
@@ -51,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -60,25 +58,15 @@ class ProfileScreen extends StatelessWidget {
                 imageUrl: viewModel.data!.profileImageUrl,
                 size: 75,
               ),
-              SizedBox(width: 30),
+              SizedBox(width: 16),
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildStats(),
-                  ],
+                child: AppText.heading4(
+                  viewModel.data!.name,
                 ),
               ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AppText.heading4(
-            viewModel.data!.name,
-          ),
-        ),
-        SizedBox(height: 10),
         Divider(),
         ProfileItemWidget(
           title: 'Seguindo',
@@ -94,27 +82,6 @@ class ProfileScreen extends StatelessWidget {
           title: 'Sair da conta',
           leading: Icon(Icons.logout),
           onTap: viewModel.logout,
-        ),
-      ],
-    );
-  }
-
-  // TODO: Populate stats
-  Widget _buildStats() {
-    return Row(
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            AppText.bodyBold('120'),
-            AppText.bodyBold('Seguidores'),
-          ],
-        ),
-        SizedBox(width: 20),
-        Column(
-          children: <Widget>[
-            AppText.bodyBold('4'),
-            AppText.bodyBold('Seguindo'),
-          ],
         ),
       ],
     );

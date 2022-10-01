@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/analytics/analytics.dart';
@@ -8,6 +10,8 @@ import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -25,6 +29,7 @@ Future main() async {
     _setupAnalytics(),
     _setupCrashlytics(),
     _setupPushNotification(),
+    _setupRemoteConfig(),
   ]);
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -47,9 +52,7 @@ Future<void> _setupPushNotification() async {
 }
 
 Future<void> _setupFirebase() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
 
 Future<void> _setupCrashlytics() async {
@@ -68,6 +71,27 @@ Future<void> _setupHive() async {
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
   await _setupFirebase();
+}
+
+Future _setupRemoteConfig() async {
+  final remoteConfig = FirebaseRemoteConfig.instance;
+
+  await remoteConfig.setConfigSettings(
+    RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(hours: kDebugMode ? 1 : 12),
+    ),
+  );
+
+  await remoteConfig.setDefaults(
+    const {
+      "homeBannerUnitId": '',
+      "streamerBannerUnitId": '',
+      "livestreamInterstitial": '',
+    },
+  );
+
+  await remoteConfig.fetchAndActivate();
 }
 
 class MyApp extends StatefulWidget {
