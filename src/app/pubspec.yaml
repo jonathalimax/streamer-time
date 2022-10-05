@@ -41,6 +41,7 @@ dependencies:
   firebase_messaging: ^13.0.2
   firebase_crashlytics: ^2.8.10
   firebase_remote_config: ^2.0.19
+  firebase_performance: ^0.8.3+2
   google_mobile_ads: ^2.0.1
   cloud_firestore: ^3.4.8
 
@@ -112,5 +113,5 @@ flutter_native_splash:
   android_gravity: fill
   ios_content_mode: scaleAspectFill
   android_12:
-    image: resources/splash/android12-launch.png
+    image: resources/icons/liveus-icon.png
     color: "#6441A5"

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/analytics/analytics.dart';
@@ -27,10 +25,11 @@ Future main() async {
     _setupHive(),
     _setupAds(),
     _setupAnalytics(),
-    _setupCrashlytics(),
-    _setupPushNotification(),
     _setupRemoteConfig(),
   ]);
+
+  _setupCrashlytics();
+  _setupPushNotification();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -55,7 +54,7 @@ Future<void> _setupFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
 
-Future<void> _setupCrashlytics() async {
+void _setupCrashlytics() {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 }
 

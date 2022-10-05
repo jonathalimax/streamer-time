@@ -45,4 +45,5 @@
         </intent>
         <package android:name="tv.twitch.android.app"/>
     </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

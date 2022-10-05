@@ -9,10 +9,7 @@ class SplashViewModel extends BaseViewModel {
   final _streamerService = locator<StreamerService>();
 
   Future<void> fetchStreamers() async {
-    await Future.wait([
-      _streamerService.fetchMyStreamers(),
-      Future.delayed(Duration(seconds: 2))
-    ]);
+    _streamerService.fetchMyStreamers();
 
     _navigationService.replaceWithTransition(
       StartupScreen(),

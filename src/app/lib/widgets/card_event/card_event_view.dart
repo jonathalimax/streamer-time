@@ -79,43 +79,44 @@ class CardEventView extends StatelessWidget {
                   children: <Widget>[
                     if (isLive) _buildLive(),
                     Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
+                    if (!isLive)
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            AppText(
-                              date,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: fontColor,
-                              ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(6),
                             ),
-                            if (time != null) SizedBox(width: 3),
-                            if (time != null)
+                          ),
+                          child: Row(
+                            children: [
                               AppText(
-                                time!,
+                                date,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                   color: fontColor,
                                 ),
                               ),
-                          ],
+                              if (time != null) SizedBox(width: 3),
+                              if (time != null)
+                                AppText(
+                                  time!,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: fontColor,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 Spacer(),

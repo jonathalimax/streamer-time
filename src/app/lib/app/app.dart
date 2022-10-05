@@ -37,8 +37,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 @StackedApp(
   routes: [
-    MaterialRoute(page: SplashScreen, initial: true),
-    MaterialRoute(page: StartupScreen),
+    MaterialRoute(page: StartupScreen, initial: true),
     MaterialRoute(page: LoginScreen),
     MaterialRoute(page: HomeScreen),
     MaterialRoute(page: WebViewScreen),
