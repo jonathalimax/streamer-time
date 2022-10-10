@@ -11,7 +11,6 @@ import 'package:app/features/favorites/favorites_screen.dart';
 import 'package:app/features/lives/lives_screen.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/features/own_events/own_events_screen.dart';
-import 'package:app/features/splash/splash_screen.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/channels/channels_screen.dart';

@@ -12,12 +12,14 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await _setupFirebase();
   await Future.wait([
@@ -38,6 +40,7 @@ Future main() async {
     ),
   );
 
+  FlutterNativeSplash.remove();
   runApp(MyApp());
 }
 
@@ -104,6 +107,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+
     return MaterialApp(
       theme: ThemeConstants.lightTheme,
       darkTheme: ThemeConstants.darkTheme,

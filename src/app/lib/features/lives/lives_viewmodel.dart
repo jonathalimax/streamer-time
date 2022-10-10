@@ -22,10 +22,10 @@ class LivesViewModel extends BaseViewModel {
 
   late final store = _streamerStore;
 
-  late BannerAd _inlineBannerAd;
+  BannerAd? _inlineBannerAd;
   InterstitialAd? _interstitialAd;
 
-  BannerAd get bannerAd => _inlineBannerAd;
+  BannerAd? get bannerAd => _inlineBannerAd;
 
   LivesViewModel() {
     buildBannerAd();
@@ -104,10 +104,14 @@ class LivesViewModel extends BaseViewModel {
           adFormat: 'Banner',
           adUnitName: 'Home Banner',
         ),
-        onAdFailedToLoad: (ad, _) => ad.dispose(),
+        onAdFailedToLoad: (ad, _) {
+          ad.dispose();
+          _inlineBannerAd = null;
+          notifyListeners();
+        },
       ),
     );
-    await _inlineBannerAd.load();
+    await _inlineBannerAd?.load();
   }
 
   Future buildInterstitialAd() async {

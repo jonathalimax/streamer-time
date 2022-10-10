@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/home/home_screen.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
@@ -64,15 +62,7 @@ class LivesScreen extends StatelessWidget {
                     ? Column(
                         children: <Widget>[
                           _buildAgendaList(viewModel),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
-                            child: Container(
-                              height: viewModel.bannerAd.size.height.toDouble(),
-                              child: AdWidget(
-                                ad: viewModel.bannerAd,
-                              ),
-                            ),
-                          )
+                          _buildAdBanner(viewModel)
                         ],
                       )
                     : AppEmptyState(
@@ -85,6 +75,20 @@ class LivesScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildAdBanner(LivesViewModel viewModel) {
+    return viewModel.bannerAd != null
+        ? Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+            child: Container(
+              height: viewModel.bannerAd!.size.height.toDouble(),
+              child: AdWidget(
+                ad: viewModel.bannerAd!,
+              ),
+            ),
+          )
+        : Container();
   }
 
   Widget _buildAgendaList(LivesViewModel viewModel) {

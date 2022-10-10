@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs, unused_import, non_constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -25,15 +26,13 @@ import '../features/lives/lives_screen.dart';
 import '../features/login/login_screen.dart';
 import '../features/own_events/own_events_screen.dart';
 import '../features/profile/profile_screen.dart';
-import '../features/splash/splash_screen.dart';
 import '../features/startup/startup_screen.dart';
 import '../features/streamer/streamer_screen.dart';
 import '../features/streamer/streamer_viewmodel.dart';
 import '../features/webview/webview_screen.dart';
 
 class Routes {
-  static const String splashScreen = '/';
-  static const String startupScreen = '/startup-screen';
+  static const String startupScreen = '/';
   static const String loginScreen = '/login-screen';
   static const String homeScreen = '/home-screen';
   static const String webViewScreen = '/web-view-screen';
@@ -51,7 +50,6 @@ class Routes {
   static const String favoritesScreen = '/favorites-screen';
   static const String ownEventsScreen = '/own-events-screen';
   static const all = <String>{
-    splashScreen,
     startupScreen,
     loginScreen,
     homeScreen,
@@ -74,7 +72,6 @@ class StackedRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.splashScreen, page: SplashScreen),
     RouteDef(Routes.startupScreen, page: StartupScreen),
     RouteDef(Routes.loginScreen, page: LoginScreen),
     RouteDef(Routes.homeScreen, page: HomeScreen),
@@ -94,12 +91,6 @@ class StackedRouter extends RouterBase {
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
-    SplashScreen: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const SplashScreen(),
-        settings: data,
-      );
-    },
     StartupScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => StartupScreen(),
@@ -281,22 +272,6 @@ class EventStepTwoEditScreenArguments {
 /// *************************************************************************
 
 extension NavigatorStateExtension on NavigationService {
-  Future<dynamic> navigateToSplashScreen({
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.splashScreen,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
   Future<dynamic> navigateToStartupScreen({
     int? routerId,
     bool preventDuplicates = true,

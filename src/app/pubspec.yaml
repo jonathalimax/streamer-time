@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
 
   # UI
-  lottie: ">=1.2.1"
   animations: ">=2.0.1"
   cupertino_icons: ^1.0.5
   flutter_spinkit: ">=5.0.0"
@@ -62,6 +61,7 @@ dependencies:
   image_picker: ">=0.8.4+2"
   cached_network_image: ">=3.1.0"
   flutter_native_image: ">=0.0.6+1"
+  flutter_native_splash: ">=2.2.8"
 
   # Localization
   flutter_localizations:
@@ -76,7 +76,6 @@ dev_dependencies:
   mobx_codegen: ^2.0.7
   hive_generator: ">=1.1.0"
   stacked_generator: ">=0.7.15"
-  flutter_native_splash: ">=2.2.8"
   flutter_launcher_icons: ">=0.10.0"
 
 flutter:
@@ -84,7 +83,6 @@ flutter:
 
   assets:
     - resources/icons/
-    - resources/lottie/
 
   fonts:
     - family: Nunito
@@ -109,9 +107,15 @@ flutter_icons:
 flutter_native_splash:
   ios: true
   android: true
-  background_image: resources/splash/splash-screen.png
-  android_gravity: fill
-  ios_content_mode: scaleAspectFill
+  web: false
+  
+  color: "#9E7AE3"
+  image: resources/icons/liveus-icon.png
+  color_dark: "#6441A5"
+  image_dark: resources/icons/liveus-icon.png
+
   android_12:
     image: resources/icons/liveus-icon.png
-    color: "#6441A5"
+    color: "#9E7AE3"
+    image_dark: resources/icons/liveus-icon.png
+    color_dark: "#6441A5"
