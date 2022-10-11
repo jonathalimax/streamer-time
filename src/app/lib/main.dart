@@ -12,26 +12,21 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 Future main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
 
   await _setupFirebase();
-  await Future.wait([
-    setupLocator(),
-    _setupHive(),
-    _setupAds(),
-    _setupAnalytics(),
-    _setupRemoteConfig(),
-  ]);
-
+  _setupHive();
+  _setupAds();
+  _setupAnalytics();
+  _setupRemoteConfig();
   _setupCrashlytics();
   _setupPushNotification();
+  setupLocator();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -40,7 +35,6 @@ Future main() async {
     ),
   );
 
-  FlutterNativeSplash.remove();
   runApp(MyApp());
 }
 
