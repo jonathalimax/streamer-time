@@ -19,14 +19,15 @@ import 'package:stacked_services/stacked_services.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  setupLocator();
+
   await _setupFirebase();
+  await _setupPushNotification();
   _setupHive();
   _setupAds();
   _setupAnalytics();
   _setupRemoteConfig();
   _setupCrashlytics();
-  _setupPushNotification();
-  setupLocator();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(

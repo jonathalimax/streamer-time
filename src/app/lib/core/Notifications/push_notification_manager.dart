@@ -7,15 +7,14 @@ class PushNotificationManager {
   final _cachingManager = locator<CachingManager>();
 
   Future<void> configure() async {
-    final permission = await _messaging.requestPermission(
+    await _messaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
 
-    await _setupNotificationAuthorizationCache(
-      permission.authorizationStatus == AuthorizationStatus.authorized,
-    );
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    print('FirebaseMessaging token $fcmToken');
 
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) => _onForegroundMessage(message),
@@ -26,6 +25,7 @@ class PushNotificationManager {
     );
   }
 
+  // ignore: unused_element
   Future<void> _setupNotificationAuthorizationCache(bool authorized) async {
     final isNotificationAuthorizedLocally =
         await _cachingManager.hasPersistedNotificationAuthoziation();
