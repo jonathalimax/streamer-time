@@ -34,9 +34,8 @@ export const workers: Workers = {
           },
         },
         {
-          timeToLive: 43200, // 12 hours
+          timeToLive: 14400, // 4 hours
           contentAvailable: true,
-          dryRun: true, // TODO: Undo this configuration
           priority: 'high',
         }
       );

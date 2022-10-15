@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBZ7n4qvS_Nu_Er2Rj4KLZHd0ju8ur62D0',
-    appId: '1:832640888153:android:e06be970849c1e6cd7b048',
+    appId: '1:832640888153:android:96bd4a013cdc3a59d7b048',
     messagingSenderId: '832640888153',
     projectId: 'streamertime-app',
     storageBucket: 'streamertime-app.appspot.com',
@@ -66,11 +66,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC61bDAjZXBUeuj8cLZU8H6DSgX3x0LAsA',
-    appId: '1:832640888153:ios:139174ab2fbcd0b1d7b048',
+    appId: '1:832640888153:ios:54d29cc0235ccac9d7b048',
     messagingSenderId: '832640888153',
     projectId: 'streamertime-app',
     storageBucket: 'streamertime-app.appspot.com',
-    iosClientId: '832640888153-2t7jofi7e52tvklp912nj2elpa52kpj3.apps.googleusercontent.com',
-    iosBundleId: 'com.jlima.streamup',
+    androidClientId: '832640888153-bbo6d87n6hdblnb4qttjl566fq44ercc.apps.googleusercontent.com',
+    iosClientId: '832640888153-eg2oip3mt4d96ssdmvmhhi8sq9udm9ij.apps.googleusercontent.com',
+    iosBundleId: 'com.jonathalima.liveus',
   );
 }

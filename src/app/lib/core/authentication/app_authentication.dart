@@ -13,12 +13,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class AppAuthentication {
   final _navigation = locator<NavigationService>();
   final _cachingManager = locator<CachingManager>();
   final _analytics = locator<Analytics>();
   final _firebaseAuth = FirebaseAuth.instance;
+  final _cookieManager = CookieManager();
 
   Future<void> persistToken(TwitchToken token) async {
     final authToken = AuthenticationModel.fromToken(token);
@@ -65,8 +67,9 @@ class AppAuthentication {
 
     await encryptedBox.delete(AUTH_TOKEN_KEY);
     await encryptedBox.close();
-
     await _firebaseAuth.signOut();
+
+    _cookieManager.clearCookies();
     _analytics.instance.logEvent(name: 'logout');
 
     locator.resetLazySingleton<FirestoreApi>();

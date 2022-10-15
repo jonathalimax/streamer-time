@@ -14,9 +14,6 @@ export const taskRunner = functions
     console.log("Starting taskRunner");
 
     const now = admin.firestore.Timestamp.now();
-
-    console.log("Fetching notifications to be sent based on this time" + now);
-
     const query = db
       .collection("tasks")
       .where("performAt", "<=", now)
@@ -29,13 +26,13 @@ export const taskRunner = functions
       const { worker, options } = snapshot.data();
       const job = workers[worker](options)
         .then(() => {
-          console.log("Setting complete state at database");
+          console.log("Setting status as completed");
           snapshot.ref.update({
             status: "complete",
           });
         })
         .catch((_) => {
-          console.log("Setting error state at database");
+          console.log("Setting status as error");
           snapshot.ref.update({
             status: "error",
           });
@@ -97,7 +94,7 @@ export const onEventUpdate = functions.firestore
       .get();
 
     if (snapshot.docs.length == 0) {
-      console.log("Finishing onEventUpdate withou task updates");
+      console.log("Finishing onEventUpdate without task updates");
       return;
     }
 

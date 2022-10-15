@@ -23,8 +23,8 @@ Future main() async {
 
   await _setupFirebase();
   await _setupPushNotification();
+  await _setupAds();
   _setupHive();
-  _setupAds();
   _setupAnalytics();
   _setupRemoteConfig();
   _setupCrashlytics();

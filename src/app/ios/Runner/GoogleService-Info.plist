@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>832640888153-nanm555dahk71ng3kjuq5ehrdgbjtf94.apps.googleusercontent.com</string>
+	<string>832640888153-eg2oip3mt4d96ssdmvmhhi8sq9udm9ij.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.832640888153-nanm555dahk71ng3kjuq5ehrdgbjtf94</string>
+	<string>com.googleusercontent.apps.832640888153-eg2oip3mt4d96ssdmvmhhi8sq9udm9ij</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>832640888153-bbo6d87n6hdblnb4qttjl566fq44ercc.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC61bDAjZXBUeuj8cLZU8H6DSgX3x0LAsA</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jonathalimax.streamup</string>
+	<string>com.jonathalima.liveus</string>
 	<key>PROJECT_ID</key>
 	<string>streamertime-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:832640888153:ios:9073b157d2980739d7b048</string>
+	<string>1:832640888153:ios:54d29cc0235ccac9d7b048</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-7838717442900192~6304309114</string>
 </dict>
 </plist>
