@@ -1,7 +1,7 @@
-import * as admin from "firebase-admin";
+import * as admin from "firebase-admin"
 
 interface Workers {
-    [key: string]: (options: any) => Promise<any>;
+    [key: string]: (options: any) => Promise<any>
 }
 
 export const workers: Workers = {
@@ -10,19 +10,19 @@ export const workers: Workers = {
         .collection("users")
         .doc(userId)
         .collection("events")
-        .doc(eventId);
+        .doc(eventId)
   
-      const snapshot = await query.get();
-      const data = snapshot.data();
+      const snapshot = await query.get()
+      const data = snapshot.data()
   
-      if (data == null) return;
+      if (data == null) return
   
-      const { title, categoryName } = data;
+      const { title, categoryName } = data
       console.log(
         "Starting notification sending with title: " + title +
         " and category name: " + categoryName +
         " to topic: " + username
-      );
+      )
   
       return admin.messaging().sendToTopic(
         username,
@@ -38,6 +38,6 @@ export const workers: Workers = {
           contentAvailable: true,
           priority: 'high',
         }
-      );
+      )
     },
-  };
+  }
