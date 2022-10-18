@@ -1,14 +1,14 @@
 import * as admin from "firebase-admin"
 import * as functions from "firebase-functions"
 import * as express from 'express'
+import * as cors from 'cors'
 
 admin.initializeApp()
 
-import * as cors from 'cors'
 import routes from './routes'
-import EventController from "./controllers/eventController"
-import Runner from "./tasks/Runner"
-import Schedules from "./schedules"
+import Runner from './tasks/Runner'
+import Schedules from './schedules'
+import EventController from "./controllers/event_controller"
 
 const app = express();
 const projectId = JSON.parse(process.env.FIREBASE_CONFIG ?? '').projectId;
@@ -20,7 +20,7 @@ app.use(routes)
 export const api = functions.https.onRequest(app);
 
 export const taskRunner = functions
-  .runWith({ memory: "128MB", minInstances: projectId === 'streamertime-app' ? 5 : 0 })
+  .runWith({ memory: "128MB", minInstances: projectId === 'streamertime-app' ? 0 : 0 }) // Set 5 to reduce the cold starts
   .pubsub.schedule(Schedules.onceADay)
   .onRun(Runner.taskRunner)
 
