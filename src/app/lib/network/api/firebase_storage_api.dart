@@ -15,6 +15,8 @@ class FirebaseStorageApi {
       final path = directory ?? EventImageDirectory;
       final compressedImage = await FlutterNativeImage.compressImage(
         image.path,
+        percentage: 50,
+        quality: 50,
       );
       final storageReference = FirebaseStorage.instance
           .ref()
