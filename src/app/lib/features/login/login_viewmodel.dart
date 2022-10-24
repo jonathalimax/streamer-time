@@ -2,7 +2,9 @@ import 'package:app/app/app.locator.dart';
 import 'package:app/app/app.router.dart';
 import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/app_authentication.dart';
+import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/features/webview/webview_screen.dart';
+import 'package:app/network/api/dio_client.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/user.dart';
 import 'package:app/network/services/twitch_service.dart';
@@ -17,6 +19,8 @@ class LoginViewModel extends BaseViewModel {
   final _twitchService = locator<TwitchService>();
   final _appAuthentication = locator<AppAuthentication>();
   final _analytics = locator<Analytics>();
+  final _dioClient = locator<DioClient>();
+  final _notificationManager = locator<PushNotificationManager>();
 
   Future<bool> _handleUrl(String url) async {
     try {
@@ -67,6 +71,8 @@ class LoginViewModel extends BaseViewModel {
     if (twitchUser.data == null) return;
 
     final user = User.fromTwitch(twitchUser: twitchUser.data!.first);
-    return await _userService.createOrUpdate(user: user);
+    user.deviceToken = _notificationManager.deviceToken;
+    await _userService.createOrUpdate(user: user);
+    _dioClient.updateTopics(user.id);
   }
 }

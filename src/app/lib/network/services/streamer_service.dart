@@ -14,8 +14,11 @@ class StreamerService {
       );
   }
 
-  Future<void> followStreamer(String streamerId) async {
-    final followedStreamer = await _firestoreApi.followStreamer(streamerId);
+  Future<void> followStreamer(String streamerId, String username) async {
+    final followedStreamer = await _firestoreApi.followStreamer(
+      streamerId,
+      username,
+    );
     if (followedStreamer != null) streamerStore.add(followedStreamer);
   }
 

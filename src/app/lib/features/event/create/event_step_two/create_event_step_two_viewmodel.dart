@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:app/app/app.locator.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
-import 'package:app/network/api/firestore_api.dart';
 import 'package:app/network/models/event.dart';
 import 'package:app/network/services/event_service.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:twitch_api/twitch_api.dart';
 
 class CreateEventStepTwoViewModel extends BaseViewModel {
-  final _firestoreApi = locator<FirestoreApi>();
+  final _appAuthentication = locator<AppAuthentication>();
   final _eventService = locator<EventService>();
   final _navigationService = locator<NavigationService>();
   final _firebaseStorageApi = locator<FirebaseStorageApi>();
@@ -28,10 +28,9 @@ class CreateEventStepTwoViewModel extends BaseViewModel {
   );
 
   Future<String> _buildImageName() async {
-    final user = await _firestoreApi.getUser();
-    final userName = user?.name ?? '';
+    final userId = await _appAuthentication.getUserId();
     final title = _title.toLowerCase().replaceAll(' ', '_');
-    return '${userName}_${title}';
+    return '${userId}_${title}_${category.name}';
   }
 
   Future<String?> _uploadSelectedImage(File? image) async {

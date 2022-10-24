@@ -10,7 +10,7 @@ import GoogleMobileAds
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
-	GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["8965c112c3a098ac06c29461572bd4a1"]
+	GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["02ab671d89bcc1739ed16cd50f8b4b0f"]
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

@@ -53,12 +53,12 @@ class CardStreamListView extends StatelessWidget {
                         children: viewModel.data!
                             .map(
                               (channel) => CardStreamView(
-                                game: channel.gameName,
-                                username: channel.userName,
+                                subtitle: channel.gameName,
+                                title: channel.userName,
                                 totalViewers: channel.viewerCount.toString(),
                                 onTap: () => viewModel.startStreamerScreen(
                                   channel.userId,
-                                  channel.userName,
+                                  channel.userLogin,
                                 ),
                               ),
                             )

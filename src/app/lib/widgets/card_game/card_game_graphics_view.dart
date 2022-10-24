@@ -3,12 +3,12 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class CardGameView extends StatelessWidget {
+class CardGameGraphicsView extends StatelessWidget {
   final String game;
   final String imageUrl;
   final Function()? onTap;
 
-  const CardGameView({
+  const CardGameGraphicsView({
     Key? key,
     required this.game,
     required this.imageUrl,

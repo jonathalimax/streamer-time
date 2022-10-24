@@ -6,15 +6,15 @@ interface Workers {
 
 export const workers: Workers = {
     sendPushNotification: async ({ userId, eventId, username }) => {
-      const query = admin.firestore()
+      const snapshot = await admin
+      .firestore()
         .collection("users")
         .doc(userId)
         .collection("events")
         .doc(eventId)
+        .get();
   
-      const snapshot = await query.get()
       const data = snapshot.data()
-  
       if (data == null) return
   
       const { title, categoryName } = data
@@ -31,6 +31,7 @@ export const workers: Workers = {
             title: username + " está transmitindo " + categoryName,
             body: title,
             sound: "default",
+            
           },
         },
         {

@@ -11,6 +11,7 @@ import 'package:app/features/favorites/favorites_screen.dart';
 import 'package:app/features/lives/lives_screen.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/features/own_events/own_events_screen.dart';
+import 'package:app/network/api/dio_client.dart';
 import 'package:app/network/api/firebase_storage_api.dart';
 import 'package:app/network/api/firestore_api.dart';
 import 'package:app/features/channels/channels_screen.dart';
@@ -29,7 +30,7 @@ import 'package:app/network/services/streamer_service.dart';
 import 'package:app/network/services/twitch_service.dart';
 import 'package:app/network/services/user_service.dart';
 import 'package:app/stores/streamer_store.dart';
-import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
+import 'package:app/widgets/card_game/list/card_game_list_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -72,6 +73,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: CachingManager),
     LazySingleton(classType: StreamerStore),
     LazySingleton(classType: Analytics),
+    LazySingleton(classType: DioClient),
   ],
 )
 class AppSetup {}

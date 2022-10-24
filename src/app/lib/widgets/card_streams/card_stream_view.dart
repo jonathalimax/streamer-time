@@ -3,18 +3,18 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class CardStreamView extends StatelessWidget {
-  final String? game;
-  final String username;
-  final String totalViewers;
+  final String title;
+  final String? subtitle;
+  final String? totalViewers;
   final VoidCallback onTap;
   final Color? backgroundColor;
 
   const CardStreamView({
     Key? key,
-    required this.username,
-    required this.totalViewers,
+    required this.title,
     required this.onTap,
-    this.game,
+    this.totalViewers,
+    this.subtitle,
     this.backgroundColor,
   }) : super(key: key);
 
@@ -30,7 +30,7 @@ class CardStreamView extends StatelessWidget {
         child: Card(
           color: backgroundColor ?? Theme.of(context).colorScheme.secondary,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,34 +41,35 @@ class CardStreamView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       AppText.bodyBold(
-                        username,
+                        title,
                         color: kcIceWhite,
                       ),
-                      AppText.caption(
-                        game ?? '',
-                        color: kcIceWhite,
-                        maxLines: 1,
-                      ),
+                      if (subtitle != null)
+                        AppText.caption(
+                          subtitle!,
+                          color: kcIceWhite,
+                          maxLines: 1,
+                        ),
                     ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                    SizedBox(width: 4),
-                    AppText.captionBold(
-                      int.parse(totalViewers).thousandToK(),
-                      color: kcIceWhite,
-                    ),
-                  ],
-                ),
+                totalViewers != null
+                    ? Row(children: <Widget>[
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        AppText.captionBold(
+                          int.parse(totalViewers!).thousandToK(),
+                          color: kcIceWhite,
+                        )
+                      ])
+                    : Container(),
               ],
             ),
           ),

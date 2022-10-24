@@ -19,8 +19,7 @@ class FirestoreApi {
       FirebaseFirestore.instance.collection(UsersFirestoreKey);
 
   Future<String?> _getUserId() async {
-    final token = await _appAuthentication.getTwitchToken();
-    return token?.userId;
+    return await _appAuthentication.getUserId();
   }
 
   // Users Collection
@@ -42,6 +41,7 @@ class FirestoreApi {
 
     try {
       final document = await usersCollection.doc(userId).get();
+
       if (!document.exists) return null;
       return User.fromJson(document.data() as Map<String, dynamic>);
     } catch (error) {
@@ -57,25 +57,9 @@ class FirestoreApi {
       final document = await usersCollection.doc(userId).get();
 
       if (!document.exists) return null;
+
       User user = User.fromJson(document.data() as Map<String, dynamic>);
-
-      final eventCollection = await usersCollection
-          .doc(userId)
-          .collection(EventsFirestoreKey)
-          .orderBy('starTime')
-          .get();
-
-      await Future.forEach(
-        eventCollection.docs,
-        (FirestoreQueryDocument document) async {
-          final Map<String, dynamic>? data = document.data();
-          if (data == null) return;
-
-          final event = Event.fromJson(data);
-          if (event.finishTime.toUtc().isAfter(DateTime.now().toUtc()))
-            user.events.add(event);
-        },
-      );
+      user.events = await getStreamerEvents(userId);
 
       return user;
     } catch (error) {
@@ -188,12 +172,16 @@ class FirestoreApi {
   }
 
   // Followers Collection
-  Future<User?> followStreamer(String streamerId) async {
+  Future<User?> followStreamer(String streamerId, String username) async {
     final userId = await _getUserId();
     if (userId == null) return null;
 
     try {
-      final streamer = Follower(userId: streamerId);
+      final streamer = Follower(
+        userId: streamerId,
+        username: username,
+      );
+
       await usersCollection
           .doc(userId)
           .collection(FollowingFirestoreKey)
@@ -203,7 +191,7 @@ class FirestoreApi {
       return await getUserById(streamerId);
     } catch (error) {
       throw FirestoreApiException(
-        message: 'Failed to follow streamer with id $streamerId',
+        message: 'Failed to follow streamer with id $streamerId and $username',
         devDetails: '$error',
       );
     }

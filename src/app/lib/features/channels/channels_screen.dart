@@ -40,13 +40,13 @@ class ChannelsScreen extends StatelessWidget {
                     children: viewModel.data!
                         .map(
                           (channel) => CardStreamView(
-                            username: channel.userName,
+                            title: channel.userName,
                             totalViewers: channel.viewerCount.toString(),
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                             onTap: () => viewModel.startStreamerScreen(
                               channel.userId,
-                              channel.userName,
+                              channel.userLogin,
                             ),
                           ),
                         )

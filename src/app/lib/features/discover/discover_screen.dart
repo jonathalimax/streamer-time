@@ -1,7 +1,7 @@
 import 'package:app/app/app.locator.dart';
 import 'package:app/features/discover/discover_search_delegate.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
-import 'package:app/widgets/card_game/card_game_list_view.dart';
+import 'package:app/widgets/card_game/list/card_game_list_view.dart';
 import 'package:app/widgets/card_streams/card_stream_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

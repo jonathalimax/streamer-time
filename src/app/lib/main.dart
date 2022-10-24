@@ -19,12 +19,14 @@ import 'package:stacked_services/stacked_services.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  setupLocator();
+  await Future.wait([
+    setupLocator(),
+    _setupFirebase(),
+    _setupHive(),
+  ]);
 
-  await _setupFirebase();
-  await _setupPushNotification();
-  await _setupAds();
-  _setupHive();
+  _setupAds();
+  _setupPushNotification();
   _setupAnalytics();
   _setupRemoteConfig();
   _setupCrashlytics();
@@ -85,6 +87,7 @@ Future _setupRemoteConfig() async {
       "homeBannerUnitId": '',
       "streamerBannerUnitId": '',
       "livestreamInterstitial": '',
+      "discoveryGraphicsEnabled": false,
     },
   );
 

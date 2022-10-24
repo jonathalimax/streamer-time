@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^3.4.8
 
   # Network
+  dio: ^4.0.6
   twitch_api:
     path: ../twitch_api
 

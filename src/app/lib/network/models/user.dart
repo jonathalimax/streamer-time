@@ -8,7 +8,8 @@ class User {
   final String profileImageUrl;
   final String? description;
   final int viewCount;
-  late bool following;
+  String? deviceToken = null;
+  bool following = false;
   List<Event> events = [];
 
   User({
@@ -18,7 +19,6 @@ class User {
     required this.profileImageUrl,
     this.description = '',
     this.viewCount = 0,
-    this.following = false,
   });
 
   User.fromTwitch({required TwitchUser twitchUser})
@@ -35,7 +35,8 @@ class User {
         username = json['username'],
         profileImageUrl = json['profileImageUrl'],
         description = json['description'],
-        viewCount = json['viewCount'];
+        viewCount = json['viewCount'],
+        deviceToken = json['deviceToken'];
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -44,5 +45,6 @@ class User {
         'profileImageUrl': profileImageUrl,
         'description': description,
         'viewCount': viewCount,
+        'deviceToken': deviceToken,
       };
 }

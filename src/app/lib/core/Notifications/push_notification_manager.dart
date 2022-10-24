@@ -1,10 +1,15 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/core/caching/caching_manager.dart';
+import 'package:app/network/api/dio_client.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationManager {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   final _cachingManager = locator<CachingManager>();
+  final _dioClient = locator<DioClient>();
+  final _appAuthentication = locator<AppAuthentication>();
+  String? deviceToken;
 
   Future<void> configure() async {
     await _messaging.requestPermission(
@@ -13,16 +18,10 @@ class PushNotificationManager {
       sound: true,
     );
 
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-    print('FirebaseMessaging token $fcmToken');
-
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) => _onForegroundMessage(message),
-    );
-
-    FirebaseMessaging.onMessageOpenedApp.listen(
-      (RemoteMessage message) => _onMessageOpenedApp(message),
-    );
+    deviceToken = await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.instance.onTokenRefresh.listen(_onTokenRefresh);
+    FirebaseMessaging.onMessage.listen(_onForegroundMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
   }
 
   // ignore: unused_element
@@ -49,6 +48,14 @@ class PushNotificationManager {
 
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
+    }
+  }
+
+  Future _onTokenRefresh(String token) async {
+    final userId = await _appAuthentication.getUserId();
+    if (userId != null) {
+      await _dioClient.registerDeviceToken(userId, deviceToken!);
+      await _dioClient.updateTopics(userId);
     }
   }
 

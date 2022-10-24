@@ -18,6 +18,7 @@ import '../features/discover/discover_viewmodel.dart';
 import '../features/lives/lives_viewmodel.dart';
 import '../features/profile/profile_viewmodel.dart';
 import '../features/webview/webview_viewmodel.dart';
+import '../network/api/dio_client.dart';
 import '../network/api/firebase_storage_api.dart';
 import '../network/api/firestore_api.dart';
 import '../network/services/event_service.dart';
@@ -25,7 +26,7 @@ import '../network/services/streamer_service.dart';
 import '../network/services/twitch_service.dart';
 import '../network/services/user_service.dart';
 import '../stores/streamer_store.dart';
-import '../widgets/card_game/card_game_list_viewmodel.dart';
+import '../widgets/card_game/list/card_game_list_viewmodel.dart';
 import '../widgets/card_streams/card_stream_list_viewmodel.dart';
 
 final locator = StackedLocator.instance;
@@ -56,4 +57,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => CachingManager());
   locator.registerLazySingleton(() => StreamerStore());
   locator.registerLazySingleton(() => Analytics());
+  locator.registerLazySingleton(() => DioClient());
 }

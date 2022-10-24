@@ -3,11 +3,13 @@ import 'package:app/app/app.router.dart';
 import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/caching/caching_manager.dart';
+import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';
+import 'package:app/network/api/dio_client.dart';
 import 'package:app/network/api/firestore_api.dart';
-import 'package:app/widgets/card_game/card_game_list_viewmodel.dart';
+import 'package:app/widgets/card_game/list/card_game_list_viewmodel.dart';
 import 'package:app/widgets/card_streams/card_stream_list_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
@@ -21,6 +23,7 @@ class AppAuthentication {
   final _analytics = locator<Analytics>();
   final _firebaseAuth = FirebaseAuth.instance;
   final _cookieManager = CookieManager();
+  final _dioClient = locator<DioClient>();
 
   Future<void> persistToken(TwitchToken token) async {
     final authToken = AuthenticationModel.fromToken(token);
@@ -60,6 +63,9 @@ class AppAuthentication {
     final encryptionKey = await _cachingManager.getEncryptionKey();
     if (encryptionKey == null) return;
 
+    final userId = await getUserId();
+    if (userId != null) _dioClient.unsubscribeFromTopics(userId);
+
     final encryptedBox = await Hive.openBox(
       AUTH_BOX_KEY,
       encryptionCipher: HiveAesCipher(encryptionKey),
@@ -80,6 +86,7 @@ class AppAuthentication {
     locator.resetLazySingleton<CardGameListViewModel>();
     locator.resetLazySingleton<CachingManager>();
     locator.resetLazySingleton<Analytics>();
+    locator.resetLazySingleton<DioClient>();
 
     await _navigation.clearStackAndShow(Routes.startupScreen);
   }
@@ -101,5 +108,10 @@ class AppAuthentication {
     if (authToken == null) return null;
 
     return authToken.twitchToken;
+  }
+
+  Future<String?> getUserId() async {
+    final token = await getTwitchToken();
+    return token?.userId;
   }
 }
