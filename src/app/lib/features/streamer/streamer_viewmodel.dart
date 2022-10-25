@@ -13,7 +13,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:twitch_api/twitch_api.dart';
 
-const String _agendaFuture = 'agendaFuture';
 const String _streamerFuture = 'streamerFuture';
 
 class StreamerViewModel extends MultipleFutureViewModel {
@@ -39,15 +38,11 @@ class StreamerViewModel extends MultipleFutureViewModel {
     _buildBannerAd();
   }
 
-  String get fetchedAgenda => dataMap![_agendaFuture];
   User? get fetchedStreamer => dataMap![_streamerFuture];
-
-  bool get fetchingAgenda => busy(_agendaFuture);
   bool get fetchingStreamer => busy(_streamerFuture);
 
   @override
   Map<String, Future Function()> get futuresMap => {
-        _agendaFuture: getStreamerAgenda,
         _streamerFuture: getStreamerById,
       };
 
@@ -67,11 +62,7 @@ class StreamerViewModel extends MultipleFutureViewModel {
     }
   }
 
-  Future<String> getStreamerAgenda() async {
-    return 'String data';
-  }
-
-  Future onEventTap(BuildContext context, String username) async {
+  Future onEventTap(BuildContext context) async {
     _livesViewModel.openStreamerWebview(context, username);
   }
 

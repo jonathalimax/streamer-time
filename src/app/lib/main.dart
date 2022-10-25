@@ -47,7 +47,6 @@ Future<void> _setupAds() async {
 
 Future<void> _setupPushNotification() async {
   await locator<PushNotificationManager>().configure();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
 Future<void> _setupFirebase() async {
@@ -65,11 +64,6 @@ Future<void> _setupAnalytics() async {
 Future<void> _setupHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AuthenticationModelAdapter());
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
-  await _setupFirebase();
 }
 
 Future _setupRemoteConfig() async {

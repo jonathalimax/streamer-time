@@ -147,6 +147,7 @@ class StackedRouter extends RouterBase {
         builder: (context) => StreamerScreen(
           key: args.key,
           viewModel: args.viewModel,
+          shouldOpenLiveOnStart: args.shouldOpenLiveOnStart,
         ),
         settings: data,
       );
@@ -235,7 +236,9 @@ class LivesScreenArguments {
 class StreamerScreenArguments {
   final Key? key;
   final StreamerViewModel viewModel;
-  StreamerScreenArguments({this.key, required this.viewModel});
+  final bool shouldOpenLiveOnStart;
+  StreamerScreenArguments(
+      {this.key, required this.viewModel, this.shouldOpenLiveOnStart = false});
 }
 
 /// ChannelsScreen arguments holder class
@@ -394,6 +397,7 @@ extension NavigatorStateExtension on NavigationService {
   Future<dynamic> navigateToStreamerScreen({
     Key? key,
     required StreamerViewModel viewModel,
+    bool shouldOpenLiveOnStart = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -402,7 +406,10 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.streamerScreen,
-      arguments: StreamerScreenArguments(key: key, viewModel: viewModel),
+      arguments: StreamerScreenArguments(
+          key: key,
+          viewModel: viewModel,
+          shouldOpenLiveOnStart: shouldOpenLiveOnStart),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

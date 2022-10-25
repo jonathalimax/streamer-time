@@ -41,10 +41,10 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> _makeLogin(TwitchToken token) async {
     locator.resetLazySingleton<FirestoreApi>();
+    _analytics.instance.logLogin();
     await _appAuthentication.persistToken(token);
     await _registerUser(token.userId);
     await _navigation.clearStackAndShow(Routes.homeScreen);
-    _analytics.instance.logLogin();
   }
 
   Future<void> startAuthentication() async {

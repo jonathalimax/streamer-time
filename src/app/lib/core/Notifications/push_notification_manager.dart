@@ -1,14 +1,24 @@
 import 'package:app/app/app.locator.dart';
+import 'package:app/app/app.router.dart';
+import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/app_authentication.dart';
 import 'package:app/core/caching/caching_manager.dart';
+import 'package:app/core/notifications/notification_data.dart';
+import 'package:app/features/streamer/streamer_viewmodel.dart';
+import 'package:app/firebase_options.dart';
 import 'package:app/network/api/dio_client.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class PushNotificationManager {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   final _cachingManager = locator<CachingManager>();
   final _dioClient = locator<DioClient>();
   final _appAuthentication = locator<AppAuthentication>();
+  final _navigationService = locator<NavigationService>();
+  final _analytics = locator<Analytics>();
+
   String? deviceToken;
 
   Future<void> configure() async {
@@ -19,6 +29,9 @@ class PushNotificationManager {
     );
 
     deviceToken = await FirebaseMessaging.instance.getToken();
+    print('DEBUG:::FirebaseMessaging device token $deviceToken');
+
+    FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
     FirebaseMessaging.instance.onTokenRefresh.listen(_onTokenRefresh);
     FirebaseMessaging.onMessage.listen(_onForegroundMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
@@ -33,22 +46,22 @@ class PushNotificationManager {
       await _cachingManager.persistNotificationPermission(authorized);
   }
 
-  Future<void> _onForegroundMessage(RemoteMessage message) async {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
+  Future<void> _onBackgroundMessage(RemoteMessage message) async {
+    print("DEBUG::: _onBackgroundMessage $message");
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  }
 
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
+  Future<void> _onForegroundMessage(RemoteMessage message) async {
+    print('DEBUG::: _onForegroundMessage $message');
+    print('Message data: ${message.data}');
   }
 
   Future<void> _onMessageOpenedApp(RemoteMessage message) async {
-    print('Got a message whilst in the foreground!');
+    print('DEBUG::: _onMessageOpenedApp $message');
     print('Message data: ${message.data}');
 
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
+    handleNotification(message);
   }
 
   Future _onTokenRefresh(String token) async {
@@ -65,5 +78,32 @@ class PushNotificationManager {
 
   Future<void> unsubscribeFromTopic(String username) async {
     await _messaging.unsubscribeFromTopic(username);
+  }
+
+  Future<void> handleNotification(RemoteMessage message) async {
+    final data = NotificationData.fromJson(message.data);
+
+    switch (data.type) {
+      case 'live':
+        await _navigationService.navigateTo(
+          Routes.streamerScreen,
+          arguments: StreamerScreenArguments(
+            viewModel: StreamerViewModel(
+              streamerId: data.streamerId,
+              username: data.username,
+            ),
+            shouldOpenLiveOnStart: true,
+          ),
+        );
+    }
+
+    _analytics.instance.logEvent(
+      name: 'notification_open',
+      parameters: {
+        'streamerId': data.streamerId,
+        'streamName': data.username,
+        'type': data.type,
+      },
+    );
   }
 }

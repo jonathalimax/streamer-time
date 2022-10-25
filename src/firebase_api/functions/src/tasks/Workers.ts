@@ -31,8 +31,13 @@ export const workers: Workers = {
             title: username + " está transmitindo " + categoryName,
             body: title,
             sound: "default",
-            
+            badge: '0'
           },
+          data: {
+            'type': 'live',
+            'streamerId': userId,
+            'username': username
+          }
         },
         {
           timeToLive: 14400, // 4 hours

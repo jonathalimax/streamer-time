@@ -9,10 +9,12 @@ import 'package:stacked/stacked.dart';
 
 class StreamerScreen extends StatelessWidget {
   final StreamerViewModel viewModel;
+  final bool shouldOpenLiveOnStart;
 
   const StreamerScreen({
     Key? key,
     required this.viewModel,
+    this.shouldOpenLiveOnStart = false,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,9 @@ class StreamerScreen extends StatelessWidget {
     return ViewModelBuilder<StreamerViewModel>.reactive(
       viewModelBuilder: () => viewModel,
       builder: (context, viewModel, _) => _buildScreen(context, viewModel),
+      onModelReady: (model) {
+        if (shouldOpenLiveOnStart) viewModel.onEventTap(context);
+      },
     );
   }
 
@@ -27,7 +32,7 @@ class StreamerScreen extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context, viewModel),
       body: SafeArea(
-        child: viewModel.fetchingStreamer || viewModel.fetchingAgenda
+        child: viewModel.fetchingStreamer
             ? SpinKitDoubleBounce(
                 color: Theme.of(context).colorScheme.secondary,
               )
@@ -41,10 +46,7 @@ class StreamerScreen extends StatelessWidget {
                           ? AgendaView(
                               title: 'Agenda',
                               events: viewModel.fetchedStreamer!.events,
-                              onEventTap: () => viewModel.onEventTap(
-                                context,
-                                viewModel.fetchedStreamer!.username,
-                              ),
+                              onEventTap: () => viewModel.onEventTap(context),
                             )
                           : Container(),
                     ),
