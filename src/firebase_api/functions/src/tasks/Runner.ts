@@ -28,8 +28,8 @@ class Runner {
                         status: "complete",
                     })
                 })
-                .catch((_) => {
-                    console.log("Setting task status as error")
+                .catch((error) => {
+                    console.log(`Setting task status as error ${error}`)
 
                     snapshot.ref.update({
                         status: "error",

@@ -1,49 +1,46 @@
 import * as admin from "firebase-admin"
+import { randomTitle } from '../push_info'
 
 interface Workers {
-    [key: string]: (options: any) => Promise<any>
+  [key: string]: (options: any) => Promise<any>
 }
 
 export const workers: Workers = {
-    sendPushNotification: async ({ userId, eventId, username }) => {
-      const snapshot = await admin
+  sendPushNotification: async ({ userId, eventId, username }) => {
+    const snapshot = await admin
       .firestore()
-        .collection("users")
-        .doc(userId)
-        .collection("events")
-        .doc(eventId)
-        .get();
-  
-      const data = snapshot.data()
-      if (data == null) return
-  
-      const { title, categoryName } = data
-      console.log(
-        "Starting notification sending with title: " + title +
-        " and category name: " + categoryName +
-        " to topic: " + username
-      )
-  
-      return admin.messaging().sendToTopic(
-        username,
-        {
-          notification: {
-            title: username + " está transmitindo " + categoryName,
-            body: title,
-            sound: "default",
-            badge: '0'
-          },
-          data: {
-            'type': 'live',
-            'streamerId': userId,
-            'username': username
-          }
+      .collection("users")
+      .doc(userId)
+      .collection("events")
+      .doc(eventId)
+      .get();
+
+    const data = snapshot.data()
+    if (data == null) return
+
+    const { title, imageUrl } = data
+
+    return admin.messaging().sendToTopic(
+      username,
+      {
+        notification: {
+          title: username + ` ${randomTitle}`,
+          body: title,
+          sound: "default",
+          badge: '0',
+          image: imageUrl
         },
-        {
-          timeToLive: 14400, // 4 hours
-          contentAvailable: true,
-          priority: 'high',
+        data: {
+          'type': 'live',
+          'streamerId': userId,
+          'username': username
         }
-      )
-    },
-  }
+      },
+      {
+        timeToLive: 14400, // 4 hours
+        contentAvailable: true,
+        priority: 'high',
+      }
+    )
+  },
+}
