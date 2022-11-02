@@ -20,27 +20,39 @@ export const workers: Workers = {
 
     const { title, imageUrl } = data
 
-    return admin.messaging().sendToTopic(
-      username,
-      {
+    return admin.messaging().send({
+      topic: username,
+      notification: {
+        title: username + ` ${randomTitle}`,
+        body: title,
+      },
+      android: {
+        ttl: 14400, // 4 hours,
         notification: {
-          title: username + ` ${randomTitle}`,
-          body: title,
-          sound: "default",
-          badge: '0',
-          image: imageUrl
-        },
-        data: {
-          'type': 'live',
-          'streamerId': userId,
-          'username': username
+          imageUrl: imageUrl,
+          priority: 'high',
+          notificationCount: 0,
+          defaultSound: true
         }
       },
-      {
-        timeToLive: 14400, // 4 hours
-        contentAvailable: true,
-        priority: 'high',
+      apns: {
+        payload: {
+          aps: {
+            mutableContent: true,
+            badge: 0,
+            sound: 'default',
+            threadId: username,
+          }
+        },
+        fcmOptions: {
+          imageUrl: imageUrl
+        },
+      },
+      data: {
+        'type': 'live',
+        'streamerId': userId,
+        'username': username
       }
-    )
+    });
   },
 }

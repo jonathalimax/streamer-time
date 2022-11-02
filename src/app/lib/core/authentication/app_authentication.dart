@@ -3,7 +3,6 @@ import 'package:app/app/app.router.dart';
 import 'package:app/core/analytics/analytics.dart';
 import 'package:app/core/authentication/authentication_model.dart';
 import 'package:app/core/caching/caching_manager.dart';
-import 'package:app/core/notifications/push_notification_manager.dart';
 import 'package:app/features/discover/discover_viewmodel.dart';
 import 'package:app/features/lives/lives_viewmodel.dart';
 import 'package:app/features/profile/profile_viewmodel.dart';
