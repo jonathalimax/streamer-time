@@ -59,11 +59,16 @@ class AppAuthentication {
   }
 
   Future logout() async {
+    final userId = await getUserId();
+    final deviceToken = await _cachingManager.getDeviceToken();
+
+    if (userId != null && deviceToken != null) {
+      _dioClient.unregisterDeviceToken(userId, deviceToken);
+      _dioClient.unsubscribeFromTopics(userId, deviceToken);
+    }
+
     final encryptionKey = await _cachingManager.getEncryptionKey();
     if (encryptionKey == null) return;
-
-    final userId = await getUserId();
-    if (userId != null) _dioClient.unsubscribeFromTopics(userId);
 
     final encryptedBox = await Hive.openBox(
       AUTH_BOX_KEY,

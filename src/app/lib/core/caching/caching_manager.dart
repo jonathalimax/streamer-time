@@ -6,10 +6,11 @@ import 'package:hive/hive.dart';
 
 const String SECURE_TOKEN_KEY = 'SecureKey';
 const String AUTH_BOX_KEY = 'AuthenticationBox';
-const String AUTH_TOKEN_KEY = 'authToken';
 const String SETTINGS_BOX_KEY = 'SettingsBox';
+const String AUTH_TOKEN_KEY = 'authToken';
 const String NOTIFICATION_AUTHORIZED_KEY = 'NotificationAuthorizedKey';
 const String OPENED_LIVES_AMOUNT = 'OpenedLivesAmount';
+const String DEVICE_TOKEN = "DeviceToken";
 
 class CachingManager {
   Future<Uint8List?> getEncryptionKey() async {
@@ -106,5 +107,33 @@ class CachingManager {
       openedLivesAmount >= 3 ? 0 : ++openedLivesAmount,
     );
     await encryptedBox.close();
+  }
+
+  Future persistDeviceToken(String deviceToken) async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return false;
+
+    final encryptedBox = await Hive.openBox(
+      AUTH_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    await encryptedBox.put(DEVICE_TOKEN, deviceToken);
+    await encryptedBox.close();
+  }
+
+  Future<String?> getDeviceToken() async {
+    final encryptionKey = await getEncryptionKey();
+    if (encryptionKey == null) return null;
+
+    final encryptedBox = await Hive.openBox(
+      AUTH_BOX_KEY,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
+
+    final deviceToken = await encryptedBox.get(DEVICE_TOKEN);
+    await encryptedBox.close();
+
+    return deviceToken;
   }
 }

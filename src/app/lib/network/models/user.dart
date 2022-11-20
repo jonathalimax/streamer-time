@@ -8,7 +8,7 @@ class User {
   final String profileImageUrl;
   final String? description;
   final int viewCount;
-  String? deviceToken = null;
+  List<String>? deviceToken = null;
   bool following = false;
   List<Event> events = [];
 
@@ -36,7 +36,8 @@ class User {
         profileImageUrl = json['profileImageUrl'],
         description = json['description'],
         viewCount = json['viewCount'],
-        deviceToken = json['deviceToken'];
+        deviceToken =
+            json['deviceToken'] != null ? List.from(json['deviceToken']) : null;
 
   Map<String, dynamic> toJson() => {
         'id': id,

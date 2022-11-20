@@ -19,8 +19,6 @@ class PushNotificationManager {
   final _navigationService = locator<NavigationService>();
   final _analytics = locator<Analytics>();
 
-  String? deviceToken;
-
   Future<void> configure() async {
     await _messaging.requestPermission(
       alert: true,
@@ -28,7 +26,8 @@ class PushNotificationManager {
       sound: true,
     );
 
-    deviceToken = await FirebaseMessaging.instance.getToken();
+    final deviceToken = await FirebaseMessaging.instance.getToken();
+    if (deviceToken != null) _cachingManager.persistDeviceToken(deviceToken);
     print('DEBUG:::FirebaseMessaging device token $deviceToken');
 
     FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
@@ -67,7 +66,8 @@ class PushNotificationManager {
   Future _onTokenRefresh(String token) async {
     final userId = await _appAuthentication.getUserId();
     if (userId != null) {
-      await _dioClient.registerDeviceToken(userId, deviceToken!);
+      await _cachingManager.persistDeviceToken(token);
+      await _dioClient.registerDeviceToken(userId, token);
       await _dioClient.updateTopics(userId);
     }
   }

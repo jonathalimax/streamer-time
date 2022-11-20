@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as express from 'express'
+import { FieldValue } from 'firebase-admin/firestore'
 
 const database = admin.firestore()
 
@@ -12,10 +13,28 @@ class UserController {
                 .collection('users')
                 .doc(req.params.id)
                 .update({
-                    deviceToken: deviceToken
+                    deviceToken: FieldValue.arrayUnion(deviceToken)
                 })
 
             return res.status(200).send(`Device token was successfully updated`);
+
+        } catch (error) {
+            return res.status(500).send(`Something goes wrong! ${error}`);
+        }
+    }
+
+    public async unregisterToken(req: express.Request, res: express.Response) {
+        try {
+            const deviceToken = req.body.deviceToken
+
+            await database
+                .collection('users')
+                .doc(req.params.id)
+                .update({
+                    deviceToken: FieldValue.arrayRemove(deviceToken)
+                })
+
+            return res.status(200).send(`Device token was successfully removed`);
 
         } catch (error) {
             return res.status(500).send(`Something goes wrong! ${error}`);
@@ -29,7 +48,7 @@ class UserController {
                 .doc(req.params.id)
                 .get()
 
-            const deviceToken: string = user.get('deviceToken')
+            const deviceToken: [string] = user.get('deviceToken')
 
             if (deviceToken == undefined)
                 return res.status(500).send(`The device token is missing for this user! 💩`)
@@ -57,16 +76,7 @@ class UserController {
 
     public async unsubscribeTopics(req: express.Request, res: express.Response) {
         try {
-            const user = await database
-                .collection('users')
-                .doc(req.params.id)
-                .get()
-
-            const deviceToken: string = user.get('deviceToken')
-
-            if (deviceToken == undefined) 
-                return res.status(500).send(`The device token is missing for this user! 💩`)
-
+            const deviceToken: string = req.body.deviceToken;
             const streamers = await database
                 .collection('users')
                 .doc(req.params.id)

@@ -17,6 +17,17 @@ class DioClient {
     }
   }
 
+  Future unregisterDeviceToken(String userId, String deviceToken) async {
+    try {
+      await _dio.delete(
+        _baseUrl + '/user/$userId/token',
+        data: {'deviceToken': deviceToken},
+      );
+    } on DioError catch (e) {
+      print(e);
+    }
+  }
+
   Future updateTopics(String userId) async {
     try {
       await _dio.post(_baseUrl + '/user/$userId/topics');
@@ -25,7 +36,7 @@ class DioClient {
     }
   }
 
-  Future unsubscribeFromTopics(String userId) async {
+  Future unsubscribeFromTopics(String userId, String deviceToken) async {
     try {
       await _dio.delete(_baseUrl + '/user/$userId/topics');
     } on DioError catch (e) {
