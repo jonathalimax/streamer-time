@@ -5,6 +5,38 @@ import { FieldValue } from 'firebase-admin/firestore'
 const database = admin.firestore()
 
 class UserController {
+    public async logout(req: express.Request, res: express.Response) {
+        try {
+            const deviceToken: string = req.body.deviceToken
+
+            // Unregister user deviceToken
+            await database
+                .collection('users')
+                .doc(req.params.id)
+                .update({ deviceToken: FieldValue.arrayRemove(deviceToken) })
+
+            // Fetch subscribed topics
+            const streamers = await database
+                .collection('users')
+                .doc(req.params.id)
+                .collection('following')
+                .get()
+
+            // Unsubscribe from topics
+            for (const streamer of streamers.docs) {
+                const topic = streamer.get('username')
+                console.log(`Unsubscribing topic: ${topic} for deviceToken: ${deviceToken}`)
+                await admin.messaging().unsubscribeFromTopic(deviceToken, topic)
+            }
+
+            console.log(`Logged out successfully 🫡`)
+            return res.status(200).send(`Logged out successfully 🫡`)
+
+        } catch (error) {
+            return res.status(500).send(`Something goes wrong! ${error}`);
+        }
+    }
+
     public async registerToken(req: express.Request, res: express.Response) {
         try {
             const deviceToken = req.body.deviceToken
@@ -23,24 +55,6 @@ class UserController {
         }
     }
 
-    public async unregisterToken(req: express.Request, res: express.Response) {
-        try {
-            const deviceToken = req.body.deviceToken
-
-            await database
-                .collection('users')
-                .doc(req.params.id)
-                .update({
-                    deviceToken: FieldValue.arrayRemove(deviceToken)
-                })
-
-            return res.status(200).send(`Device token was successfully removed`);
-
-        } catch (error) {
-            return res.status(500).send(`Something goes wrong! ${error}`);
-        }
-    }
-
     public async updateTopics(req: express.Request, res: express.Response) {
         try {
             const user = await database
@@ -52,14 +66,14 @@ class UserController {
 
             if (deviceToken == undefined)
                 return res.status(500).send(`The device token is missing for this user! 💩`)
-            
+
             const streamers = await database
                 .collection('users')
                 .doc(req.params.id)
                 .collection('following')
                 .get()
 
-            if (streamers.docs.length == 0) 
+            if (streamers.docs.length == 0)
                 return res.status(200).send(`There is no topic to update 😅`)
 
             for (const streamer of streamers.docs) {
@@ -68,30 +82,6 @@ class UserController {
             }
 
             return res.status(200).send(`All topics were successfully updated 🫡`)
-
-        } catch (error) {
-            return res.status(500).send(`Something goes wrong! ${error}`);
-        }
-    }
-
-    public async unsubscribeTopics(req: express.Request, res: express.Response) {
-        try {
-            const deviceToken: string = req.body.deviceToken;
-            const streamers = await database
-                .collection('users')
-                .doc(req.params.id)
-                .collection('following')
-                .get()
-
-            if (streamers.docs.length == 0) 
-                return res.status(200).send(`There is no topic to unsubscribe 😅`)
-
-            for (const streamer of streamers.docs) {
-                const topic = streamer.get('username')
-                await admin.messaging().unsubscribeFromTopic(deviceToken, topic)
-            }
-
-            return res.status(200).send(`All topics were successfully unsubscribed 🫡`)
 
         } catch (error) {
             return res.status(500).send(`Something goes wrong! ${error}`);

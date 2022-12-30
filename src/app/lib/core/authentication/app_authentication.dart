@@ -63,8 +63,7 @@ class AppAuthentication {
     final deviceToken = await _cachingManager.getDeviceToken();
 
     if (userId != null && deviceToken != null) {
-      _dioClient.unregisterDeviceToken(userId, deviceToken);
-      _dioClient.unsubscribeFromTopics(userId, deviceToken);
+      _dioClient.logout(userId, deviceToken);
     }
 
     final encryptionKey = await _cachingManager.getEncryptionKey();
