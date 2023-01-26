@@ -70,6 +70,7 @@ class LivesScreen extends StatelessWidget {
                         type: AppEmptyStateType.noDocument,
                         buttonTitle: 'Buscar streamers',
                         buttonAction: () => changePage(TabItem.discover),
+                        refreshAction: () => viewModel.fetchStreamers(),
                       ),
           ),
         ),
