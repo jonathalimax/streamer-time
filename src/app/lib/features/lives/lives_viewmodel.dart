@@ -30,11 +30,11 @@ class LivesViewModel extends BaseViewModel {
   LivesViewModel() {
     buildBannerAd();
     buildInterstitialAd();
+    setBusy(true);
     if (store.streamers.isEmpty) fetchStreamers();
   }
 
   Future<void> fetchStreamers() async {
-    setBusy(true);
     await _streamerService.fetchMyStreamers() ?? [];
     setBusy(false);
   }

@@ -32,8 +32,9 @@ class ProfileScreen extends StatelessWidget {
                 )
               : viewModel.data == null
                   ? AppEmptyState(
-                      title: 'Ocorreu um erro, tente novamente!',
+                      title: 'Para atualizar,\ndeslize para baixo!',
                       type: AppEmptyStateType.noDocument,
+                      refreshAction: () => viewModel.futureToRun(),
                     )
                   : _buildItemList(context, viewModel),
         );

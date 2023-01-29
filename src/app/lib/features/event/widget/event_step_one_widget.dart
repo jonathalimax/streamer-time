@@ -93,25 +93,21 @@ class EventStepOneWidget extends StatelessWidget {
                             onEditingComplete: () {
                               viewModel.setCategory(null);
                             },
-                            autofocus: category == null,
                             textInputAction: TextInputAction.next,
                             onSubmitted: (_) => _focusNode.requestFocus(),
                             textCapitalization: TextCapitalization.words,
                             controller: _categoryController,
-                            scrollPadding: EdgeInsets.only(bottom: 250),
+                            scrollPadding: EdgeInsets.only(bottom: 200),
                             decoration: appInputTextDecoration(
                               context,
                               'Categoria',
                             ),
                           ),
                           suggestionsCallback: viewModel.getCategorySuggestion,
-                          getImmediateSuggestions: true,
                           itemBuilder: (context, TwitchGame? game) {
                             return ListTile(
                               dense: true,
-                              title: AppText.body(
-                                game?.name ?? '',
-                              ),
+                              title: AppText.body(game?.name ?? ''),
                             );
                           },
                           onSuggestionSelected: (TwitchGame? game) {

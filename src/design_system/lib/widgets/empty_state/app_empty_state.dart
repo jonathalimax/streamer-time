@@ -31,11 +31,14 @@ class AppEmptyState extends StatelessWidget {
             children: <Widget>[
               Expanded(child: Container()),
               if (type != null)
-                Image(
-                  image: AssetImage(type!.path, package: 'design_system'),
-                  height: 190,
-                  width: 190,
-                  fit: BoxFit.cover,
+                Expanded(
+                  flex: 1,
+                  child: Image(
+                    image: AssetImage(type!.path, package: 'design_system'),
+                    height: 190,
+                    width: 190,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               Container(
                 width: 350,
@@ -65,7 +68,7 @@ class AppEmptyState extends StatelessWidget {
               if (buttonTitle != null && buttonAction != null)
                 Column(
                   children: <Widget>[
-                    SizedBox(height: 16),
+                    SizedBox(height: 28),
                     AppButton(
                       title: buttonTitle!,
                       action: () => buttonAction!(),
@@ -75,7 +78,7 @@ class AppEmptyState extends StatelessWidget {
                 ),
               Expanded(
                 child: Container(),
-                flex: 2,
+                flex: 1,
               ),
             ],
           ),

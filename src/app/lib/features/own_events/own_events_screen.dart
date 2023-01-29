@@ -28,44 +28,43 @@ class OwnEventsScreen extends StatelessWidget {
                   ),
                 )
               : viewModel.data!.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                      child: ListView.builder(
-                        itemCount: viewModel.data!.length,
-                        itemBuilder: (context, index) {
-                          final item = viewModel.data![index];
-                          return Container(
-                            height: 230,
-                            child: InkWell(
-                              onTap: () => viewModel.manageEvent(item),
-                              highlightColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(.2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(3)),
-                              child: CardEventView(
-                                category: item.categoryName,
-                                title: item.title,
-                                date: item.dateDisplay,
-                                time: item.timeDisplay,
-                                imageUrl: item.imageUrl,
-                                isLive: item.isLive,
-                                width: double.infinity,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  : Center(
-                      child: AppEmptyState(
-                        title: 'Nenhum evento disponível!',
-                        type: AppEmptyStateType.noDocument,
-                      ),
+                  ? EventsWidget(viewModel)
+                  : AppEmptyState(
+                      title: 'Nenhum evento disponível!',
+                      type: AppEmptyStateType.noDocument,
                     ),
         );
       },
+    );
+  }
+
+  Padding EventsWidget(OwnEventsViewModel viewModel) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+      child: ListView.builder(
+        itemCount: viewModel.data!.length,
+        itemBuilder: (context, index) {
+          final item = viewModel.data![index];
+          return Container(
+            height: 230,
+            child: InkWell(
+              onTap: () => viewModel.manageEvent(item),
+              highlightColor:
+                  Theme.of(context).colorScheme.secondary.withOpacity(.2),
+              borderRadius: BorderRadius.all(Radius.circular(3)),
+              child: CardEventView(
+                category: item.categoryName,
+                title: item.title,
+                date: item.dateDisplay,
+                time: item.timeDisplay,
+                imageUrl: item.imageUrl,
+                isLive: item.isLive,
+                width: double.infinity,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -79,17 +79,19 @@ class LivesScreen extends StatelessWidget {
   }
 
   Widget _buildAdBanner(LivesViewModel viewModel) {
-    return viewModel.bannerAd != null
-        ? Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-            child: Container(
-              height: viewModel.bannerAd!.size.height.toDouble(),
-              child: AdWidget(
-                ad: viewModel.bannerAd!,
-              ),
-            ),
-          )
-        : Container();
+    if (viewModel.bannerAd == null) {
+      return Container();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+      child: Container(
+        height: viewModel.bannerAd!.size.height.toDouble(),
+        child: AdWidget(
+          ad: viewModel.bannerAd!,
+        ),
+      ),
+    );
   }
 
   Widget _buildAgendaList(LivesViewModel viewModel) {

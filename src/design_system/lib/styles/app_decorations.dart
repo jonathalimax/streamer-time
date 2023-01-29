@@ -1,3 +1,4 @@
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 InputDecoration appInputTextDecoration(
@@ -7,8 +8,10 @@ InputDecoration appInputTextDecoration(
   return InputDecoration(
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.black12,
-        width: 1,
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.grey.shade200
+            : kcLightPurple.withOpacity(0.5),
+        width: 2,
       ),
     ),
     focusedBorder: UnderlineInputBorder(
