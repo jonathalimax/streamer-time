@@ -70,6 +70,36 @@ class FirestoreApi {
     }
   }
 
+  // Lives
+  Future<Users?> fetchLives() async {
+    final userId = await _getUserId();
+    if (userId == null) return null;
+
+    final collection = await usersCollection
+        .doc(userId)
+        .collection(FollowingFirestoreKey)
+        .get();
+
+    Users users = [];
+
+    try {
+      await Future.forEach(collection.docs,
+          (QueryDocumentSnapshot<Map<String, dynamic>> element) async {
+        final follower = Follower.fromJson(element.data());
+        final user = await getUserById(follower.userId);
+        if (user != null) users.add(user);
+      });
+
+      users.sort((a, b) => b.viewCount.compareTo(a.viewCount));
+      return users;
+    } catch (error) {
+      throw FirestoreApiException(
+        message: 'Failed to get following streamers',
+        devDetails: '$error',
+      );
+    }
+  }
+
   // Events Collection
   Future<void> createEvent(Event event) async {
     final userId = await _getUserId();
@@ -188,6 +218,7 @@ class FirestoreApi {
           .doc()
           .set(streamer.toJson());
 
+      // TODO: Avoid calling this another request.
       return await getUserById(streamerId);
     } catch (error) {
       throw FirestoreApiException(
@@ -239,35 +270,6 @@ class FirestoreApi {
       throw FirestoreApiException(
         message:
             'Failed to verify if user is following streamer with id $streamerId',
-        devDetails: '$error',
-      );
-    }
-  }
-
-  Future<Users?> fetchMyStreamers() async {
-    final userId = await _getUserId();
-    if (userId == null) return null;
-
-    final collection = await usersCollection
-        .doc(userId)
-        .collection(FollowingFirestoreKey)
-        .get();
-
-    Users users = [];
-
-    try {
-      await Future.forEach(collection.docs,
-          (QueryDocumentSnapshot<Map<String, dynamic>> element) async {
-        final follower = Follower.fromJson(element.data());
-        final user = await getUserById(follower.userId);
-        if (user != null) users.add(user);
-      });
-
-      users.sort((a, b) => b.viewCount.compareTo(a.viewCount));
-      return users;
-    } catch (error) {
-      throw FirestoreApiException(
-        message: 'Failed to get following streamers',
         devDetails: '$error',
       );
     }

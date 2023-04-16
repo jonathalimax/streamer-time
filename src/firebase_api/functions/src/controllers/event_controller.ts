@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin'
-import * as functions from "firebase-functions"
+import * as functions from 'firebase-functions'
 import * as express from 'express'
 
 type Snapshot = functions.firestore.QueryDocumentSnapshot
@@ -23,7 +23,7 @@ class EventController {
             }
 
             const result = await database
-                .collection("users")
+                .collection('users')
                 .doc(snapshot.docs[0].id)
                 .collection('events')
                 .doc()
@@ -41,12 +41,12 @@ class EventController {
     }
 
     public async onEventCreate(snapshot: Snapshot, context: Context) {
-        console.log("Starting onEventCreate function")
+        console.log('Starting onEventCreate function')
 
         const ref = snapshot.ref
         const userRef = ref.parent.parent
         if (userRef == null) {
-            console.log("userRref is null, stopping process")
+            console.log('userRref is null, stopping process')
             return
         }
 
@@ -54,16 +54,16 @@ class EventController {
         const user = userQuery.data()
         const event = snapshot.data()
         if (user == null) {
-            console.log("user is null, stopping process")
+            console.log('user is null, stopping process')
             return
         }
 
         await database
-            .collection("tasks")
+            .collection('tasks')
             .doc()
             .set({
-                worker: "sendPushNotification",
-                status: "scheduled",
+                worker: 'sendPushNotification',
+                status: 'scheduled',
                 performAt: event.starTime,
                 options: {
                     eventId: context.params.eventId,
@@ -72,51 +72,51 @@ class EventController {
                 },
             })
 
-        console.log("Finishing onEventCreate function")
+        console.log('Finishing onEventCreate function')
     }
 
     public async onEventUpdate(change: Change, context: Context) {
         const eventId = context.params.eventId
 
         const snapshot = await database
-            .collection("tasks")
-            .where("options.eventId", "==", eventId)
+            .collection('tasks')
+            .where('options.eventId', '==', eventId)
             .get()
 
         if (snapshot.docs.length == 0) {
-            console.log("Finishing onEventUpdate without task updates")
+            console.log('Finishing onEventUpdate without task updates')
             return
         }
 
         await database
-            .collection("tasks")
+            .collection('tasks')
             .doc(snapshot.docs[0].id)
             .update({
                 performAt: change.after.data().starTime,
-                status: "scheduled",
+                status: 'scheduled',
             })
 
-        console.log("Finishing onEventUpdate function")
+        console.log('Finishing onEventUpdate function')
     }
 
     public async onEventDelete(snapshot: Snapshot, context: Context) {
         const eventId = context.params.eventId
         const result = await database
-            .collection("tasks")
-            .where("options.eventId", "==", eventId)
+            .collection('tasks')
+            .where('options.eventId', '==', eventId)
             .get()
 
         if (result.docs.length == 0) {
-            console.log("Finishing onEventDelete without task deletion")
+            console.log('Finishing onEventDelete without task deletion')
             return
         }
 
         await database
-        .collection("tasks")
-        .doc(result.docs[0].id)
-        .delete()
-        
-        console.log("Task deleted succesfully")
+            .collection('tasks')
+            .doc(result.docs[0].id)
+            .delete()
+
+        console.log('Task deleted succesfully')
     }
 }
 

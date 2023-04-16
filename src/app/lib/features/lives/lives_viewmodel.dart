@@ -35,7 +35,7 @@ class LivesViewModel extends BaseViewModel {
   }
 
   Future<void> fetchStreamers() async {
-    await _streamerService.fetchMyStreamers() ?? [];
+    await _streamerService.fetchLives() ?? [];
     setBusy(false);
   }
 

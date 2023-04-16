@@ -7,7 +7,7 @@ admin.initializeApp()
 
 import routes from './routes'
 import Runner from './tasks/Runner'
-import Schedules from './schedules'
+import Schedules from './utils/schedules'
 import EventController from "./controllers/event_controller"
 
 const app = express();

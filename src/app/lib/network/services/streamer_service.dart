@@ -6,8 +6,8 @@ class StreamerService {
   final _firestoreApi = locator<FirestoreApi>();
   final streamerStore = locator<StreamerStore>();
 
-  Future fetchMyStreamers() async {
-    final fetchedStreamers = await _firestoreApi.fetchMyStreamers();
+  Future fetchLives() async {
+    final fetchedStreamers = await _firestoreApi.fetchLives();
     if (fetchedStreamers != null)
       streamerStore.set(
         fetchedStreamers.where((element) => element.events.isNotEmpty).toList(),

@@ -21,3 +21,5 @@ doc/api/
 *.js.map
 
 node_modules
+
+.DS_Store

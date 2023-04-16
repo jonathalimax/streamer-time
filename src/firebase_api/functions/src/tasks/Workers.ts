@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin"
-import { randomTitle } from '../push_info'
+import { randomTitle } from '../utils/push_info'
 
 interface Workers {
   [key: string]: (options: any) => Promise<any>

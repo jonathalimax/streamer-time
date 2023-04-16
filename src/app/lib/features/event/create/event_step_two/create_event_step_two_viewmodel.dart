@@ -51,18 +51,16 @@ class CreateEventStepTwoViewModel extends BaseViewModel {
   ) async {
     setBusy(true);
 
-    final imageUrl = await _uploadSelectedImage(image);
-
     final event = Event(
       title: _title,
       starTime: startDate,
       categoryId: _category.id,
       categoryName: _category.name,
-      imageUrl: imageUrl,
+      imageUrl: await _uploadSelectedImage(image),
       duration: duration.inMinutes,
     );
 
-    await _eventService.createEvent(event);
+    _eventService.createEvent(event);
     _navigationService.popRepeated(2);
   }
 }
