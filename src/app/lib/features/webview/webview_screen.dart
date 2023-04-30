@@ -12,6 +12,8 @@ class WebViewScreen extends StatelessWidget {
   final String url;
   final ShouldNavigateCallback shouldNavigate;
 
+  late final webViewController = makeWebViewController();
+
   WebViewScreen(
     this.url,
     this.shouldNavigate,
@@ -27,29 +29,33 @@ class WebViewScreen extends StatelessWidget {
         appBar: AppBar(),
         body: LoadingOverlay(
           color: Theme.of(context).scaffoldBackgroundColor,
-          isLoading: viewModel.isBusy,
+          isLoading: viewModel.isLoading,
           progressIndicator: SpinKitDoubleBounce(
             color: Theme.of(context).colorScheme.secondary,
           ),
-          child: WebView(
-            initialUrl: url,
-            javascriptMode: JavascriptMode.unrestricted,
-            zoomEnabled: false,
-            gestureNavigationEnabled: true,
-            onProgress: (value) => value != 100
-                ? viewModel.setBusy(true)
-                : viewModel.setBusy(false),
-            navigationDelegate: (NavigationRequest request) async {
-              return await shouldNavigate(request.url)
-                  ? NavigationDecision.navigate
-                  : NavigationDecision.prevent;
-            },
-            onWebViewCreated: (controller) {
-              controller.clearCache();
-            },
+          child: WebViewWidget(
+            controller: webViewController
+              ..setNavigationDelegate(
+                NavigationDelegate(
+                  onPageStarted: (url) => viewModel.setLoding(true),
+                  onPageFinished: (url) => viewModel.setLoding(false),
+                  onNavigationRequest: (NavigationRequest request) async {
+                    return await shouldNavigate(request.url)
+                        ? NavigationDecision.navigate
+                        : NavigationDecision.prevent;
+                  },
+                ),
+              ),
           ),
         ),
       ),
     );
+  }
+
+  WebViewController makeWebViewController() {
+    return WebViewController()
+      ..enableZoom(false)
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(url));
   }
 }

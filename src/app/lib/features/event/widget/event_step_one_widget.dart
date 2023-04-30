@@ -41,7 +41,7 @@ class EventStepOneWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<EventStepOneWidgetViewModel>.reactive(
       viewModelBuilder: () => EventStepOneWidgetViewModel(),
-      onModelReady: (viewModel) {
+      onViewModelReady: (viewModel) {
         viewModel.selectedTitle = this.title;
         if (title != null) _titleController.text = title!;
         if (category != null) {

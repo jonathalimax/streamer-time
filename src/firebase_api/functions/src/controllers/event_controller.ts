@@ -19,7 +19,7 @@ class EventController {
                 .get();
 
             if (snapshot.empty) {
-                return console.log(`No streamer found with this username: ${username}. 😅`);
+                return res.status(204).send(`No streamer found with this username: ${username}. 😅`);
             }
 
             const result = await database

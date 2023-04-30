@@ -189,10 +189,7 @@ class FirestoreApi {
         },
       );
 
-      return events
-          .where((element) =>
-              element.finishTime.toUtc().isAfter(DateTime.now().toUtc()))
-          .toList();
+      return events.toList();
     } catch (error) {
       throw FirestoreApiException(
         message: 'Failed to get streamer events for streamerid: $streamerId',

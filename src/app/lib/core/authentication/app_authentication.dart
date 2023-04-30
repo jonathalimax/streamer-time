@@ -21,7 +21,7 @@ class AppAuthentication {
   final _cachingManager = locator<CachingManager>();
   final _analytics = locator<Analytics>();
   final _firebaseAuth = FirebaseAuth.instance;
-  final _cookieManager = CookieManager();
+  final _cookieManager = WebViewCookieManager();
   final _dioClient = locator<DioClient>();
 
   Future<void> persistToken(TwitchToken token) async {

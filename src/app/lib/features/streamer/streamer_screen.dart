@@ -22,7 +22,7 @@ class StreamerScreen extends StatelessWidget {
     return ViewModelBuilder<StreamerViewModel>.reactive(
       viewModelBuilder: () => viewModel,
       builder: (context, viewModel, _) => _buildScreen(context, viewModel),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         if (shouldOpenLiveOnStart) viewModel.onEventTap(context);
       },
     );
@@ -42,10 +42,10 @@ class StreamerScreen extends StatelessWidget {
                   if (viewModel.fetchedStreamer != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      child: viewModel.fetchedStreamer!.events.isNotEmpty
+                      child: viewModel.fetchedStreamer!.upcoming.isNotEmpty
                           ? AgendaView(
                               title: 'Agenda',
-                              events: viewModel.fetchedStreamer!.events,
+                              events: viewModel.fetchedStreamer!.upcoming,
                               onEventTap: () => viewModel.onEventTap(context),
                             )
                           : Container(),

@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )
                 .catchError((error) {
               _displayDataAlert('startCommercial', error.toString());
+              return error;
             }),
             child: const Text('Start Commercial'),
           ),
@@ -130,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 .getExtensionAnalytics(first: 1)
                 .catchError((error) {
               _displayDataAlert('getExtensionAnalytics', error.toString());
+              return error;
             }),
             child: const Text('Get Extension Analytics'),
           ),
@@ -138,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 .getGameAnalytics(gameId: '493057')
                 .catchError((error) {
               _displayDataAlert('getGameAnalytics', error.toString());
+              return error;
             }),
             child: const Text('Get Games Analytics'),
           ),

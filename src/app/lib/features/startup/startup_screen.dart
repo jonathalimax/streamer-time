@@ -9,7 +9,7 @@ class StartupScreen extends StatelessWidget {
     return ViewModelBuilder<StartupViewModel>.reactive(
       viewModelBuilder: () => StartupViewModel(),
       builder: (context, viewModel, child) => _buildScreen(context),
-      onModelReady: (viewModel) =>
+      onViewModelReady: (viewModel) =>
           SchedulerBinding.instance.addPostFrameCallback(
         (timeStamp) {
           viewModel.runStartupLogic();

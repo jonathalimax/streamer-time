@@ -8,10 +8,7 @@ class StreamerService {
 
   Future fetchLives() async {
     final fetchedStreamers = await _firestoreApi.fetchLives();
-    if (fetchedStreamers != null)
-      streamerStore.set(
-        fetchedStreamers.where((element) => element.events.isNotEmpty).toList(),
-      );
+    if (fetchedStreamers != null) streamerStore.set(fetchedStreamers);
   }
 
   Future<void> followStreamer(String streamerId, String username) async {

@@ -12,6 +12,11 @@ class User {
   bool following = false;
   List<Event> events = [];
 
+  late List<Event> upcoming = events
+      .where((element) =>
+          element.finishTime.toUtc().isAfter(DateTime.now().toUtc()))
+      .toList();
+
   User({
     required this.id,
     required this.name,

@@ -9,6 +9,10 @@ abstract class _StreamerStore with Store {
   @observable
   var streamers = ObservableList<User>();
 
+  bool get hasUpcomingEvents {
+    return streamers.any((element) => element.upcoming.isNotEmpty);
+  }
+
   @action
   void add(User streamer) {
     streamers.add(streamer);
@@ -23,8 +27,7 @@ abstract class _StreamerStore with Store {
   @action
   void removeById(String streamerId) {
     final filteredStreamers =
-        streamers.where((element) => element.id == streamerId).toList();
-    if (filteredStreamers.isEmpty) return;
-    streamers.remove(filteredStreamers.first);
+        streamers.firstWhere((element) => element.id == streamerId);
+    streamers.remove(filteredStreamers);
   }
 }

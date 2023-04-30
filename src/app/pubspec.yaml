@@ -30,19 +30,19 @@ dependencies:
   # Caching
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^8.0.0
 
   # Google
-  firebase_auth: ^3.9.0
-  firebase_core: ^1.22.0
-  firebase_storage: ^10.3.8
-  firebase_analytics: ^9.3.5
-  firebase_messaging: ^13.1.0
-  firebase_crashlytics: ^2.8.10
-  firebase_remote_config: ^2.0.19
-  firebase_performance: ^0.8.3+2
-  google_mobile_ads: ^2.0.1
-  cloud_firestore: ^3.4.8
+  firebase_auth: ^4.4.1
+  firebase_core: ^2.9.0
+  firebase_storage: ^11.1.0
+  firebase_analytics: ^10.2.0
+  firebase_messaging: ^14.4.0
+  firebase_crashlytics: ^3.1.0
+  firebase_remote_config: ^4.0.0
+  firebase_performance: ^0.9.1
+  google_mobile_ads: ^2.4.0
+  cloud_firestore: ^4.5.1
 
   # Network
   dio: ^4.0.6
@@ -56,7 +56,7 @@ dependencies:
   webview_flutter: ">=3.0.0"
   mobx: ^2.0.7+5
   flutter_mobx: ^2.0.6+1
-  package_info_plus: ^1.4.3+1
+  package_info_plus: ^3.1.0
 
   # Media
   image_picker: ">=0.8.4+2"

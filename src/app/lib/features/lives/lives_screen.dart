@@ -22,7 +22,7 @@ class LivesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LivesViewModel>.reactive(
       disposeViewModel: false,
-      fireOnModelReadyOnce: true,
+      fireOnViewModelReadyOnce: true,
       initialiseSpecialViewModelsOnce: true,
       viewModelBuilder: () => locator<LivesViewModel>(),
       builder: (context, viewModel, child) => _buildScreen(
@@ -58,10 +58,10 @@ class LivesScreen extends StatelessWidget {
                 ? SpinKitDoubleBounce(
                     color: Theme.of(context).colorScheme.secondary,
                   )
-                : viewModel.store.streamers.isNotEmpty
+                : viewModel.store.hasUpcomingEvents
                     ? Column(
                         children: <Widget>[
-                          _buildAgendaList(viewModel),
+                          _buildAgenda(viewModel),
                           _buildAdBanner(viewModel)
                         ],
                       )
@@ -94,7 +94,7 @@ class LivesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAgendaList(LivesViewModel viewModel) {
+  Widget _buildAgenda(LivesViewModel viewModel) {
     return Expanded(
       child: RefreshIndicator(
         onRefresh: () => viewModel.fetchStreamers(),
@@ -104,10 +104,10 @@ class LivesScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               var item = viewModel.store.streamers.elementAt(index);
 
-              return item.events.isNotEmpty
+              return item.upcoming.isNotEmpty
                   ? AgendaView(
                       title: item.username,
-                      events: item.events,
+                      events: item.upcoming,
                       profileImageUrl: item.profileImageUrl,
                       onEventTap: () => viewModel.openStreamerWebview(
                         context,
