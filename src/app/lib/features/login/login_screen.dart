@@ -32,32 +32,38 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Spacer(flex: 1),
+                  Spacer(flex: 2),
                   Center(
                     child: Image(
                       image: AssetImage('resources/icons/liveus-icon.png'),
-                      width: 300,
+                      width: 260,
                     ),
                   ),
                   Spacer(flex: 1),
-                  Center(
-                    child: AppText.heading3(
-                      'Vai ter live hoje?',
-                      color: kcIceWhite,
-                      textAlign: TextAlign.center,
+                  Flexible(
+                    flex: 1,
+                    child: Center(
+                      child: AppText.heading3(
+                        'Você sempre atualizado!',
+                        color: kcIceWhite,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   SizedBox(height: 40),
-                  Center(
-                    child: AppText.heading4(
-                      'Fique ligado nos eventos que \nestão por vir!',
-                      color: kcIceWhite,
-                      textAlign: TextAlign.center,
+                  Flexible(
+                    flex: 2,
+                    child: Center(
+                      child: AppText.heading4(
+                        'Fique por dentro da agenda \ndos seus streamers favoritos!',
+                        color: kcIceWhite,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                  Spacer(flex: 5),
+                  Spacer(flex: 2),
                   AppButton(
-                    title: 'Entrar',
+                    title: 'Utilizar conta Twitch',
                     action: () => viewModel.startAuthentication(),
                     titleColor: kcPurple,
                   ),

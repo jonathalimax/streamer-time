@@ -30,11 +30,11 @@ class AppButton extends StatelessWidget {
       decoration: !outlined
           ? BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(6),
             )
           : BoxDecoration(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: color,
                 width: 1.5,
