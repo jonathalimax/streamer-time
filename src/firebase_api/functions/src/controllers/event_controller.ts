@@ -36,7 +36,7 @@ class EventController {
             return res.status(200).send('Event inserted successfully 🫡');
 
         } catch (error) {
-            res.status(500).send(`Something goes wrong! ${error}`);
+            return res.status(500).send(`Something goes wrong! ${error}`);
         }
     }
 
@@ -67,6 +67,7 @@ class EventController {
                 performAt: event.starTime,
                 options: {
                     eventId: context.params.eventId,
+                    duration: context.params.duration ?? 60,
                     userId: context.params.userId,
                     username: user.username,
                 },

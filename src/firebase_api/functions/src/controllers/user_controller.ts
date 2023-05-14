@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin'
 import * as express from 'express'
 import { FieldValue } from 'firebase-admin/firestore'
+import topics from "../domain/topics"
 
 const database = admin.firestore()
 
@@ -9,11 +10,12 @@ class UserController {
         try {
             const deviceToken: string = req.body.deviceToken
 
-            // Unregister user deviceToken
-            await database
+            const query =  database
                 .collection('users')
                 .doc(req.params.id)
-                .update({ deviceToken: FieldValue.arrayRemove(deviceToken) })
+
+            // Unregister user deviceToken
+            await query.update({ deviceToken: FieldValue.arrayRemove(deviceToken) })
 
             // Fetch subscribed topics
             const streamers = await database
@@ -28,6 +30,9 @@ class UserController {
                 console.log(`Unsubscribing topic: ${topic} for deviceToken: ${deviceToken}`)
                 await admin.messaging().unsubscribeFromTopic(deviceToken, topic)
             }
+
+            // Update topics update timestamp
+            await query.update({ topicsUpdatedAt: admin.firestore.Timestamp.now() })
 
             console.log(`Logged out successfully 🫡`)
             return res.status(200).send(`Logged out successfully 🫡`)
@@ -44,9 +49,7 @@ class UserController {
             await database
                 .collection('users')
                 .doc(req.params.id)
-                .update({
-                    deviceToken: FieldValue.arrayUnion(deviceToken)
-                })
+                .update({ deviceToken: FieldValue.arrayUnion(deviceToken) })
 
             return res.status(200).send(`Device token was successfully updated`);
 
@@ -57,32 +60,8 @@ class UserController {
 
     public async updateTopics(req: express.Request, res: express.Response) {
         try {
-            const user = await database
-                .collection('users')
-                .doc(req.params.id)
-                .get()
-
-            const deviceToken: [string] = user.get('deviceToken')
-
-            if (deviceToken == undefined)
-                return res.status(500).send(`The device token is missing for this user! 💩`)
-
-            const streamers = await database
-                .collection('users')
-                .doc(req.params.id)
-                .collection('following')
-                .get()
-
-            if (streamers.docs.length == 0)
-                return res.status(200).send(`There is no topic to update 😅`)
-
-            for (const streamer of streamers.docs) {
-                const topic = streamer.get('username')
-                await admin.messaging().subscribeToTopic(deviceToken, topic)
-            }
-
+            topics.updateTopics(req.params.id)
             return res.status(200).send(`All topics were successfully updated 🫡`)
-
         } catch (error) {
             return res.status(500).send(`Something goes wrong! ${error}`);
         }

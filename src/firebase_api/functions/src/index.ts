@@ -19,11 +19,18 @@ app.use(routes)
 // Export endpoints
 export const api = functions.https.onRequest(app);
 
+// Export scheduled tasks
 export const taskRunner = functions
   .runWith({ memory: "128MB", minInstances: projectId === 'streamertime-app' ? 0 : 0 }) // Set 5 to reduce the cold starts
   .pubsub.schedule(Schedules.onceADay)
   .onRun(Runner.taskRunner)
 
+export const topicsUpdateRunner = functions
+  .runWith({ memory: "128MB", minInstances: projectId === 'streamertime-app' ? 0 : 0 }) // Set 5 to reduce the cold starts
+  .pubsub.schedule(Schedules.onceADay)
+  .onRun(Runner.updateTopicsTask)
+
+// Export triggered tasks
 export const onEventCreate = functions.firestore
   .document("users/{userId}/{eventCollectionId}/{eventId}")
   .onCreate(EventController.onEventCreate)

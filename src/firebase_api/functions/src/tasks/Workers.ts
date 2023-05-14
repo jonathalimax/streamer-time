@@ -6,7 +6,7 @@ interface Workers {
 }
 
 export const workers: Workers = {
-  sendPushNotification: async ({ userId, eventId, username }) => {
+  sendPushNotification: async ({ eventId, userId, username }) => {
     const snapshot = await admin
       .firestore()
       .collection("users")
@@ -27,7 +27,7 @@ export const workers: Workers = {
         body: title,
       },
       android: {
-        ttl: 14400, // 4 hours,
+        ttl: 3600, // 1 Hour
         notification: {
           imageUrl: imageUrl,
           priority: 'high',
