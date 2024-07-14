@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "832640888153",
+    "project_id": "streamertime-app",
+    "storage_bucket": "streamertime-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832640888153:android:96bd4a013cdc3a59d7b048",
+        "android_client_info": {
+          "package_name": "com.jonathalima.liveus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832640888153-utk8a23q03pd5rnhcggo63q22ajt7jkq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jonathalima.liveus",
+            "certificate_hash": "8bfa52d70aa36a3fafdc1606ae0d50b8dd4f8438"
+          }
+        },
+        {
+          "client_id": "832640888153-ijoret4rhh7rtj6mmpocvtuvro68d4ld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ7n4qvS_Nu_Er2Rj4KLZHd0ju8ur62D0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832640888153-ijoret4rhh7rtj6mmpocvtuvro68d4ld.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "832640888153-2t7jofi7e52tvklp912nj2elpa52kpj3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jlima.streamup"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7838717442900192~2583721804"
+    }
+  ],
+  "configuration_version": "1"
+}

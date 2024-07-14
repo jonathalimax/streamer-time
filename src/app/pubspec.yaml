@@ -1,0 +1,122 @@
+name: app
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.2+5
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=3.0.5"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI
+  animations: ">=2.0.1"
+  cupertino_icons: ^1.0.5
+  flutter_spinkit: ">=5.0.0"
+  loading_overlay: ">=0.3.0"
+  flutter_typeahead: ">=3.2.1"
+  flutter_datetime_picker: ">=1.5.1"
+  design_system:
+    path: ../design_system
+
+  # FilledStacks
+  stacked: ">=2.3.15"
+  stacked_services: ">=0.9.5"
+
+  # Caching
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  flutter_secure_storage: ^8.0.0
+
+  # Google
+  firebase_auth: ^4.4.1
+  firebase_core: ^2.9.0
+  firebase_storage: ^11.1.0
+  firebase_analytics: ^10.2.0
+  firebase_messaging: ^14.4.0
+  firebase_crashlytics: ^3.1.0
+  firebase_remote_config: ^4.0.0
+  firebase_performance: ^0.9.1
+  google_mobile_ads: ^2.4.0
+  cloud_firestore: ^4.5.1
+
+  # Network
+  dio: ^4.0.6
+  twitch_api:
+    path: ../twitch_api
+
+  # Utils
+  intl: ">=0.17.0"
+  injectable: ">=1.5.0"
+  url_launcher: ">=6.0.17"
+  webview_flutter: ">=3.0.0"
+  mobx: ^2.0.7+5
+  flutter_mobx: ^2.0.6+1
+  package_info_plus: ^3.1.0
+
+  # Media
+  image_picker: ">=0.8.4+2"
+  cached_network_image: ">=3.1.0"
+  flutter_native_image: ">=0.0.6+1"
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  build: ">=2.1.0"
+  build_runner: ">=2.1.2"
+  mobx_codegen: ^2.0.7
+  hive_generator: ">=1.1.0"
+  stacked_generator: ">=0.7.15"
+  flutter_native_splash: ">=2.2.8"
+  flutter_launcher_icons: ">=0.10.0"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - resources/icons/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: packages/design_system/resources/fonts/Nunito-Regular.ttf
+          weight: 400
+        - asset: packages/design_system/resources/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: packages/design_system/resources/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: packages/design_system/resources/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_background: "#6441A5"
+  adaptive_icon_foreground: "resources/logo/adaptive-logo.png"
+  image_path: "resources/logo/logo.png"
+
+flutter_native_splash:
+  ios: true
+  android: true
+  web: false
+  
+  color: "#9E7AE3"
+  image: resources/icons/liveus-icon.png
+  color_dark: "#6441A5"
+  image_dark: resources/icons/liveus-icon.png
+
+  android_12:
+    image: resources/icons/liveus-icon.png
+    color: "#9E7AE3"
+    image_dark: resources/icons/liveus-icon.png
+    color_dark: "#6441A5"

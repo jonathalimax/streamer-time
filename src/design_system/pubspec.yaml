@@ -1,0 +1,24 @@
+name: design_system
+description: A new Flutter package project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=3.0.5"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  salomon_bottom_bar: ^3.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - lib/resources/images/
